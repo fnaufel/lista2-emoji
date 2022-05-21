@@ -1,0 +1,214 @@
+---
+title: 'Experiments with Sympy'
+author: 'fnaufel'
+email: 'https://fnaufel.github.io/'
+date: '   (v. `r format(Sys.Date(), "%d/%m/%Y")`)'
+lang: 'en'
+
+output: 
+  # To install these output formats, run
+  #   install.packages("devtools")
+  #   devtools::install_github("fnaufel/fnaufelRmd")
+  fnaufelRmd::html_report:
+    []
+---
+
+```{r setup, include=FALSE}
+# The next command configures MANY things and loads quite a few packages.
+# 
+# If you want to see what's being done, execute 
+# 
+#   cat(
+#     system.file(
+#       "rmarkdown/resources/R/_common_report.R", 
+#       package = "fnaufelRmd"
+#     )
+#   )
+# 
+# to find out the location of the file. Then open the file.
+# 
+# If you want to change the configuration, copy the file, edit it, and
+# source it instead of the package file. 
+# 
+# Or simply write your commands here in this code chunk.
+
+source(
+  system.file(
+    "rmarkdown/resources/R/_common_report.R",
+    package = "fnaufelRmd"
+  )
+)
+
+library(reticulate)
+py_run_string('import sympy as sp')
+py_run_string('sp.init_printing()')
+```
+
+
+# Printing stuff
+
+## Create eq
+
+```{python}
+print(sp.__version__)
+```
+
+```{python}
+x, y = sp.symbols('x, y', real=True)
+xc, yc = sp.symbols('x_c, y_c', real=True)
+rc = sp.symbols('r_c', real=True, positive=True)
+```
+
+```{python}
+face = sp.Eq((x - xc)**2 + (y - yc)**2, rc**2)
+```
+
+
+## Using variable only
+
+* Ascii math in Python:
+
+```{python}
+face
+```
+
+```{python}
+sp.Integral(x**2, x)
+```
+
+* Object in R:
+
+```{r}
+py$face
+```
+
+
+## Using print
+
+```{python}
+print(face)
+```
+
+```{r}
+print(py$face)
+```
+
+
+## asis
+
+```{python, results='asis'}
+sp.print_mathml(face)
+```
+
+```{python, results='asis'}
+sp.print_mathml(face, printer='presentation')
+```
+
+* Can use LaTeX
+
+```{python, results='asis'}
+print('$$', sp.latex(face), '$$')
+```
+
+
+## Using preview image
+
+```{python}
+# Opens viewer window and blocks knitr
+# sp.printing.preview(face)
+```
+
+
+## Using custom print methods
+
+* https://cran.rstudio.com/web/packages/knitr/vignettes/knit_print.html
+
+```{r}
+pp <- getS3method('knit_print', 'html') 
+```
+
+```{python resultas='asis'}
+r.pp(sp.print_mathml(face, printer='presentation'))
+```
+
+## Using asis_output
+
+From https://community.rstudio.com/t/using-sympy-in-rmarkdown/99514
+
+```{r out.height=2}
+py_run_string('l = sp.latex(face)')
+knitr::asis_output(sprintf("$$%s$$", py$l))
+```
+
+```{r}
+mm <- function(x, sep = '$$') {
+  
+  py_thing <- rlang::enexpr(x)
+  r_name <- rlang::as_label(py_thing)
+  
+  if (startsWith(r_name, 'py$')) {
+    py_name <- substring(r_name, 4)
+  } else {
+    py_name <- r_name
+  }
+
+  py_run_string(
+    paste0(
+      'mm_latex = sp.latex(',
+      py_name,
+      ')'
+    )
+  )
+  
+  knitr::asis_output(
+    paste0(sep, py$mm_latex, sep)
+  )
+
+}
+```
+
+Display:
+
+```{r}
+mm(py$face)
+```
+
+Inline: the face has `r mm(py$face, '$')` as its equation.
+
+
+## Decision
+
+### This way, but refined
+
+```{python, results='asis'}
+print('$$', sp.latex(face), '$$')
+```
+
+What about inline? 
+
+`python face` does not work
+
+What is the output of `r print(py$face)` <- this code?
+
+
+### Like this
+
+```{r results='asis'}
+py_run_string('l = sp.latex(face)')
+cat(
+  paste0(
+    '$$', py$l, '$$'
+  )
+)
+```
+
+```{r results='asis'}
+py_run_string('l = sp.latex(face)')
+cat(
+  paste0(
+    '$', py$l, '$'
+  )
+)
+```
+
+

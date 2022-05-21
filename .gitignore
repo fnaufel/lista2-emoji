@@ -3,3 +3,6 @@
 .Rdata
 .httr-oauth
 .DS_Store
+html_files
+pdf_files
+scratch.html
