@@ -47,7 +47,7 @@ py_run_string('sp.init_printing()')
 
 # Printing stuff
 
-## Create eq
+## Create stuff
 
 ```{python}
 print(sp.__version__)
@@ -96,15 +96,7 @@ print(py$face)
 
 ## asis
 
-```{python, results='asis'}
-sp.print_mathml(face)
-```
-
-```{python, results='asis'}
-sp.print_mathml(face, printer='presentation')
-```
-
-* Can use LaTeX
+* Can use LaTeX in python chunk with asis option:
 
 ```{python, results='asis'}
 print('$$', sp.latex(face), '$$')
@@ -119,38 +111,20 @@ print('$$', sp.latex(face), '$$')
 ```
 
 
-## Using custom print methods
-
-* https://cran.rstudio.com/web/packages/knitr/vignettes/knit_print.html
-
-```{r}
-pp <- getS3method('knit_print', 'html') 
-```
-
-```{python resultas='asis'}
-r.pp(sp.print_mathml(face, printer='presentation'))
-```
-
-## Using asis_output
+## Using asis_output (no interpolation yet)
 
 From https://community.rstudio.com/t/using-sympy-in-rmarkdown/99514
 
-```{r out.height=2}
-py_run_string('l = sp.latex(face)')
-knitr::asis_output(sprintf("$$%s$$", py$l))
-```
-
 ```{r}
-mm <- function(x, sep = '$$') {
+mm <- function(x, inline = FALSE) {
   
   py_thing <- rlang::enexpr(x)
   r_name <- rlang::as_label(py_thing)
-  
-  if (startsWith(r_name, 'py$')) {
-    py_name <- substring(r_name, 4)
-  } else {
-    py_name <- r_name
-  }
+  py_name <- ifelse(
+    startsWith(r_name, 'py$'),
+    substring(r_name, 4),
+    r_name
+  )
 
   py_run_string(
     paste0(
@@ -159,6 +133,8 @@ mm <- function(x, sep = '$$') {
       ')'
     )
   )
+  
+  sep <- ifelse(inline, '$', '$$')
   
   knitr::asis_output(
     paste0(sep, py$mm_latex, sep)
@@ -173,42 +149,258 @@ Display:
 mm(py$face)
 ```
 
-Inline: the face has `r mm(py$face, '$')` as its equation.
+Inline: the face has `r mm(py$face, 1)` as its equation.
 
 
-## Decision
+## Interpolation using glue
 
-### This way, but refined
+See https://glue.tidyverse.org/articles/transformers.html.
 
-```{python, results='asis'}
-print('$$', sp.latex(face), '$$')
+```{r}
+py_transformer <- function(text, envir) {
+  
+  py_run_string(
+    paste0(
+      'mm_latex = sp.latex(',
+      text,
+      ')'
+    )
+  )
+
+  py$mm_latex
+  
+}
 ```
 
-What about inline? 
+```{r}
+template <- 
+r"($$
+  \begin{align}
+  x_C &= {{xc}} \\ 
+  y_C &= {{yc}} \\ 
+  r_C &= {{rc}} \\ 
+  \text{face} &= {{face}}
+  \end{align}
+$$)"  
 
-`python face` does not work
+cat(template)
+```
 
-What is the output of `r print(py$face)` <- this code?
-
-
-### Like this
-
-```{r results='asis'}
-py_run_string('l = sp.latex(face)')
-cat(
-  paste0(
-    '$$', py$l, '$$'
+```{r}
+knitr::asis_output(
+  glue::glue(
+    template,
+    .open = '{{',
+    .close = '}}',
+    .transformer = py_transformer
   )
 )
 ```
 
-```{r results='asis'}
-py_run_string('l = sp.latex(face)')
-cat(
-  paste0(
-    '$', py$l, '$'
+
+## Production
+
+1. Define function `m('...')`
+
+1. Only argument will be the template string
+
+1. Test in various cases
+
+   a. Decimal point (consult options)
+   
+   a. Several times in the same chunk
+   
+   a. Expressions as opposed to variables
+   
+   a. Inline
+   
+   a. Inside loop
+   
+   a. Indentation
+
+```{r}
+py_transformer <- function(text, envir) {
+  
+  decimal <- ifelse(
+    getOption('OutDec') == ',',
+    '"comma"',
+    '"period"'
   )
+  
+  py_run_string(
+    paste0(
+      'mm_latex = sp.latex(',
+      text,
+      ', decimal_separator = ',
+      decimal,
+      ')'
+    )
+  )
+
+  py$mm_latex
+  
+}
+
+m <- function(template, asis = getOption('masis', FALSE)) {
+  
+  f <- ifelse(asis, cat, knitr::asis_output)
+
+  f(
+    glue::glue(
+      template,
+      .open = '{{',
+      .close = '}}',
+      .transformer = py_transformer
+    )
+  )
+    
+}
+```
+
+### Decimal OK
+
+```{python}
+sp.var('pi')
+```
+
+```{python}
+eq = pi / 2
+eq = eq.subs(pi, 3.141592)
+sp.latex(eq)
+```
+
+```{r}
+m(
+  '$$
+  {{eq}}
+  $$'
+)
+
+options(
+  OutDec = '.'
+)
+
+m(
+  '$$
+  {{eq}}
+  $$'
+)
+
+options(
+  OutDec = ','
 )
 ```
 
+Here I can also see that several calls in one chunk just work.
 
+
+### Expressions OK
+
+* The template string can contain LaTeX expressions:
+
+```{r}
+m('$${{xc}}^2 + \\sqrt{ {{rc}} }$$')
+```
+
+  Compare 
+  
+  $$
+  x_c^2 + \sqrt{r_c}
+  $$
+
+* Python expressions:
+
+```{r}
+m('$${{ 2 * pi }}$$')
+m('$${{ pi + eq }}$$')
+m('$${{ pi + pi }}$$')
+```
+
+
+### Inline R OK
+
+This is an example of inline math: `r m('${{eq + pi}}$')` --- a simple sum.
+
+Can I write $`r m('{{eq + pi}}')`$? Yep.
+
+What if I generate inline [math]{.hl} in a chunk?
+
+```{r}
+m('${{eq + pi}}$')
+```
+
+I get a paragraph. If it's only math, it's left-aligned.
+
+```{r}
+m('I can write text like ${{eq + pi}}$ and it *works*, even the **markdown**.')
+```
+
+
+### Display math
+
+I must have `$$` inside the string that is passed to `m()`.
+
+Wrapping a chunk in `$$` doesn't work:
+
+$$
+```{r}
+m('{{eq + pi}}')
+```
+$$
+
+
+### In a loop
+
+```{r}
+for (i in 1:3)
+  m(paste0('$${{eq}} + ', i, '$$\n\n'))
+```
+
+It doesn't work.
+
+For this I must pass `asis = TRUE` and the chunk must have `results='asis'`:
+
+```{r results='asis'}
+for (i in 1:3)
+  m(paste0('$${{eq}} + ', i, '$$\n\n'), asis = TRUE)
+```
+
+I can set option `masis` to TRUE to make this behavior the default:
+
+```{r results='asis'}
+options(masis = TRUE)
+
+for (i in 1:3)
+  m(paste0('$${{eq}} + ', i, '$$\n\n'))
+```
+
+
+But now all chunks must have `results='asis'`.
+
+```{r}
+options(masis = FALSE)
+```
+
+
+### Can I save the output of `m()`? Yes.
+
+```{r}
+output <- m('$${{eq + pi}}$$')
+output
+```
+
+As `knitr::asis_output` adds a certain class to the string, it still shows asis.
+
+
+### Indentation OK
+
+1. A list:
+
+    ```{r}
+    m('$${{eq + pi}}$$')
+    ```
+
+1. Second item.
+
+
+<div style='height: 300px'></div>
