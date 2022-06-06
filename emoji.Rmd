@@ -99,7 +99,7 @@ m <- function(template, asis = getOption('m_asis', FALSE)) {
 
 # Questão única: construindo um emoji com cônicas
 
-Os dados da sua questão dependem valor de $n$ sorteado para você.
+Os dados da sua questão dependem do valor de $n$ sorteado para você.
 
 [Veja o seu valor de $n$ nesta lista.](#nums)
 
@@ -170,9 +170,9 @@ df <- tibble(matrícula, n) %>%
 
 # Valores de xc, yc, rc
 coords <- expand_grid(
-  xc = c(-2, -1, 1, 2),
-  yc = c(-2, -1, 1, 2),
-  rc = 1:4
+  xc = as.integer(c(-2, -1, 1, 2)),
+  yc = as.integer(c(-2, -1, 1, 2)),
+  rc = as.integer(1:4)
 ) %>% 
   slice_sample(n = n_alunos)
 
@@ -185,46 +185,241 @@ xc, yc = symbols('x_C, y_C', real = True)
 rc = symbols('r_C', real = True, positive = True)
 ```
 
-
-## Desenho {-}
-
 Seu emoji vai ficar assim:
 
-???
+```{r echo=FALSE, out.width='50%'}
+knitr::include_graphics('emoji-sem-orelhas.png')
+```
 
 
 ## Rosto
 
-```{python echo=FALSE}
-eq_face = Eq(xc**2 - 2*xc*x + yc**2 - 2*yc*y + x**2 + y**2 - rc**2, 0)
-```
+* O [rosto]{.hl} é o [círculo de equação geral dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
-```{r echo=FALSE}
-templ <- glue::glue_data(
-  df,
-  r"(
-  1. $\quad {{ eq_face.subs({xc: @xc@, yc: @yc@, rc:@rc@ }) }}$
-  )",
-  .open = '@',
-  .close = '@'
-) %>% 
-  paste0(collapse = '\n\n')
-```
+* Ache a [equação canônica]{.hl} deste círculo.
 
-* O rosto é o círculo de equação geral dada abaixo ([Veja o seu número $n$ nesta lista](#nums)):
-
-  ```{r echo=FALSE}
-  m(templ)
-  ```
+    ```{python echo=FALSE}
+    eq_face = Eq(xc**2 - 2*xc*x + yc**2 - 2*yc*y + x**2 + y**2 - rc**2, 0)
+    
+    eqs_face = [
+      eq_face.subs({xc: xx, yc: yy, rc: rr}) 
+      for (xx, yy, rr) 
+      in zip(r.df.xc, r.df.yc, r.df.rc)
+    ]
+    
+    eqs_face_latex = [latex(e) for e in eqs_face]
+    ```
+    
+    ```{r echo=FALSE}
+    eqs_face <- paste0(
+      '1. $\\displaystyle \\quad ',
+      py$eqs_face_latex,
+      '$',
+      collapse = '\n\n'
+    )
+    ```
+    
+    ```{r echo=FALSE}
+    m(eqs_face)
+    ```
 
 
 ## Nariz
 
+* O [nariz]{.hl} é a [elipse de eixo maior horizontal com as coordenadas do centro, valores de $a$ e de $c$ dados abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
+
+* Ache a [equação canônica]{.hl} desta elipse.
+
+    ```{python echo=FALSE}
+    cnariz = rc / 10
+    anariz = cnariz + cnariz / 10
+    
+    centronarizes = zip(r.df.xc, r.df.yc)
+    centronarizes_latex = [latex(e) for e in centronarizes]
+    
+    cnarizes = [
+      cnariz.subs({rc: rr}) for rr in r.df.rc
+    ]
+    cnarizes_latex = [latex(e) for e in cnarizes]
+    
+    anarizes = [
+      anariz.subs({cnariz: cn}) for cn in cnarizes
+    ]
+    anarizes_latex = [latex(e) for e in anarizes]
+    ```
+    
+    ```{r echo=FALSE}
+    narizes <- paste0(
+      '1. $\\displaystyle \\quad \\text{Centro} = ',
+      py$centronarizes_latex,
+      '\\ ,\\quad a = ',
+      py$anarizes_latex,
+      '\\ ,\\quad c = ',
+      py$cnarizes_latex,
+      '$',
+      collapse = '\n\n'
+    )
+    ```
+    
+    ```{r echo=FALSE}
+    m(narizes)
+    ```
+    
 
 ## Olhos
 
+* Os [centros dos olhos]{.hl} são os [focos da elipse com equação geral dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
+
+* Ache a [equação canônica]{.hl} e as [coordenadas dos focos]{.hl} desta elipse.
+
+    ```{python echo=FALSE}
+    eq_mascara = Eq(
+      80 * (
+        (21 * x**(2)) +
+        (121 * y**(2)) +
+        - ((42 * xc) * x)
+        - (((Rational(242, 5) * rc) + (242 * yc)) * y) +
+        ((Rational(242, 5) * rc) * yc) +
+        (Rational(-121, 80) * rc**(2)) +
+        (21 * xc**(2)) +
+        (121 * yc**(2))
+      ),
+      0
+    )
+    
+    eqs_mascara = [
+      eq_mascara.subs({xc: xx, yc: yy, rc: rr}) 
+      for (xx, yy, rr) 
+      in zip(r.df.xc, r.df.yc, r.df.rc)
+    ]
+    
+    eqs_mascara_latex = [latex(e) for e in eqs_mascara]
+    ```
+    
+    ```{r echo=FALSE}
+    eqs_mascara <- paste0(
+      '1. $\\displaystyle \\quad ',
+      py$eqs_mascara_latex,
+      '$',
+      collapse = '\n\n'
+    )
+    ```
+    
+    ```{r echo=FALSE}
+    m(eqs_mascara)
+    ```
+
+* [Cada olho]{.hl} é uma [elipse de eixo maior vertical com os valores de $a$ e de $c$ dados abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
+
+* Ache as [equações gerais]{.hl} destas elipses.
+
+    ```{python echo=FALSE}
+    colho = rc / 4
+    aolho = rc / 3
+    
+    colhos = [
+      colho.subs({rc: rr}) for rr in r.df.rc
+    ]
+    colhos_latex = [latex(e) for e in colhos]
+    
+    aolhos = [
+      aolho.subs({rc: rr}) for rr in r.df.rc
+    ]
+    aolhos_latex = [latex(e) for e in aolhos]
+    ```
+    
+    ```{r echo=FALSE}
+    olhos <- paste0(
+      '1. $\\displaystyle \\quad a = ',
+      py$aolhos_latex,
+      '\\ ,\\quad c = ',
+      py$colhos_latex,
+      '$',
+      collapse = '\n\n'
+    )
+    ```
+    
+    ```{r echo=FALSE}
+    m(olhos)
+    ```
+
 
 ## Boca
+
+* A [parte superior da boca]{.hl} é uma [parábola com concavidade para cima, com as coordenadas do foco $F$ e a distância focal $p$ dadas abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
+
+* Ache a [equação canônica]{.hl} desta parábola.
+
+    ```{python echo=FALSE}
+    fbocasup = (xc, yc - rc / 3)
+    pbocasup = rc / 4
+    
+    fbocasups = [
+      (
+        fbocasup[0].subs({xc: xx, yc: yy, rc: rr}),
+        fbocasup[1].subs({xc: xx, yc: yy, rc: rr})
+      )
+      for (xx, yy, rr) 
+      in zip(r.df.xc, r.df.yc, r.df.rc)
+    ]
+    fbocasups_latex = [latex(e) for e in fbocasups]
+    
+    pbocasups = [
+      pbocasup.subs({rc: rr}) for rr in r.df.rc
+    ]
+    pbocasups_latex = [latex(e) for e in pbocasups]
+    ```
+    
+    ```{r echo=FALSE}
+    bocasup <- paste0(
+      '1. $\\displaystyle \\quad F = ',
+      py$fbocasups_latex,
+      '\\ ,\\quad p = ',
+      py$pbocasups_latex,
+      '$',
+      collapse = '\n\n'
+    )
+    ```
+    
+    ```{r echo=FALSE}
+    m(bocasup)
+    ```
+
+* A [parte inferior da boca]{.hl} também é uma [parábola, cuja equação geral é dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
+
+* Ache a [equação canônica]{.hl} desta parábola.
+
+* Ache as coordenadas dos [pontos onde as duas parábolas se interceptam]{.hl} --- i.e., os cantos das bocas.
+
+* No Geogebra, aprenda como [traçar estas duas parábolas]{.hl} apenas na região entre os dois pontos de interseção, para que o traçado da boca não ultrapasse os cantos.
+
+    ```{python echo=FALSE}
+    eq_bocainf = Eq(
+      -18*rc*y - 15*rc**2 + 26*xc**2 + 26*x**2 + 18*rc*yc - 52*xc*x,
+      0
+    )
+    
+    eqs_bocainf = [
+      eq_bocainf.subs({xc: xx, yc: yy, rc: rr}) 
+      for (xx, yy, rr) 
+      in zip(r.df.xc, r.df.yc, r.df.rc)
+    ]
+    
+    eqs_bocainf_latex = [latex(e) for e in eqs_bocainf]
+    ```
+    
+    ```{r echo=FALSE}
+    eqs_bocainf <- paste0(
+      '1. $\\displaystyle \\quad ',
+      py$eqs_bocainf_latex,
+      '$',
+      collapse = '\n\n'
+    )
+    ```
+    
+    ```{r echo=FALSE}
+    m(eqs_bocainf)
+    ```
 
 
 ## Orelhas
