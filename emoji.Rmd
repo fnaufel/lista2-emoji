@@ -1,0 +1,246 @@
+---
+title: 'Lista 2: emoji com cônicas'
+author: 'fnaufel'
+email: 'https://fnaufel.github.io/'
+date: '   (v. `r format(Sys.Date(), "%d/%m/%Y")`)'
+lang: 'pt-br'
+
+output:
+  # To install these output formats, run
+  #   install.packages("devtools")
+  #   devtools::install_github("fnaufel/fnaufelRmd")
+  fnaufelRmd::html_report:
+    []
+---
+
+```{r setup, include=FALSE}
+# The next command configures MANY things and loads quite a few packages.
+#
+# If you want to see what's being done, execute
+#
+#   cat(
+#     system.file(
+#       "rmarkdown/resources/R/_common_report.R",
+#       package = "fnaufelRmd"
+#     )
+#   )
+#
+# to find out the location of the file. Then open the file.
+#
+# If you want to change the configuration, copy the file, edit it, and
+# source it instead of the package file.
+#
+# Or simply write your commands here in this code chunk.
+
+source(
+  system.file(
+    "rmarkdown/resources/R/_common_report.R",
+    package = "fnaufelRmd"
+  )
+)
+
+library(reticulate)
+sympy <- import('sympy')
+py_run_string('from sympy import *')
+py_run_string('init_printing(use_latex = True)')
+
+py_transformer <- function(text, envir) {
+
+  decimal <- ifelse(
+    getOption('OutDec') == ',',
+    '"comma"',
+    '"period"'
+  )
+
+  py_run_string(
+    paste0(
+      'm_latex = latex(',
+      text,
+      ', decimal_separator = ',
+      decimal,
+      ')'
+    )
+  )
+
+  py$m_latex
+
+}
+
+m <- function(template, asis = getOption('m_asis', FALSE)) {
+
+  f <- ifelse(asis, cat, knitr::asis_output)
+
+  f(
+    glue::glue(
+      template,
+      .open = '{{',
+      .close = '}}',
+      .transformer = py_transformer
+    )
+  )
+
+}
+
+```
+
+
+# Instruções
+
+* Fique à vontade para consultar os coleguinhas e para usar programas como o Geogebra, mas [somente soluções *analíticas* serão aceitas --- nada de responder no olhômetro.]{.hl}
+
+* Uma solução analítica é aquela em que você detalha todos os passos intermediários: [não vale resolver tudo no Geogebra e apresentar o resultado final; é preciso mostrar o passo-a-passo]{.hl}.
+
+* Entregue [(via Moodle)]{.hl} sua resolução escrita no formato que você preferir: manuscrito escaneado ou fotografado, documento gerado via $\LaTeX$ etc. O importante é que a resolução esteja legível. [Se você for fotografar sua resolução, use um aplicativo como [Clear Scan](https://play.google.com/store/apps/details?id=com.indymobileapp.document.scanner) para gerar um resultado melhor.]{.hl}
+
+* Além da resolução por escrito, entregue também [(via Moodle)]{.hl} um arquivo contendo um vídeo de no máximo 5 minutos onde você explica em detalhes a resolução de uma parte da sua questão.
+
+* Bom trabalho.
+
+
+# Questão única: construindo um emoji com cônicas
+
+Os dados da sua questão dependem valor de $n$ sorteado para você.
+
+[Veja o seu valor de $n$ nesta lista.](#nums)
+
+Você vai achar equações de cônicas que são o rosto, os olhos, o nariz, a boca e as orelhas de um emoji no $\mathbb{R}^2$.
+
+::: {.rmdimportant}
+
+Em todos os seus cálculos e respostas, [use frações e radicais.]{.hl} 
+
+[Não use valores numéricos com vírgulas decimais em momento algum.]{.hl}
+
+:::
+
+```{r echo=FALSE}
+set.seed(12345)
+
+matrícula <- c(
+  220060041,
+  122060031,
+  122060020,
+  122060013,
+  122060034,
+  122060021,
+  822060037,
+  122060006,
+  622060027,
+  215060056,
+  122060005,
+  122060008,
+  122060017,
+  122060012,
+  622060024,
+  122060007,
+  122060003,
+  122060004,
+  622060025,
+  122060029,
+  221060040,
+  122060033,
+  122060041,
+  122060009,
+  122060016,
+  122060038,
+  122060028,
+  122060030,
+  119060029,
+  221060047,
+  122060023,
+  122060015,
+  122060010,
+  122060014,
+  122060036,
+  622060026,
+  122060018,
+  122060011,
+  122060019,
+  122060022,
+  122060040,
+  122060035  
+)  
+
+n_alunos <- length(matrícula)
+  
+n <- sample(1:n_alunos)
+
+df <- tibble(matrícula, n) %>% 
+  arrange(n)
+
+# Valores de xc, yc, rc
+coords <- expand_grid(
+  xc = c(-2, -1, 1, 2),
+  yc = c(-2, -1, 1, 2),
+  rc = 1:4
+) %>% 
+  slice_sample(n = n_alunos)
+
+df <- cbind(df, coords)
+```
+
+```{python echo=FALSE}
+x, y = symbols('x, y', real = True)
+xc, yc = symbols('x_C, y_C', real = True)
+rc = symbols('r_C', real = True, positive = True)
+```
+
+
+## Desenho {-}
+
+Seu emoji vai ficar assim:
+
+???
+
+
+## Rosto
+
+```{python echo=FALSE}
+eq_face = Eq(xc**2 - 2*xc*x + yc**2 - 2*yc*y + x**2 + y**2 - rc**2, 0)
+```
+
+```{r echo=FALSE}
+templ <- glue::glue_data(
+  df,
+  r"(
+  1. $\quad {{ eq_face.subs({xc: @xc@, yc: @yc@, rc:@rc@ }) }}$
+  )",
+  .open = '@',
+  .close = '@'
+) %>% 
+  paste0(collapse = '\n\n')
+```
+
+* O rosto é o círculo de equação geral dada abaixo ([Veja o seu número $n$ nesta lista](#nums)):
+
+  ```{r echo=FALSE}
+  m(templ)
+  ```
+
+
+## Nariz
+
+
+## Olhos
+
+
+## Boca
+
+
+## Orelhas
+
+
+
+# Números dos alunos, por matrícula { #nums }
+
+```{r echo=FALSE}
+df %>% 
+  select(matrícula, n) %>% 
+  arrange(matrícula) %>% 
+  kbl() %>% 
+  kable_paper(
+    c('striped', 'hover'),
+    full_width = FALSE
+  )
+```
+
