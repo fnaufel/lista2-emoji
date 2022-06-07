@@ -1,0 +1,413 @@
+---
+title: 'Completar quadrados'
+author: 'fnaufel'
+email: 'https://fnaufel.github.io/'
+date: '   (v. `r format(Sys.Date(), "%d/%m/%Y")`)'
+lang: 'pt-br'
+
+output:
+  # To install these output formats, run
+  #   install.packages("devtools")
+  #   devtools::install_github("fnaufel/fnaufelRmd")
+  fnaufelRmd::html_report:
+    []
+---
+
+```{r setup, include=FALSE}
+# The next command configures MANY things and loads quite a few packages.
+#
+# If you want to see what's being done, execute
+#
+#   cat(
+#     system.file(
+#       "rmarkdown/resources/R/_common_report.R",
+#       package = "fnaufelRmd"
+#     )
+#   )
+#
+# to find out the location of the file. Then open the file.
+#
+# If you want to change the configuration, copy the file, edit it, and
+# source it instead of the package file.
+#
+# Or simply write your commands here in this code chunk.
+
+source(
+  system.file(
+    "rmarkdown/resources/R/_common_report.R",
+    package = "fnaufelRmd"
+  )
+)
+
+library(reticulate)
+sympy <- import('sympy')
+py_run_string('from sympy import *')
+py_run_string('init_printing(use_latex = True)')
+
+py_transformer <- function(text, envir) {
+
+  decimal <- ifelse(
+    getOption('OutDec') == ',',
+    '"comma"',
+    '"period"'
+  )
+
+  py_run_string(
+    paste0(
+      'm_latex = latex(',
+      text,
+      ', decimal_separator = ',
+      decimal,
+      ')'
+    )
+  )
+
+  py$m_latex
+
+}
+
+m <- function(template, asis = getOption('m_asis', FALSE)) {
+
+  f <- ifelse(asis, cat, knitr::asis_output)
+
+  f(
+    glue::glue(
+      template,
+      .open = '{{',
+      .close = '}}',
+      .transformer = py_transformer
+    )
+  )
+
+}
+
+```
+
+
+```{r echo=FALSE}
+set.seed(12345)
+
+matrícula <- c(
+  220060041,
+  122060031,
+  122060020,
+  122060013,
+  122060034,
+  122060021,
+  822060037,
+  122060006,
+  622060027,
+  215060056,
+  122060005,
+  122060008,
+  122060017,
+  122060012,
+  622060024,
+  122060007,
+  122060003,
+  122060004,
+  622060025,
+  122060029,
+  221060040,
+  122060033,
+  122060041,
+  122060009,
+  122060016,
+  122060038,
+  122060028,
+  122060030,
+  119060029,
+  221060047,
+  122060023,
+  122060015,
+  122060010,
+  122060014,
+  122060036,
+  622060026,
+  122060018,
+  122060011,
+  122060019,
+  122060022,
+  122060040,
+  122060035  
+)  
+
+n_alunos <- length(matrícula)
+  
+n <- sample(1:n_alunos)
+
+df <- tibble(matrícula, n) %>% 
+  arrange(n)
+
+# Valores de xc, yc, rc
+coords <- expand_grid(
+  xc = as.integer(c(-2, -1, 1, 2)),
+  yc = as.integer(c(-2, -1, 1, 2)),
+  rc = as.integer(1:4)
+) %>% 
+  slice_sample(n = n_alunos)
+
+df <- cbind(df, coords)
+```
+
+```{python echo=FALSE}
+x, y = symbols('x, y', real = True)
+xc, yc = symbols('x_C, y_C', real = True)
+rc = symbols('r_C', real = True, positive = True)
+```
+
+
+## Rosto
+
+* O [rosto]{.hl} é o [círculo de equação geral dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
+
+* Ache a [equação canônica]{.hl} deste círculo.
+
+    ```{python echo=FALSE}
+    eq_face = Eq(xc**2 - 2*xc*x + yc**2 - 2*yc*y + x**2 + y**2 - rc**2, 0)
+    
+    eqs_face = [
+      eq_face.subs({xc: xx, yc: yy, rc: rr}) 
+      for (xx, yy, rr) 
+      in zip(r.df.xc, r.df.yc, r.df.rc)
+    ]
+    
+    eqs_face_latex = [latex(e) for e in eqs_face]
+    ```
+    
+    ```{r echo=FALSE}
+    eqs_face <- paste0(
+      '1. $\\displaystyle \\quad ',
+      py$eqs_face_latex,
+      '$',
+      collapse = '\n\n'
+    )
+    ```
+    
+    ```{r echo=FALSE}
+    m(eqs_face)
+    ```
+
+
+# Completar o quadrado
+
+## Letras
+
+```{python}
+a, b, c, d, e = symbols('a b c d e')
+e = Poly(a*x**2 + c*x + b*y**2 + d*y + e, x, y)
+e.as_expr()
+```
+
+Get terms for $x$:
+
+```{python}
+a = e.coeff_monomial(x**2)
+a
+c = e.coeff_monomial(x)
+c
+```
+
+Assemble new expression:
+
+```{python}
+terms_monic = monic(a*x**2 + c*x, x)
+part = a * terms_monic
+part
+```
+
+Add and subtract constant:
+
+```{python}
+add_term = a * (terms_monic + c / (2*a)) - sympify('a * c / (2*a)', evaluate=False)
+add_term
+```
+
+Develop square and simplify fraction:
+
+```{python}
+square = a * (x + sign(c) * sympify('sqrt(c / (2*a))', evaluate=False))**2 - c/2
+square
+```
+
+
+Make function to deal only with expression $ax^2 + cx$.
+
+The function returns a list of expressions with the steps of the computation.
+
+```{python}
+def completesq(e, symb):
+  
+  x = symb
+  epoly = e.as_poly(x)
+  
+  a = epoly.coeff_monomial(x**2)
+  c = epoly.coeff_monomial(x)
+  
+  terms_monic = monic(a*x**2 + c*x, x)
+  part = a * terms_monic
+  
+  add_term = a * (terms_monic + c / (2*a)) - sympify('a * c / (2*a)', evaluate=False)
+  
+  square = a * (x + sign(c) * sympify('sqrt(c / (2*a))', evaluate=False))**2 - c/2
+  
+  return [e, part, add_term, square]
+```
+
+```{python}
+e = Poly(a*x**2 + c*x, x)
+e = e.as_expr()
+
+steps = completesq(e, x)
+
+steps_latex = [latex(s) for s in steps]
+```
+
+```{r}
+steps_latex <- paste0(
+  py$steps_latex,
+  collapse = '\\\\ \n'
+)
+
+m(
+  paste0(
+    '$$\n \\displaystyle \\begin{align} \n',
+    steps_latex,
+    '\n \\end{align} \n$$',
+    collapse = '\n'
+  )
+)
+```
+
+```{python}
+e = Poly(2*x**2 + 3*x, x)
+e = e.as_expr()
+
+steps = completesq(e, x)
+
+steps_latex = [latex(s) for s in steps]
+```
+
+```{r}
+steps_latex <- paste0(
+  py$steps_latex,
+  collapse = '\\\\ \n'
+)
+
+m(
+  paste0(
+    '$$\n \\displaystyle \\begin{align} \n',
+    steps_latex,
+    '\n \\end{align} \n$$',
+    collapse = '\n'
+  )
+)
+```
+
+## Números
+
+```{python}
+e = Poly(2*x**2 + 3*x + 1*y**2 + 1*y + 1, x, y)
+e.as_expr()
+```
+
+Get terms for $x$:
+
+```{python}
+a = e.coeff_monomial(x**2)
+a
+c = e.coeff_monomial(x)
+c
+```
+
+Assemble new expression:
+
+```{python}
+terms_monic = monic(a*x**2 + c*x, x)
+part = a * UnevaluatedExpr(terms_monic)
+part
+```
+
+Add and subtract constant:
+
+```{python}
+add_term = a * (terms_monic + UnevaluatedExpr(c / (2*a))) - a * UnevaluatedExpr(c / (2*a))
+add_term
+```
+
+Develop square and simplify fraction:
+
+```{python}
+square = a * (x + sign(c) * UnevaluatedExpr(sqrt(c / (2*a))))**2 - UnevaluatedExpr(c/2)
+square
+```
+
+
+Make function to deal only with expression $ax^2 + cx$.
+
+The function returns a list of expressions with the steps of the computation.
+
+```{python}
+def completesq(e, symb):
+  
+  x = symb
+  _epoly = e.as_poly(x)
+  
+  _a = _epoly.coeff_monomial(x**2)
+  _c = _epoly.coeff_monomial(x)
+  
+  _terms_monic = monic(_a*x**2 + _c*x, x)
+  _part = _a * UnevaluatedExpr(_terms_monic)
+  
+  _add_term = _a * (_terms_monic + UnevaluatedExpr(abs(_c) / (2*abs(_a)))) - _a * UnevaluatedExpr(abs(_c) / (2*abs(_a)))
+  
+  _square = _a * (x + sign(_c) * UnevaluatedExpr(sqrt(abs(_c) / (2*abs(_a)))))**2 - UnevaluatedExpr(abs(_c)/2)
+  
+  return [e, _part, _add_term, _square]
+```
+
+```{r}
+eg <- function(e) {
+  
+  py_run_string(
+    paste(
+      'e = sympify(',
+      e,
+      ')'
+    )
+  )
+  
+  py_run_string('steps = completesq(e, x)')
+  py_run_string('steps_latex = [latex(s) for s in steps]')
+
+  steps_latex <- paste0(
+    py$steps_latex,
+    collapse = '\\\\ \n'
+  )
+
+  m(
+    paste0(
+      '$$\n \\displaystyle \\begin{align} \n',
+      steps_latex,
+      '\n \\end{align} \n$$',
+      collapse = '\n'
+    )
+  )
+  
+}
+```
+
+
+### Exemplos com números
+
+```{r}
+eg('2*x**2 + 3*x')
+eg('2*x**2 - 3*x')
+eg('-2*x**2 + 3*x')
+eg('-2*x**2 - 3*x')
+```
+
+
+
+# Usar `m()` com listas
+
