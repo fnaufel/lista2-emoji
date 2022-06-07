@@ -188,7 +188,7 @@ rc = symbols('r_C', real = True, positive = True)
 Seu emoji vai ficar assim:
 
 ```{r echo=FALSE, out.width='50%'}
-knitr::include_graphics('emoji-sem-orelhas.png')
+knitr::include_graphics('emoji-com-orelha.png')
 ```
 
 
@@ -424,6 +424,31 @@ knitr::include_graphics('emoji-sem-orelhas.png')
 
 ## Orelhas
 
+* As [orelhas]{.hl} são os ramos de uma [hipérbole de eixo real          horizontal, de excentricidade $11/10$]{.hl}, cujos [vértices]{.hl} são os [dois pontos do círculo do rosto]{.hl} que têm a [coordenada $y$ igual ao valor abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
+
+    ```{python echo=FALSE}
+    yorelha = yc + rc / 5
+    
+    yorelhas = [
+      yorelha.subs({yc: yy, rc: rr}) for (yy, rr) in zip(r.df.yc, r.df.rc)
+    ]
+    yorelhas_latex = [latex(e) for e in yorelhas]
+    ```
+    
+    ```{r echo=FALSE}
+    orelhas <- paste0(
+      '1. $\\displaystyle \\quad y = ',
+      py$yorelhas_latex,
+      '$',
+      collapse = '\n\n'
+    )
+    ```
+    
+    ```{r echo=FALSE}
+    m(orelhas)
+    ```
+
+* Ache a [equação canônica]{.hl} desta hipérbole.
 
 
 # Números dos alunos, por matrícula { #nums }
