@@ -273,22 +273,19 @@ knitr::include_graphics('emoji-com-orelha.png')
 * Ache a [equação canônica]{.hl} e as [coordenadas dos focos]{.hl} desta elipse.
 
     ```{python echo=FALSE}
-    eq_mascara = Eq(
-      80 * (
-        (21 * x**(2)) +
-        (121 * y**(2)) +
-        - ((42 * xc) * x)
-        - (((Rational(242, 5) * rc) + (242 * yc)) * y) +
-        ((Rational(242, 5) * rc) * yc) +
-        (Rational(-121, 80) * rc**(2)) +
-        (21 * xc**(2)) +
-        (121 * yc**(2))
-      ),
-      0
+    eq_mascara = 80 * (
+      (21 * x**(2)) +
+      (121 * y**(2)) +
+      - ((42 * xc) * x)
+      - (((Rational(242, 5) * rc) + (242 * yc)) * y) +
+      ((Rational(242, 5) * rc) * yc) +
+      (Rational(-121, 80) * rc**(2)) +
+      (21 * xc**(2)) +
+      (121 * yc**(2))
     )
     
     eqs_mascara = [
-      eq_mascara.subs({xc: xx, yc: yy, rc: rr}) 
+      monic(eq_mascara.subs({xc: xx, yc: yy, rc: rr}))
       for (xx, yy, rr) 
       in zip(r.df.xc, r.df.yc, r.df.rc)
     ]
@@ -300,7 +297,7 @@ knitr::include_graphics('emoji-com-orelha.png')
     eqs_mascara <- paste0(
       '1. $\\displaystyle \\quad ',
       py$eqs_mascara_latex,
-      '$',
+      ' = 0$',
       collapse = '\n\n'
     )
     ```
@@ -394,13 +391,10 @@ knitr::include_graphics('emoji-com-orelha.png')
 * No Geogebra, aprenda como [traçar estas duas parábolas]{.hl} apenas na região entre os dois pontos de interseção, para que o traçado da boca não ultrapasse os cantos.
 
     ```{python echo=FALSE}
-    eq_bocainf = Eq(
-      -18*rc*y - 15*rc**2 + 26*xc**2 + 26*x**2 + 18*rc*yc - 52*xc*x,
-      0
-    )
+    eq_bocainf = -18*rc*y - 15*rc**2 + 26*xc**2 + 26*x**2 + 18*rc*yc - 52*xc*x
     
     eqs_bocainf = [
-      eq_bocainf.subs({xc: xx, yc: yy, rc: rr}) 
+      monic(eq_bocainf.subs({xc: xx, yc: yy, rc: rr}))
       for (xx, yy, rr) 
       in zip(r.df.xc, r.df.yc, r.df.rc)
     ]
@@ -412,7 +406,7 @@ knitr::include_graphics('emoji-com-orelha.png')
     eqs_bocainf <- paste0(
       '1. $\\displaystyle \\quad ',
       py$eqs_bocainf_latex,
-      '$',
+      ' = 0$',
       collapse = '\n\n'
     )
     ```
