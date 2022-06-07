@@ -2129,248 +2129,37 @@ pre code {
 
 <div id="TOC">
 <ul>
-<li><a href="#rosto" id="toc-rosto"><span class="toc-section-number">0.1</span> Rosto<span></span></a></li>
-<li>
-<a href="#completar-o-quadrado" id="toc-completar-o-quadrado"><span class="toc-section-number">1</span> Completar o quadrado<span></span></a>
-<ul>
-<li><a href="#letras" id="toc-letras"><span class="toc-section-number">1.1</span> Letras<span></span></a></li>
-<li>
-<a href="#n%C3%BAmeros" id="toc-números"><span class="toc-section-number">1.2</span> Números<span></span></a>
-<ul>
-<li><a href="#exemplos-com-n%C3%BAmeros" id="toc-exemplos-com-números"><span class="toc-section-number">1.2.1</span> Exemplos com números<span></span></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#usar-m-com-listas" id="toc-usar-m-com-listas"><span class="toc-section-number">2</span> Usar <code>m()</code> com listas<span></span></a></li>
+<li><a href="#completar-o-quadrado" id="toc-completar-o-quadrado"><span class="toc-section-number">1</span> Completar o quadrado<span></span></a></li>
+<li><a href="#exemplos-com-n%C3%BAmeros" id="toc-exemplos-com-números"><span class="toc-section-number">2</span> Exemplos com números<span></span></a></li>
+<li><a href="#exemplo-com-letras" id="toc-exemplo-com-letras"><span class="toc-section-number">3</span> Exemplo com letras<span></span></a></li>
+<li><a href="#usar-m-com-listas" id="toc-usar-m-com-listas"><span class="toc-section-number">4</span> Usar <code>m()</code> com listas<span></span></a></li>
 </ul>
 </div>
 
-<div id="rosto" class="section level2 hasAnchor" number="0.1">
-<h2 class="hasAnchor">
-<span class="header-section-number">0.1</span> Rosto<a href="#rosto" class="anchor-section" aria-label="Anchor link to header"></a>
-</h2>
-<ul>
-<li><p>O <span class="hl">rosto</span> é o <span class="hl">círculo de equação geral dada abaixo</span> (<a href="#nums">veja o seu número <span class="math inline">\(n\)</span> nesta lista</a>).</p></li>
-<li>
-<p>Ache a <span class="hl">equação canônica</span> deste círculo.</p>
-<ol style="list-style-type: decimal">
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 2 x + y^{2} + 4 y - 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 2 x + y^{2} + 4 y + 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} - 4 y - 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} + 2 y + 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} - 2 y + 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} - 2 y - 2 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 4 x + y^{2} + 4 y - 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} - 4 y - 8 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 4 x + y^{2} - 4 y + 7 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 2 x + y^{2} - 4 y - 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} - 2 y - 11 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} + 4 y + 7 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 4 x + y^{2} - 2 y + 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} - 2 y - 7 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 2 x + y^{2} - 2 y - 7 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} + 4 y + 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} - 2 y - 14 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} + 4 y - 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} - 4 y + 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 2 x + y^{2} + 2 y - 2 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} - 2 y - 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 2 x + y^{2} + 2 y - 7 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} + 2 y - 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 2 x + y^{2} - 2 y - 2 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 4 x + y^{2} + 2 y - 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 4 x + y^{2} - 4 y - 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} - 4 y + 7 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} + 4 y - 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 4 x + y^{2} - 2 y - 11 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} - 2 y + 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 2 x + y^{2} + 2 y - 14 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 4 x + y^{2} + 2 y + 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 4 x + y^{2} - 2 y - 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 4 x + y^{2} + 4 y - 8 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 2 x + y^{2} - 2 y + 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} + 2 x + y^{2} - 4 y - 11 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} - 4 y + 4 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} + 2 y + 1 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 4 x + y^{2} + 4 y - 8 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} + 2 y - 7 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} + 2 y - 14 = 0\)</span></p></li>
-<li><p><span class="math inline">\(\displaystyle \quad x^{2} - 2 x + y^{2} - 4 y - 4 = 0\)</span></p></li>
-</ol>
-</li>
-</ul>
-</div>
 <div id="completar-o-quadrado" class="section level1 hasAnchor" number="1">
 <h1 class="hasAnchor">
 <span class="header-section-number">1</span> Completar o quadrado<a href="#completar-o-quadrado" class="anchor-section" aria-label="Anchor link to header"></a>
 </h1>
-<div id="letras" class="section level2 hasAnchor" number="1.1">
-<h2 class="hasAnchor">
-<span class="header-section-number">1.1</span> Letras<a href="#letras" class="anchor-section" aria-label="Anchor link to header"></a>
-</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>a, b, c, d, e <span class="op">=</span> symbols(<span class="st">'a b c d e'</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> Poly(a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> c<span class="op">*</span>x <span class="op">+</span> b<span class="op">*</span>y<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> d<span class="op">*</span>y <span class="op">+</span> e, x, y)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>e.as_expr()</span></code></pre></div>
-<pre><code>##    2      2                
-## a⋅x  + b⋅y  + c⋅x + d⋅y + e</code></pre>
-<p>Get terms for <span class="math inline">\(x\)</span>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> e.coeff_monomial(x<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
-<pre><code>## a</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> e.coeff_monomial(x)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>c</span></code></pre></div>
-<pre><code>## c</code></pre>
-<p>Assemble new expression:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>terms_monic <span class="op">=</span> monic(a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> c<span class="op">*</span>x, x)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>part <span class="op">=</span> a <span class="op">*</span> terms_monic</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>part</span></code></pre></div>
-<pre><code>##   ⎛ 2   c⋅x⎞
-## a⋅⎜x  + ───⎟
-##   ⎝      a ⎠</code></pre>
-<p>Add and subtract constant:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>add_term <span class="op">=</span> a <span class="op">*</span> (terms_monic <span class="op">+</span> c <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>a)) <span class="op">-</span> sympify(<span class="st">'a * c / (2*a)'</span>, evaluate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>add_term</span></code></pre></div>
-<pre><code>##   ⎛ 2   c⋅x    c ⎞   a⋅c
-## a⋅⎜x  + ─── + ───⎟ - ───
-##   ⎝      a    2⋅a⎠   2⋅a</code></pre>
-<p>Develop square and simplify fraction:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>square <span class="op">=</span> a <span class="op">*</span> (x <span class="op">+</span> sign(c) <span class="op">*</span> sympify(<span class="st">'sqrt(c / (2*a))'</span>, evaluate<span class="op">=</span><span class="va">False</span>))<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> c<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>square</span></code></pre></div>
-<pre><code>##                            2    
-##   ⎛        _______        ⎞     
-##   ⎜       ╱  1            ⎟    c
-## a⋅⎜x +   ╱  ───⋅c ⋅sign(c)⎟  - ─
-##   ⎝    ╲╱   2⋅a           ⎠    2</code></pre>
 <p>Make function to deal only with expression <span class="math inline">\(ax^2 + cx\)</span>.</p>
 <p>The function returns a list of expressions with the steps of the computation.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> completesq(e, symb):</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> symb</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  epoly <span class="op">=</span> e.as_poly(x)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> epoly.coeff_monomial(x<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  c <span class="op">=</span> epoly.coeff_monomial(x)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  terms_monic <span class="op">=</span> monic(a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> c<span class="op">*</span>x, x)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  part <span class="op">=</span> a <span class="op">*</span> terms_monic</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  add_term <span class="op">=</span> a <span class="op">*</span> (terms_monic <span class="op">+</span> c <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>a)) <span class="op">-</span> sympify(<span class="st">'a * c / (2*a)'</span>, evaluate<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  square <span class="op">=</span> a <span class="op">*</span> (x <span class="op">+</span> sign(c) <span class="op">*</span> sympify(<span class="st">'sqrt(c / (2*a))'</span>, evaluate<span class="op">=</span><span class="va">False</span>))<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> c<span class="op">/</span><span class="dv">2</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [e, part, add_term, square]</span></code></pre></div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> Poly(a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> c<span class="op">*</span>x, x)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> e.as_expr()</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>steps <span class="op">=</span> completesq(e, x)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>steps_latex <span class="op">=</span> [latex(s) <span class="cf">for</span> s <span class="kw">in</span> steps]</span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">steps_latex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
-  <span class="va">py</span><span class="op">$</span><span class="va">steps_latex</span>,
-  collapse <span class="op">=</span> <span class="st">'\\\\ \n'</span>
-<span class="op">)</span>
-
-<span class="fu">m</span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
-    <span class="st">'$$\n \\displaystyle \\begin{align} \n'</span>,
-    <span class="va">steps_latex</span>,
-    <span class="st">'\n \\end{align} \n$$'</span>,
-    collapse <span class="op">=</span> <span class="st">'\n'</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-a x^{2} + c x\\
-a \left(x^{2} + \frac{c x}{a}\right)\\
-a \left(x^{2} + \frac{c x}{a} + \frac{c}{2 a}\right) - \frac{a c}{2 a}\\
-a \left(x + \sqrt{\frac{1}{2 a} c} \operatorname{sign}{\left(c \right)}\right)^{2} - \frac{c}{2}
-\end{align}
-\]</span></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> Poly(<span class="dv">2</span><span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>x, x)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> e.as_expr()</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>steps <span class="op">=</span> completesq(e, x)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>steps_latex <span class="op">=</span> [latex(s) <span class="cf">for</span> s <span class="kw">in</span> steps]</span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">steps_latex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
-  <span class="va">py</span><span class="op">$</span><span class="va">steps_latex</span>,
-  collapse <span class="op">=</span> <span class="st">'\\\\ \n'</span>
-<span class="op">)</span>
-
-<span class="fu">m</span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
-    <span class="st">'$$\n \\displaystyle \\begin{align} \n'</span>,
-    <span class="va">steps_latex</span>,
-    <span class="st">'\n \\end{align} \n$$'</span>,
-    collapse <span class="op">=</span> <span class="st">'\n'</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-2 x^{2} + 3 x\\
-2 x^{2} + 3 x\\
-- \frac{a c}{2 a} + 2 x^{2} + 3 x + \frac{3}{2}\\
-2 \left(x + \sqrt{\frac{c}{2 a}}\right)^{2} - \frac{3}{2}
-\end{align}
-\]</span></p>
-</div>
-<div id="números" class="section level2 hasAnchor" number="1.2">
-<h2 class="hasAnchor">
-<span class="header-section-number">1.2</span> Números<a href="#n%C3%BAmeros" class="anchor-section" aria-label="Anchor link to header"></a>
-</h2>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> Poly(<span class="dv">2</span><span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">3</span><span class="op">*</span>x <span class="op">+</span> <span class="dv">1</span><span class="op">*</span>y<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span><span class="op">*</span>y <span class="op">+</span> <span class="dv">1</span>, x, y)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>e.as_expr()</span></code></pre></div>
-<pre><code>##    2          2        
-## 2⋅x  + 3⋅x + y  + y + 1</code></pre>
-<p>Get terms for <span class="math inline">\(x\)</span>:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> e.coeff_monomial(x<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>a</span></code></pre></div>
-<pre><code>## 2</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> e.coeff_monomial(x)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>c</span></code></pre></div>
-<pre><code>## 3</code></pre>
-<p>Assemble new expression:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>terms_monic <span class="op">=</span> monic(a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> c<span class="op">*</span>x, x)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>part <span class="op">=</span> a <span class="op">*</span> UnevaluatedExpr(terms_monic)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>part</span></code></pre></div>
-<pre><code>##   ⎛ 2   3⋅x⎞
-## 2⋅⎜x  + ───⎟
-##   ⎝      2 ⎠</code></pre>
-<p>Add and subtract constant:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>add_term <span class="op">=</span> a <span class="op">*</span> (terms_monic <span class="op">+</span> UnevaluatedExpr(c <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>a))) <span class="op">-</span> a <span class="op">*</span> UnevaluatedExpr(c <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>a))</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>add_term</span></code></pre></div>
-<pre><code>##   ⎛ 2   3⋅x      ⎞        
-## 2⋅⎜x  + ─── + 3/4⎟ - 2⋅3/4
-##   ⎝      2       ⎠</code></pre>
-<p>Develop square and simplify fraction:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>square <span class="op">=</span> a <span class="op">*</span> (x <span class="op">+</span> sign(c) <span class="op">*</span> UnevaluatedExpr(sqrt(c <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span>a))))<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> UnevaluatedExpr(c<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>square</span></code></pre></div>
-<pre><code>##           2      
-##   ⎛    √3⎞       
-## 2⋅⎜x + ──⎟  - 3/2
-##   ⎝    2 ⎠</code></pre>
-<p>Make function to deal only with expression <span class="math inline">\(ax^2 + cx\)</span>.</p>
-<p>The function returns a list of expressions with the steps of the computation.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> completesq(e, symb):</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> symb</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  _epoly <span class="op">=</span> e.as_poly(x)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  _a <span class="op">=</span> _epoly.coeff_monomial(x<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  _c <span class="op">=</span> _epoly.coeff_monomial(x)</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  _terms_monic <span class="op">=</span> monic(_a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> _c<span class="op">*</span>x, x)</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  _part <span class="op">=</span> _a <span class="op">*</span> UnevaluatedExpr(_terms_monic)</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  _add_term <span class="op">=</span> _a <span class="op">*</span> (_terms_monic <span class="op">+</span> UnevaluatedExpr(<span class="bu">abs</span>(_c) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span><span class="bu">abs</span>(_a)))) <span class="op">-</span> _a <span class="op">*</span> UnevaluatedExpr(<span class="bu">abs</span>(_c) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span><span class="bu">abs</span>(_a)))</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  _square <span class="op">=</span> _a <span class="op">*</span> (x <span class="op">+</span> sign(_c) <span class="op">*</span> UnevaluatedExpr(sqrt(<span class="bu">abs</span>(_c) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span><span class="bu">abs</span>(_a)))))<span class="op">**</span><span class="dv">2</span> <span class="op">-</span> UnevaluatedExpr(<span class="bu">abs</span>(_c)<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [e, _part, _add_term, _square]</span></code></pre></div>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> completesq(e, symb):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> symb</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  _epoly <span class="op">=</span> e.as_poly(x)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  _a <span class="op">=</span> _epoly.coeff_monomial(x<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  _c <span class="op">=</span> _epoly.coeff_monomial(x)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  _terms_monic <span class="op">=</span> monic(_a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> _c<span class="op">*</span>x, x)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  _part <span class="op">=</span> _a <span class="op">*</span> UnevaluatedExpr(_terms_monic)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  _add_term <span class="op">=</span> _a <span class="op">*</span> (_terms_monic <span class="op">+</span> UnevaluatedExpr(_c<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span><span class="op">*</span>_a<span class="op">**</span><span class="dv">2</span>))) <span class="op">-</span> _a <span class="op">*</span> UnevaluatedExpr(_c<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span><span class="op">*</span>_a<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  _square <span class="op">=</span> _a <span class="op">*</span> (x <span class="op">+</span> sign(_c<span class="op">/</span>_a) <span class="op">*</span> UnevaluatedExpr(<span class="bu">abs</span>(_c) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span><span class="bu">abs</span>(_a))))<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="op">-</span>sign(_a) <span class="op">*</span> UnevaluatedExpr(_c<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="bu">abs</span>(<span class="dv">4</span><span class="op">*</span>_a))</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [_part, _add_term, _square]</span></code></pre></div>
+<p>Process an example (find better way to do this later):</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">eg</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span>
   
   <span class="fu">py_run_string</span><span class="op">(</span>
@@ -2392,6 +2181,8 @@ a \left(x + \sqrt{\frac{1}{2 a} c} \operatorname{sign}{\left(c \right)}\right)^{
   <span class="fu">m</span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
       <span class="st">'$$\n \\displaystyle \\begin{align} \n'</span>,
+      <span class="va">py</span><span class="op">$</span><span class="fu">latex</span><span class="op">(</span><span class="va">py</span><span class="op">$</span><span class="va">e</span><span class="op">)</span>,
+      <span class="st">'\\\\ \n'</span>,
       <span class="va">steps_latex</span>,
       <span class="st">'\n \\end{align} \n$$'</span>,
       collapse <span class="op">=</span> <span class="st">'\n'</span>
@@ -2399,60 +2190,75 @@ a \left(x + \sqrt{\frac{1}{2 a} c} \operatorname{sign}{\left(c \right)}\right)^{
   <span class="op">)</span>
   
 <span class="op">}</span></code></pre></div>
-<div id="exemplos-com-números" class="section level3 hasAnchor" number="1.2.1">
-<h3 class="hasAnchor">
-<span class="header-section-number">1.2.1</span> Exemplos com números<a href="#exemplos-com-n%C3%BAmeros" class="anchor-section" aria-label="Anchor link to header"></a>
-</h3>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+</div>
+<div id="exemplos-com-números" class="section level1 hasAnchor" number="2">
+<h1 class="hasAnchor">
+<span class="header-section-number">2</span> Exemplos com números<a href="#exemplos-com-n%C3%BAmeros" class="anchor-section" aria-label="Anchor link to header"></a>
+</h1>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'2*x**2 + 3*x'</span><span class="op">)</span></code></pre></div>
 <p><span class="math display">\[
 \displaystyle \begin{align}
 2 x^{2} + 3 x\\
 2 \left(x^{2} + \frac{3 x}{2}\right)\\
-2 \left(x^{2} + \frac{3 x}{2} + \frac{3}{4}\right) - 2 \cdot \frac{3}{4}\\
-2 \left(x + \frac{\sqrt{3}}{2}\right)^{2} - \frac{3}{2}
+2 \left(x^{2} + \frac{3 x}{2} + \frac{9}{16}\right) - 2 \cdot \frac{9}{16}\\
+2 \left(x + \frac{3}{4}\right)^{2} - \frac{9}{8}
 \end{align}
 \]</span></p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'2*x**2 - 3*x'</span><span class="op">)</span></code></pre></div>
 <p><span class="math display">\[
 \displaystyle \begin{align}
 2 x^{2} - 3 x\\
 2 \left(x^{2} - \frac{3 x}{2}\right)\\
-2 \left(x^{2} - \frac{3 x}{2} + \frac{3}{4}\right) - 2 \cdot \frac{3}{4}\\
-2 \left(x - \frac{\sqrt{3}}{2}\right)^{2} - \frac{3}{2}
+2 \left(x^{2} - \frac{3 x}{2} + \frac{9}{16}\right) - 2 \cdot \frac{9}{16}\\
+2 \left(x - \frac{3}{4}\right)^{2} - \frac{9}{8}
 \end{align}
 \]</span></p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'-2*x**2 + 3*x'</span><span class="op">)</span></code></pre></div>
 <p><span class="math display">\[
 \displaystyle \begin{align}
 - 2 x^{2} + 3 x\\
 - 2 \left(x^{2} - \frac{3 x}{2}\right)\\
-- 2 \left(x^{2} - \frac{3 x}{2} + \frac{3}{4}\right) + 2 \cdot \frac{3}{4}\\
-- 2 \left(x + \frac{\sqrt{3}}{2}\right)^{2} - \frac{3}{2}
+- 2 \left(x^{2} - \frac{3 x}{2} + \frac{9}{16}\right) + 2 \cdot \frac{9}{16}\\
+- 2 \left(x - \frac{3}{4}\right)^{2} + \frac{9}{8}
 \end{align}
 \]</span></p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'-2*x**2 - 3*x'</span><span class="op">)</span></code></pre></div>
 <p><span class="math display">\[
 \displaystyle \begin{align}
 - 2 x^{2} - 3 x\\
 - 2 \left(x^{2} + \frac{3 x}{2}\right)\\
-- 2 \left(x^{2} + \frac{3 x}{2} + \frac{3}{4}\right) + 2 \cdot \frac{3}{4}\\
-- 2 \left(x - \frac{\sqrt{3}}{2}\right)^{2} - \frac{3}{2}
+- 2 \left(x^{2} + \frac{3 x}{2} + \frac{9}{16}\right) + 2 \cdot \frac{9}{16}\\
+- 2 \left(x + \frac{3}{4}\right)^{2} + \frac{9}{8}
 \end{align}
 \]</span></p>
 </div>
-</div>
-</div>
-<div id="usar-m-com-listas" class="section level1 hasAnchor" number="2">
+<div id="exemplo-com-letras" class="section level1 hasAnchor" number="3">
 <h1 class="hasAnchor">
-<span class="header-section-number">2</span> Usar <code>m()</code> com listas<a href="#usar-m-com-listas" class="anchor-section" aria-label="Anchor link to header"></a>
+<span class="header-section-number">3</span> Exemplo com letras<a href="#exemplo-com-letras" class="anchor-section" aria-label="Anchor link to header"></a>
+</h1>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">py_run_string</span><span class="op">(</span><span class="st">'a, c = symbols("a c")'</span><span class="op">)</span>
+<span class="fu">eg</span><span class="op">(</span><span class="st">'a*x**2 + c*x'</span><span class="op">)</span></code></pre></div>
+<p><span class="math display">\[
+\displaystyle \begin{align}
+a x^{2} + c x\\
+a \left(x^{2} + \frac{c x}{a}\right)\\
+a \left(x^{2} + \frac{c^{2}}{4 a^{2}} + \frac{c x}{a}\right) - a \frac{c^{2}}{4 a^{2}}\\
+a \left(x + \operatorname{sign}{\left(\frac{c}{a} \right)} \frac{\left|{c}\right|}{2 \left|{a}\right|}\right)^{2} - \operatorname{sign}{\left(a \right)} \frac{c^{2}}{4 \left|{a}\right|}
+\end{align}
+\]</span></p>
+</div>
+<div id="usar-m-com-listas" class="section level1 hasAnchor" number="4">
+<h1 class="hasAnchor">
+<span class="header-section-number">4</span> Usar <code>m()</code> com listas<a href="#usar-m-com-listas" class="anchor-section" aria-label="Anchor link to header"></a>
 </h1>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAnQ29tcGxldGFyIHF1YWRyYWRvcycKYXV0aG9yOiAnZm5hdWZlbCcKZW1haWw6ICdodHRwczovL2ZuYXVmZWwuZ2l0aHViLmlvLycKZGF0ZTogJyAgICh2LiBgciBmb3JtYXQoU3lzLkRhdGUoKSwgIiVkLyVtLyVZIilgKScKbGFuZzogJ3B0LWJyJwoKb3V0cHV0OgogICMgVG8gaW5zdGFsbCB0aGVzZSBvdXRwdXQgZm9ybWF0cywgcnVuCiAgIyAgIGluc3RhbGwucGFja2FnZXMoImRldnRvb2xzIikKICAjICAgZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKCJmbmF1ZmVsL2ZuYXVmZWxSbWQiKQogIGZuYXVmZWxSbWQ6Omh0bWxfcmVwb3J0OgogICAgW10KLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0KIyBUaGUgbmV4dCBjb21tYW5kIGNvbmZpZ3VyZXMgTUFOWSB0aGluZ3MgYW5kIGxvYWRzIHF1aXRlIGEgZmV3IHBhY2thZ2VzLgojCiMgSWYgeW91IHdhbnQgdG8gc2VlIHdoYXQncyBiZWluZyBkb25lLCBleGVjdXRlCiMKIyAgIGNhdCgKIyAgICAgc3lzdGVtLmZpbGUoCiMgICAgICAgInJtYXJrZG93bi9yZXNvdXJjZXMvUi9fY29tbW9uX3JlcG9ydC5SIiwKIyAgICAgICBwYWNrYWdlID0gImZuYXVmZWxSbWQiCiMgICAgICkKIyAgICkKIwojIHRvIGZpbmQgb3V0IHRoZSBsb2NhdGlvbiBvZiB0aGUgZmlsZS4gVGhlbiBvcGVuIHRoZSBmaWxlLgojCiMgSWYgeW91IHdhbnQgdG8gY2hhbmdlIHRoZSBjb25maWd1cmF0aW9uLCBjb3B5IHRoZSBmaWxlLCBlZGl0IGl0LCBhbmQKIyBzb3VyY2UgaXQgaW5zdGVhZCBvZiB0aGUgcGFja2FnZSBmaWxlLgojCiMgT3Igc2ltcGx5IHdyaXRlIHlvdXIgY29tbWFuZHMgaGVyZSBpbiB0aGlzIGNvZGUgY2h1bmsuCgpzb3VyY2UoCiAgc3lzdGVtLmZpbGUoCiAgICAicm1hcmtkb3duL3Jlc291cmNlcy9SL19jb21tb25fcmVwb3J0LlIiLAogICAgcGFja2FnZSA9ICJmbmF1ZmVsUm1kIgogICkKKQoKbGlicmFyeShyZXRpY3VsYXRlKQpzeW1weSA8LSBpbXBvcnQoJ3N5bXB5JykKcHlfcnVuX3N0cmluZygnZnJvbSBzeW1weSBpbXBvcnQgKicpCnB5X3J1bl9zdHJpbmcoJ2luaXRfcHJpbnRpbmcodXNlX2xhdGV4ID0gVHJ1ZSknKQoKcHlfdHJhbnNmb3JtZXIgPC0gZnVuY3Rpb24odGV4dCwgZW52aXIpIHsKCiAgZGVjaW1hbCA8LSBpZmVsc2UoCiAgICBnZXRPcHRpb24oJ091dERlYycpID09ICcsJywKICAgICciY29tbWEiJywKICAgICcicGVyaW9kIicKICApCgogIHB5X3J1bl9zdHJpbmcoCiAgICBwYXN0ZTAoCiAgICAgICdtX2xhdGV4ID0gbGF0ZXgoJywKICAgICAgdGV4dCwKICAgICAgJywgZGVjaW1hbF9zZXBhcmF0b3IgPSAnLAogICAgICBkZWNpbWFsLAogICAgICAnKScKICAgICkKICApCgogIHB5JG1fbGF0ZXgKCn0KCm0gPC0gZnVuY3Rpb24odGVtcGxhdGUsIGFzaXMgPSBnZXRPcHRpb24oJ21fYXNpcycsIEZBTFNFKSkgewoKICBmIDwtIGlmZWxzZShhc2lzLCBjYXQsIGtuaXRyOjphc2lzX291dHB1dCkKCiAgZigKICAgIGdsdWU6OmdsdWUoCiAgICAgIHRlbXBsYXRlLAogICAgICAub3BlbiA9ICd7eycsCiAgICAgIC5jbG9zZSA9ICd9fScsCiAgICAgIC50cmFuc2Zvcm1lciA9IHB5X3RyYW5zZm9ybWVyCiAgICApCiAgKQoKfQoKYGBgCgoKYGBge3IgZWNobz1GQUxTRX0Kc2V0LnNlZWQoMTIzNDUpCgptYXRyw61jdWxhIDwtIGMoCiAgMjIwMDYwMDQxLAogIDEyMjA2MDAzMSwKICAxMjIwNjAwMjAsCiAgMTIyMDYwMDEzLAogIDEyMjA2MDAzNCwKICAxMjIwNjAwMjEsCiAgODIyMDYwMDM3LAogIDEyMjA2MDAwNiwKICA2MjIwNjAwMjcsCiAgMjE1MDYwMDU2LAogIDEyMjA2MDAwNSwKICAxMjIwNjAwMDgsCiAgMTIyMDYwMDE3LAogIDEyMjA2MDAxMiwKICA2MjIwNjAwMjQsCiAgMTIyMDYwMDA3LAogIDEyMjA2MDAwMywKICAxMjIwNjAwMDQsCiAgNjIyMDYwMDI1LAogIDEyMjA2MDAyOSwKICAyMjEwNjAwNDAsCiAgMTIyMDYwMDMzLAogIDEyMjA2MDA0MSwKICAxMjIwNjAwMDksCiAgMTIyMDYwMDE2LAogIDEyMjA2MDAzOCwKICAxMjIwNjAwMjgsCiAgMTIyMDYwMDMwLAogIDExOTA2MDAyOSwKICAyMjEwNjAwNDcsCiAgMTIyMDYwMDIzLAogIDEyMjA2MDAxNSwKICAxMjIwNjAwMTAsCiAgMTIyMDYwMDE0LAogIDEyMjA2MDAzNiwKICA2MjIwNjAwMjYsCiAgMTIyMDYwMDE4LAogIDEyMjA2MDAxMSwKICAxMjIwNjAwMTksCiAgMTIyMDYwMDIyLAogIDEyMjA2MDA0MCwKICAxMjIwNjAwMzUgIAopICAKCm5fYWx1bm9zIDwtIGxlbmd0aChtYXRyw61jdWxhKQogIApuIDwtIHNhbXBsZSgxOm5fYWx1bm9zKQoKZGYgPC0gdGliYmxlKG1hdHLDrWN1bGEsIG4pICU+JSAKICBhcnJhbmdlKG4pCgojIFZhbG9yZXMgZGUgeGMsIHljLCByYwpjb29yZHMgPC0gZXhwYW5kX2dyaWQoCiAgeGMgPSBhcy5pbnRlZ2VyKGMoLTIsIC0xLCAxLCAyKSksCiAgeWMgPSBhcy5pbnRlZ2VyKGMoLTIsIC0xLCAxLCAyKSksCiAgcmMgPSBhcy5pbnRlZ2VyKDE6NCkKKSAlPiUgCiAgc2xpY2Vfc2FtcGxlKG4gPSBuX2FsdW5vcykKCmRmIDwtIGNiaW5kKGRmLCBjb29yZHMpCmBgYAoKYGBge3B5dGhvbiBlY2hvPUZBTFNFfQp4LCB5ID0gc3ltYm9scygneCwgeScsIHJlYWwgPSBUcnVlKQp4YywgeWMgPSBzeW1ib2xzKCd4X0MsIHlfQycsIHJlYWwgPSBUcnVlKQpyYyA9IHN5bWJvbHMoJ3JfQycsIHJlYWwgPSBUcnVlLCBwb3NpdGl2ZSA9IFRydWUpCmBgYAoKCiMjIFJvc3RvCgoqIE8gW3Jvc3RvXXsuaGx9IMOpIG8gW2PDrXJjdWxvIGRlIGVxdWHDp8OjbyBnZXJhbCBkYWRhIGFiYWl4b117LmhsfSAoW3ZlamEgbyBzZXUgbsO6bWVybyAkbiQgbmVzdGEgbGlzdGFdKCNudW1zKSkuCgoqIEFjaGUgYSBbZXF1YcOnw6NvIGNhbsO0bmljYV17LmhsfSBkZXN0ZSBjw61yY3Vsby4KCiAgICBgYGB7cHl0aG9uIGVjaG89RkFMU0V9CiAgICBlcV9mYWNlID0gRXEoeGMqKjIgLSAyKnhjKnggKyB5YyoqMiAtIDIqeWMqeSArIHgqKjIgKyB5KioyIC0gcmMqKjIsIDApCiAgICAKICAgIGVxc19mYWNlID0gWwogICAgICBlcV9mYWNlLnN1YnMoe3hjOiB4eCwgeWM6IHl5LCByYzogcnJ9KSAKICAgICAgZm9yICh4eCwgeXksIHJyKSAKICAgICAgaW4gemlwKHIuZGYueGMsIHIuZGYueWMsIHIuZGYucmMpCiAgICBdCiAgICAKICAgIGVxc19mYWNlX2xhdGV4ID0gW2xhdGV4KGUpIGZvciBlIGluIGVxc19mYWNlXQogICAgYGBgCiAgICAKICAgIGBgYHtyIGVjaG89RkFMU0V9CiAgICBlcXNfZmFjZSA8LSBwYXN0ZTAoCiAgICAgICcxLiAkXFxkaXNwbGF5c3R5bGUgXFxxdWFkICcsCiAgICAgIHB5JGVxc19mYWNlX2xhdGV4LAogICAgICAnJCcsCiAgICAgIGNvbGxhcHNlID0gJ1xuXG4nCiAgICApCiAgICBgYGAKICAgIAogICAgYGBge3IgZWNobz1GQUxTRX0KICAgIG0oZXFzX2ZhY2UpCiAgICBgYGAKCgojIENvbXBsZXRhciBvIHF1YWRyYWRvCgojIyBMZXRyYXMKCmBgYHtweXRob259CmEsIGIsIGMsIGQsIGUgPSBzeW1ib2xzKCdhIGIgYyBkIGUnKQplID0gUG9seShhKngqKjIgKyBjKnggKyBiKnkqKjIgKyBkKnkgKyBlLCB4LCB5KQplLmFzX2V4cHIoKQpgYGAKCkdldCB0ZXJtcyBmb3IgJHgkOgoKYGBge3B5dGhvbn0KYSA9IGUuY29lZmZfbW9ub21pYWwoeCoqMikKYQpjID0gZS5jb2VmZl9tb25vbWlhbCh4KQpjCmBgYAoKQXNzZW1ibGUgbmV3IGV4cHJlc3Npb246CgpgYGB7cHl0aG9ufQp0ZXJtc19tb25pYyA9IG1vbmljKGEqeCoqMiArIGMqeCwgeCkKcGFydCA9IGEgKiB0ZXJtc19tb25pYwpwYXJ0CmBgYAoKQWRkIGFuZCBzdWJ0cmFjdCBjb25zdGFudDoKCmBgYHtweXRob259CmFkZF90ZXJtID0gYSAqICh0ZXJtc19tb25pYyArIGMgLyAoMiphKSkgLSBzeW1waWZ5KCdhICogYyAvICgyKmEpJywgZXZhbHVhdGU9RmFsc2UpCmFkZF90ZXJtCmBgYAoKRGV2ZWxvcCBzcXVhcmUgYW5kIHNpbXBsaWZ5IGZyYWN0aW9uOgoKYGBge3B5dGhvbn0Kc3F1YXJlID0gYSAqICh4ICsgc2lnbihjKSAqIHN5bXBpZnkoJ3NxcnQoYyAvICgyKmEpKScsIGV2YWx1YXRlPUZhbHNlKSkqKjIgLSBjLzIKc3F1YXJlCmBgYAoKCk1ha2UgZnVuY3Rpb24gdG8gZGVhbCBvbmx5IHdpdGggZXhwcmVzc2lvbiAkYXheMiArIGN4JC4KClRoZSBmdW5jdGlvbiByZXR1cm5zIGEgbGlzdCBvZiBleHByZXNzaW9ucyB3aXRoIHRoZSBzdGVwcyBvZiB0aGUgY29tcHV0YXRpb24uCgpgYGB7cHl0aG9ufQpkZWYgY29tcGxldGVzcShlLCBzeW1iKToKICAKICB4ID0gc3ltYgogIGVwb2x5ID0gZS5hc19wb2x5KHgpCiAgCiAgYSA9IGVwb2x5LmNvZWZmX21vbm9taWFsKHgqKjIpCiAgYyA9IGVwb2x5LmNvZWZmX21vbm9taWFsKHgpCiAgCiAgdGVybXNfbW9uaWMgPSBtb25pYyhhKngqKjIgKyBjKngsIHgpCiAgcGFydCA9IGEgKiB0ZXJtc19tb25pYwogIAogIGFkZF90ZXJtID0gYSAqICh0ZXJtc19tb25pYyArIGMgLyAoMiphKSkgLSBzeW1waWZ5KCdhICogYyAvICgyKmEpJywgZXZhbHVhdGU9RmFsc2UpCiAgCiAgc3F1YXJlID0gYSAqICh4ICsgc2lnbihjKSAqIHN5bXBpZnkoJ3NxcnQoYyAvICgyKmEpKScsIGV2YWx1YXRlPUZhbHNlKSkqKjIgLSBjLzIKICAKICByZXR1cm4gW2UsIHBhcnQsIGFkZF90ZXJtLCBzcXVhcmVdCmBgYAoKYGBge3B5dGhvbn0KZSA9IFBvbHkoYSp4KioyICsgYyp4LCB4KQplID0gZS5hc19leHByKCkKCnN0ZXBzID0gY29tcGxldGVzcShlLCB4KQoKc3RlcHNfbGF0ZXggPSBbbGF0ZXgocykgZm9yIHMgaW4gc3RlcHNdCmBgYAoKYGBge3J9CnN0ZXBzX2xhdGV4IDwtIHBhc3RlMCgKICBweSRzdGVwc19sYXRleCwKICBjb2xsYXBzZSA9ICdcXFxcIFxuJwopCgptKAogIHBhc3RlMCgKICAgICckJFxuIFxcZGlzcGxheXN0eWxlIFxcYmVnaW57YWxpZ259IFxuJywKICAgIHN0ZXBzX2xhdGV4LAogICAgJ1xuIFxcZW5ke2FsaWdufSBcbiQkJywKICAgIGNvbGxhcHNlID0gJ1xuJwogICkKKQpgYGAKCmBgYHtweXRob259CmUgPSBQb2x5KDIqeCoqMiArIDMqeCwgeCkKZSA9IGUuYXNfZXhwcigpCgpzdGVwcyA9IGNvbXBsZXRlc3EoZSwgeCkKCnN0ZXBzX2xhdGV4ID0gW2xhdGV4KHMpIGZvciBzIGluIHN0ZXBzXQpgYGAKCmBgYHtyfQpzdGVwc19sYXRleCA8LSBwYXN0ZTAoCiAgcHkkc3RlcHNfbGF0ZXgsCiAgY29sbGFwc2UgPSAnXFxcXCBcbicKKQoKbSgKICBwYXN0ZTAoCiAgICAnJCRcbiBcXGRpc3BsYXlzdHlsZSBcXGJlZ2lue2FsaWdufSBcbicsCiAgICBzdGVwc19sYXRleCwKICAgICdcbiBcXGVuZHthbGlnbn0gXG4kJCcsCiAgICBjb2xsYXBzZSA9ICdcbicKICApCikKYGBgCgojIyBOw7ptZXJvcwoKYGBge3B5dGhvbn0KZSA9IFBvbHkoMip4KioyICsgMyp4ICsgMSp5KioyICsgMSp5ICsgMSwgeCwgeSkKZS5hc19leHByKCkKYGBgCgpHZXQgdGVybXMgZm9yICR4JDoKCmBgYHtweXRob259CmEgPSBlLmNvZWZmX21vbm9taWFsKHgqKjIpCmEKYyA9IGUuY29lZmZfbW9ub21pYWwoeCkKYwpgYGAKCkFzc2VtYmxlIG5ldyBleHByZXNzaW9uOgoKYGBge3B5dGhvbn0KdGVybXNfbW9uaWMgPSBtb25pYyhhKngqKjIgKyBjKngsIHgpCnBhcnQgPSBhICogVW5ldmFsdWF0ZWRFeHByKHRlcm1zX21vbmljKQpwYXJ0CmBgYAoKQWRkIGFuZCBzdWJ0cmFjdCBjb25zdGFudDoKCmBgYHtweXRob259CmFkZF90ZXJtID0gYSAqICh0ZXJtc19tb25pYyArIFVuZXZhbHVhdGVkRXhwcihjIC8gKDIqYSkpKSAtIGEgKiBVbmV2YWx1YXRlZEV4cHIoYyAvICgyKmEpKQphZGRfdGVybQpgYGAKCkRldmVsb3Agc3F1YXJlIGFuZCBzaW1wbGlmeSBmcmFjdGlvbjoKCmBgYHtweXRob259CnNxdWFyZSA9IGEgKiAoeCArIHNpZ24oYykgKiBVbmV2YWx1YXRlZEV4cHIoc3FydChjIC8gKDIqYSkpKSkqKjIgLSBVbmV2YWx1YXRlZEV4cHIoYy8yKQpzcXVhcmUKYGBgCgoKTWFrZSBmdW5jdGlvbiB0byBkZWFsIG9ubHkgd2l0aCBleHByZXNzaW9uICRheF4yICsgY3gkLgoKVGhlIGZ1bmN0aW9uIHJldHVybnMgYSBsaXN0IG9mIGV4cHJlc3Npb25zIHdpdGggdGhlIHN0ZXBzIG9mIHRoZSBjb21wdXRhdGlvbi4KCmBgYHtweXRob259CmRlZiBjb21wbGV0ZXNxKGUsIHN5bWIpOgogIAogIHggPSBzeW1iCiAgX2Vwb2x5ID0gZS5hc19wb2x5KHgpCiAgCiAgX2EgPSBfZXBvbHkuY29lZmZfbW9ub21pYWwoeCoqMikKICBfYyA9IF9lcG9seS5jb2VmZl9tb25vbWlhbCh4KQogIAogIF90ZXJtc19tb25pYyA9IG1vbmljKF9hKngqKjIgKyBfYyp4LCB4KQogIF9wYXJ0ID0gX2EgKiBVbmV2YWx1YXRlZEV4cHIoX3Rlcm1zX21vbmljKQogIAogIF9hZGRfdGVybSA9IF9hICogKF90ZXJtc19tb25pYyArIFVuZXZhbHVhdGVkRXhwcihhYnMoX2MpIC8gKDIqYWJzKF9hKSkpKSAtIF9hICogVW5ldmFsdWF0ZWRFeHByKGFicyhfYykgLyAoMiphYnMoX2EpKSkKICAKICBfc3F1YXJlID0gX2EgKiAoeCArIHNpZ24oX2MpICogVW5ldmFsdWF0ZWRFeHByKHNxcnQoYWJzKF9jKSAvICgyKmFicyhfYSkpKSkpKioyIC0gVW5ldmFsdWF0ZWRFeHByKGFicyhfYykvMikKICAKICByZXR1cm4gW2UsIF9wYXJ0LCBfYWRkX3Rlcm0sIF9zcXVhcmVdCmBgYAoKYGBge3J9CmVnIDwtIGZ1bmN0aW9uKGUpIHsKICAKICBweV9ydW5fc3RyaW5nKAogICAgcGFzdGUoCiAgICAgICdlID0gc3ltcGlmeSgnLAogICAgICBlLAogICAgICAnKScKICAgICkKICApCiAgCiAgcHlfcnVuX3N0cmluZygnc3RlcHMgPSBjb21wbGV0ZXNxKGUsIHgpJykKICBweV9ydW5fc3RyaW5nKCdzdGVwc19sYXRleCA9IFtsYXRleChzKSBmb3IgcyBpbiBzdGVwc10nKQoKICBzdGVwc19sYXRleCA8LSBwYXN0ZTAoCiAgICBweSRzdGVwc19sYXRleCwKICAgIGNvbGxhcHNlID0gJ1xcXFwgXG4nCiAgKQoKICBtKAogICAgcGFzdGUwKAogICAgICAnJCRcbiBcXGRpc3BsYXlzdHlsZSBcXGJlZ2lue2FsaWdufSBcbicsCiAgICAgIHN0ZXBzX2xhdGV4LAogICAgICAnXG4gXFxlbmR7YWxpZ259IFxuJCQnLAogICAgICBjb2xsYXBzZSA9ICdcbicKICAgICkKICApCiAgCn0KYGBgCgoKIyMjIEV4ZW1wbG9zIGNvbSBuw7ptZXJvcwoKYGBge3J9CmVnKCcyKngqKjIgKyAzKngnKQplZygnMip4KioyIC0gMyp4JykKZWcoJy0yKngqKjIgKyAzKngnKQplZygnLTIqeCoqMiAtIDMqeCcpCmBgYAoKCgojIFVzYXIgYG0oKWAgY29tIGxpc3RhcwoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAnQ29tcGxldGFyIHF1YWRyYWRvcycKYXV0aG9yOiAnZm5hdWZlbCcKZW1haWw6ICdodHRwczovL2ZuYXVmZWwuZ2l0aHViLmlvLycKZGF0ZTogJyAgICh2LiBgciBmb3JtYXQoU3lzLkRhdGUoKSwgIiVkLyVtLyVZIilgKScKbGFuZzogJ3B0LWJyJwoKb3V0cHV0OgogICMgVG8gaW5zdGFsbCB0aGVzZSBvdXRwdXQgZm9ybWF0cywgcnVuCiAgIyAgIGluc3RhbGwucGFja2FnZXMoImRldnRvb2xzIikKICAjICAgZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKCJmbmF1ZmVsL2ZuYXVmZWxSbWQiKQogIGZuYXVmZWxSbWQ6Omh0bWxfcmVwb3J0OgogICAgW10KLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0KIyBUaGUgbmV4dCBjb21tYW5kIGNvbmZpZ3VyZXMgTUFOWSB0aGluZ3MgYW5kIGxvYWRzIHF1aXRlIGEgZmV3IHBhY2thZ2VzLgojCiMgSWYgeW91IHdhbnQgdG8gc2VlIHdoYXQncyBiZWluZyBkb25lLCBleGVjdXRlCiMKIyAgIGNhdCgKIyAgICAgc3lzdGVtLmZpbGUoCiMgICAgICAgInJtYXJrZG93bi9yZXNvdXJjZXMvUi9fY29tbW9uX3JlcG9ydC5SIiwKIyAgICAgICBwYWNrYWdlID0gImZuYXVmZWxSbWQiCiMgICAgICkKIyAgICkKIwojIHRvIGZpbmQgb3V0IHRoZSBsb2NhdGlvbiBvZiB0aGUgZmlsZS4gVGhlbiBvcGVuIHRoZSBmaWxlLgojCiMgSWYgeW91IHdhbnQgdG8gY2hhbmdlIHRoZSBjb25maWd1cmF0aW9uLCBjb3B5IHRoZSBmaWxlLCBlZGl0IGl0LCBhbmQKIyBzb3VyY2UgaXQgaW5zdGVhZCBvZiB0aGUgcGFja2FnZSBmaWxlLgojCiMgT3Igc2ltcGx5IHdyaXRlIHlvdXIgY29tbWFuZHMgaGVyZSBpbiB0aGlzIGNvZGUgY2h1bmsuCgpzb3VyY2UoCiAgc3lzdGVtLmZpbGUoCiAgICAicm1hcmtkb3duL3Jlc291cmNlcy9SL19jb21tb25fcmVwb3J0LlIiLAogICAgcGFja2FnZSA9ICJmbmF1ZmVsUm1kIgogICkKKQoKbGlicmFyeShyZXRpY3VsYXRlKQpzeW1weSA8LSBpbXBvcnQoJ3N5bXB5JykKcHlfcnVuX3N0cmluZygnZnJvbSBzeW1weSBpbXBvcnQgKicpCnB5X3J1bl9zdHJpbmcoJ2luaXRfcHJpbnRpbmcodXNlX2xhdGV4ID0gVHJ1ZSknKQpweV9ydW5fc3RyaW5nKCd4LCB5ID0gc3ltYm9scyhcJ3ggeVwnKScpCgpweV90cmFuc2Zvcm1lciA8LSBmdW5jdGlvbih0ZXh0LCBlbnZpcikgewoKICBkZWNpbWFsIDwtIGlmZWxzZSgKICAgIGdldE9wdGlvbignT3V0RGVjJykgPT0gJywnLAogICAgJyJjb21tYSInLAogICAgJyJwZXJpb2QiJwogICkKCiAgcHlfcnVuX3N0cmluZygKICAgIHBhc3RlMCgKICAgICAgJ21fbGF0ZXggPSBsYXRleCgnLAogICAgICB0ZXh0LAogICAgICAnLCBkZWNpbWFsX3NlcGFyYXRvciA9ICcsCiAgICAgIGRlY2ltYWwsCiAgICAgICcpJwogICAgKQogICkKCiAgcHkkbV9sYXRleAoKfQoKbSA8LSBmdW5jdGlvbih0ZW1wbGF0ZSwgYXNpcyA9IGdldE9wdGlvbignbV9hc2lzJywgRkFMU0UpKSB7CgogIGYgPC0gaWZlbHNlKGFzaXMsIGNhdCwga25pdHI6OmFzaXNfb3V0cHV0KQoKICBmKAogICAgZ2x1ZTo6Z2x1ZSgKICAgICAgdGVtcGxhdGUsCiAgICAgIC5vcGVuID0gJ3t7JywKICAgICAgLmNsb3NlID0gJ319JywKICAgICAgLnRyYW5zZm9ybWVyID0gcHlfdHJhbnNmb3JtZXIKICAgICkKICApCgp9CgpgYGAKCgojIENvbXBsZXRhciBvIHF1YWRyYWRvCgpNYWtlIGZ1bmN0aW9uIHRvIGRlYWwgb25seSB3aXRoIGV4cHJlc3Npb24gJGF4XjIgKyBjeCQuCgpUaGUgZnVuY3Rpb24gcmV0dXJucyBhIGxpc3Qgb2YgZXhwcmVzc2lvbnMgd2l0aCB0aGUgc3RlcHMgb2YgdGhlIGNvbXB1dGF0aW9uLgoKYGBge3B5dGhvbn0KZGVmIGNvbXBsZXRlc3EoZSwgc3ltYik6CiAgCiAgeCA9IHN5bWIKICBfZXBvbHkgPSBlLmFzX3BvbHkoeCkKICAKICBfYSA9IF9lcG9seS5jb2VmZl9tb25vbWlhbCh4KioyKQogIF9jID0gX2Vwb2x5LmNvZWZmX21vbm9taWFsKHgpCiAgCiAgX3Rlcm1zX21vbmljID0gbW9uaWMoX2EqeCoqMiArIF9jKngsIHgpCiAgX3BhcnQgPSBfYSAqIFVuZXZhbHVhdGVkRXhwcihfdGVybXNfbW9uaWMpCiAgCiAgX2FkZF90ZXJtID0gX2EgKiAoX3Rlcm1zX21vbmljICsgVW5ldmFsdWF0ZWRFeHByKF9jKioyIC8gKDQqX2EqKjIpKSkgLSBfYSAqIFVuZXZhbHVhdGVkRXhwcihfYyoqMiAvICg0Kl9hKioyKSkKICAKICBfc3F1YXJlID0gX2EgKiAoeCArIHNpZ24oX2MvX2EpICogVW5ldmFsdWF0ZWRFeHByKGFicyhfYykgLyAoMiphYnMoX2EpKSkpKioyICsgLXNpZ24oX2EpICogVW5ldmFsdWF0ZWRFeHByKF9jKioyL2Ficyg0Kl9hKSkKICAKICByZXR1cm4gW19wYXJ0LCBfYWRkX3Rlcm0sIF9zcXVhcmVdCmBgYAoKUHJvY2VzcyBhbiBleGFtcGxlIChmaW5kIGJldHRlciB3YXkgdG8gZG8gdGhpcyBsYXRlcik6CgpgYGB7cn0KZWcgPC0gZnVuY3Rpb24oZSkgewogIAogIHB5X3J1bl9zdHJpbmcoCiAgICBwYXN0ZSgKICAgICAgJ2UgPSBzeW1waWZ5KCcsCiAgICAgIGUsCiAgICAgICcpJwogICAgKQogICkKICAKICBweV9ydW5fc3RyaW5nKCdzdGVwcyA9IGNvbXBsZXRlc3EoZSwgeCknKQogIHB5X3J1bl9zdHJpbmcoJ3N0ZXBzX2xhdGV4ID0gW2xhdGV4KHMpIGZvciBzIGluIHN0ZXBzXScpCgogIHN0ZXBzX2xhdGV4IDwtIHBhc3RlMCgKICAgIHB5JHN0ZXBzX2xhdGV4LAogICAgY29sbGFwc2UgPSAnXFxcXCBcbicKICApCgogIG0oCiAgICBwYXN0ZTAoCiAgICAgICckJFxuIFxcZGlzcGxheXN0eWxlIFxcYmVnaW57YWxpZ259IFxuJywKICAgICAgcHkkbGF0ZXgocHkkZSksCiAgICAgICdcXFxcIFxuJywKICAgICAgc3RlcHNfbGF0ZXgsCiAgICAgICdcbiBcXGVuZHthbGlnbn0gXG4kJCcsCiAgICAgIGNvbGxhcHNlID0gJ1xuJwogICAgKQogICkKICAKfQpgYGAKCgojIEV4ZW1wbG9zIGNvbSBuw7ptZXJvcwoKYGBge3J9CmVnKCcyKngqKjIgKyAzKngnKQplZygnMip4KioyIC0gMyp4JykKZWcoJy0yKngqKjIgKyAzKngnKQplZygnLTIqeCoqMiAtIDMqeCcpCmBgYAoKCiMgRXhlbXBsbyBjb20gbGV0cmFzCgpgYGB7cn0KcHlfcnVuX3N0cmluZygnYSwgYyA9IHN5bWJvbHMoImEgYyIpJykKZWcoJ2EqeCoqMiArIGMqeCcpCmBgYAoKCiMgVXNhciBgbSgpYCBjb20gbGlzdGFzCgo=</div>
 
 
 
