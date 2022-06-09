@@ -44,43 +44,7 @@ sympy <- import('sympy')
 py_run_string('from sympy import *')
 py_run_string('init_printing(use_latex = True)')
 
-py_transformer <- function(text, envir) {
-
-  decimal <- ifelse(
-    getOption('OutDec') == ',',
-    '"comma"',
-    '"period"'
-  )
-
-  py_run_string(
-    paste0(
-      'm_latex = latex(',
-      text,
-      ', decimal_separator = ',
-      decimal,
-      ')'
-    )
-  )
-
-  py$m_latex
-
-}
-
-m <- function(template, asis = getOption('m_asis', FALSE)) {
-
-  f <- ifelse(asis, cat, knitr::asis_output)
-
-  f(
-    glue::glue(
-      template,
-      .open = '{{',
-      .close = '}}',
-      .transformer = py_transformer
-    )
-  )
-
-}
-
+library(sympyglue)
 ```
 
 
@@ -206,23 +170,16 @@ knitr::include_graphics('emoji-com-orelha.png')
       for (xx, yy, rr) 
       in zip(r.df.xc, r.df.yc, r.df.rc)
     ]
-    
-    eqs_face_latex = [latex(e) for e in eqs_face]
     ```
     
     ```{r echo=FALSE}
-    eqs_face <- paste0(
+    m(
       '1. $\\displaystyle \\quad ',
-      py$eqs_face_latex,
-      '$',
-      collapse = '\n\n'
+      '{{eqs_face}}',
+      '$\n\n\n',
     )
     ```
     
-    ```{r echo=FALSE}
-    m(eqs_face)
-    ```
-
 
 ## Nariz
 
@@ -234,35 +191,25 @@ knitr::include_graphics('emoji-com-orelha.png')
     cnariz = rc / 10
     anariz = cnariz + cnariz / 10
     
-    centronarizes = zip(r.df.xc, r.df.yc)
-    centronarizes_latex = [latex(e) for e in centronarizes]
+    centronarizes = [sympify((xx, yy), rational=True) 
+      for (xx, yy) in zip(r.df.xc, r.df.yc)]
     
     cnarizes = [
       cnariz.subs({rc: rr}) for rr in r.df.rc
     ]
-    cnarizes_latex = [latex(e) for e in cnarizes]
     
     anarizes = [
       anariz.subs({cnariz: cn}) for cn in cnarizes
     ]
-    anarizes_latex = [latex(e) for e in anarizes]
     ```
     
     ```{r echo=FALSE}
-    narizes <- paste0(
-      '1. $\\displaystyle \\quad \\text{Centro} = ',
-      py$centronarizes_latex,
-      '\\ ,\\quad a = ',
-      py$anarizes_latex,
-      '\\ ,\\quad c = ',
-      py$cnarizes_latex,
-      '$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad \\text{Centro} = {{centronarizes}}',
+      '\\ ,\\quad a = {{anarizes}}',
+      '\\ ,\\quad c = {{cnarizes}}',
+      '$\n\n\n'
     )
-    ```
-    
-    ```{r echo=FALSE}
-    m(narizes)
     ```
     
 
@@ -289,22 +236,14 @@ knitr::include_graphics('emoji-com-orelha.png')
       for (xx, yy, rr) 
       in zip(r.df.xc, r.df.yc, r.df.rc)
     ]
-    
-    eqs_mascara_latex = [latex(e) for e in eqs_mascara]
     ```
     
     ```{r echo=FALSE}
-    eqs_mascara <- paste0(
-      '1. $\\displaystyle \\quad ',
-      py$eqs_mascara_latex,
-      ' = 0$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad {{eqs_mascara}} = 0$\n\n\n'
     )
     ```
     
-    ```{r echo=FALSE}
-    m(eqs_mascara)
-    ```
 
 * [Cada olho]{.hl} é uma [elipse de eixo maior vertical com os valores de $a$ e de $c$ dados abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
@@ -317,29 +256,19 @@ knitr::include_graphics('emoji-com-orelha.png')
     colhos = [
       colho.subs({rc: rr}) for rr in r.df.rc
     ]
-    colhos_latex = [latex(e) for e in colhos]
     
     aolhos = [
       aolho.subs({rc: rr}) for rr in r.df.rc
     ]
-    aolhos_latex = [latex(e) for e in aolhos]
     ```
     
     ```{r echo=FALSE}
-    olhos <- paste0(
-      '1. $\\displaystyle \\quad a = ',
-      py$aolhos_latex,
-      '\\ ,\\quad c = ',
-      py$colhos_latex,
-      '$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad a = {{aolhos}}',
+      '\\ ,\\quad c = {{colhos}}$\n\n\n'
     )
     ```
     
-    ```{r echo=FALSE}
-    m(olhos)
-    ```
-
 
 ## Boca
 
@@ -352,35 +281,28 @@ knitr::include_graphics('emoji-com-orelha.png')
     pbocasup = rc / 4
     
     fbocasups = [
-      (
-        fbocasup[0].subs({xc: xx, yc: yy, rc: rr}),
-        fbocasup[1].subs({xc: xx, yc: yy, rc: rr})
+      S(
+        (
+          fbocasup[0].subs({xc: xx, yc: yy, rc: rr}),
+          fbocasup[1].subs({xc: xx, yc: yy, rc: rr})
+        )
       )
       for (xx, yy, rr) 
       in zip(r.df.xc, r.df.yc, r.df.rc)
     ]
-    fbocasups_latex = [latex(e) for e in fbocasups]
     
     pbocasups = [
       pbocasup.subs({rc: rr}) for rr in r.df.rc
     ]
-    pbocasups_latex = [latex(e) for e in pbocasups]
     ```
     
     ```{r echo=FALSE}
-    bocasup <- paste0(
-      '1. $\\displaystyle \\quad F = ',
-      py$fbocasups_latex,
-      '\\ ,\\quad p = ',
-      py$pbocasups_latex,
-      '$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad F = {{fbocasups}}',
+      '\\ ,\\quad p = {{pbocasups}}$\n\n\n'
     )
     ```
     
-    ```{r echo=FALSE}
-    m(bocasup)
-    ```
 
 * A [parte inferior da boca]{.hl} também é uma [parábola, cuja equação geral é dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
@@ -398,23 +320,14 @@ knitr::include_graphics('emoji-com-orelha.png')
       for (xx, yy, rr) 
       in zip(r.df.xc, r.df.yc, r.df.rc)
     ]
-    
-    eqs_bocainf_latex = [latex(e) for e in eqs_bocainf]
     ```
     
     ```{r echo=FALSE}
-    eqs_bocainf <- paste0(
-      '1. $\\displaystyle \\quad ',
-      py$eqs_bocainf_latex,
-      ' = 0$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad {{eqs_bocainf}} = 0$\n\n\n'
     )
     ```
     
-    ```{r echo=FALSE}
-    m(eqs_bocainf)
-    ```
-
 
 ## Orelhas
 
@@ -426,22 +339,14 @@ knitr::include_graphics('emoji-com-orelha.png')
     yorelhas = [
       yorelha.subs({yc: yy, rc: rr}) for (yy, rr) in zip(r.df.yc, r.df.rc)
     ]
-    yorelhas_latex = [latex(e) for e in yorelhas]
     ```
     
     ```{r echo=FALSE}
-    orelhas <- paste0(
-      '1. $\\displaystyle \\quad y = ',
-      py$yorelhas_latex,
-      '$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad y = {{yorelhas}}$\n\n\n'
     )
     ```
     
-    ```{r echo=FALSE}
-    m(orelhas)
-    ```
-
 * Ache a [equação canônica]{.hl} desta hipérbole.
 
 

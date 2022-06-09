@@ -1,9 +1,9 @@
 ---
-title: 'Completar quadrados'
+title: 'Complete the square'
 author: 'fnaufel'
 email: 'https://fnaufel.github.io/'
 date: '   (v. `r format(Sys.Date(), "%d/%m/%Y")`)'
-lang: 'pt-br'
+lang: 'en'
 
 output:
   # To install these output formats, run
@@ -42,50 +42,15 @@ source(
 library(reticulate)
 sympy <- import('sympy')
 py_run_string('from sympy import *')
+py_run_string('from sympy.parsing.sympy_parser import T')
 py_run_string('init_printing(use_latex = True)')
 py_run_string('x, y = symbols(\'x y\')')
 
-py_transformer <- function(text, envir) {
-
-  decimal <- ifelse(
-    getOption('OutDec') == ',',
-    '"comma"',
-    '"period"'
-  )
-
-  py_run_string(
-    paste0(
-      'm_latex = latex(',
-      text,
-      ', decimal_separator = ',
-      decimal,
-      ')'
-    )
-  )
-
-  py$m_latex
-
-}
-
-m <- function(template, asis = getOption('m_asis', FALSE)) {
-
-  f <- ifelse(asis, cat, knitr::asis_output)
-
-  f(
-    glue::glue(
-      template,
-      .open = '{{',
-      .close = '}}',
-      .transformer = py_transformer
-    )
-  )
-
-}
-
+library(sympyglue)
 ```
 
 
-# Completar o quadrado
+# Complete the square: first try
 
 Make function to deal only with expression $ax^2 + cx$.
 
@@ -110,7 +75,7 @@ def completesq(e, symb):
   return [_part, _add_term, _square]
 ```
 
-Process an example (find better way to do this later):
+Process an example:
 
 ```{r}
 eg <- function(e) {
@@ -131,22 +96,20 @@ eg <- function(e) {
     collapse = '\\\\ \n'
   )
 
-  m(
-    paste0(
-      '$$\n \\displaystyle \\begin{align} \n',
-      py$latex(py$e),
-      '\\\\ \n',
-      steps_latex,
-      '\n \\end{align} \n$$',
-      collapse = '\n'
-    )
-  )
+  paste0(
+    '$$\n \\displaystyle \\begin{align} \n',
+    py$latex(py$e),
+    '\\\\ \n',
+    steps_latex,
+    '\n \\end{align} \n$$',
+    collapse = '\n'
+  ) %>% m()
   
 }
 ```
 
 
-# Exemplos com números
+## Numbers
 
 ```{r}
 eg('2*x**2 + 3*x')
@@ -156,7 +119,7 @@ eg('-2*x**2 - 3*x')
 ```
 
 
-# Exemplo com letras
+## Letters
 
 ```{r}
 py_run_string('a, c = symbols("a c")')
@@ -164,5 +127,174 @@ eg('a*x**2 + c*x')
 ```
 
 
-# Usar `m()` com listas
+# Second try
+
+Use parse_expr to control order and simplifications.
+
+https://docs.sympy.org/latest/modules/parsing.html
+
+No good.
+
+```{python}
+def completesq(e, symb):
+  
+  x = symb
+  _epoly = e.as_poly(x)
+  
+  _a = _epoly.coeff_monomial(x**2)
+  _c = _epoly.coeff_monomial(x)
+  
+  _terms_monic = monic(_a*x**2 + _c*x, x)
+  
+  _part = parse_expr( \
+    '_a * (_terms_monic)', \
+    local_dict=locals(), \
+    evaluate=False
+  )
+  
+  _add_term = parse_expr( \
+    '_a * (_terms_monic + _c**2 / (2**2*_a**2)) - _a * (_c**2 / (2**2*_a**2))', \
+    local_dict=locals(), \
+    evaluate=False
+  )
+  
+  ### Stopped here
+  
+  _a * (_terms_monic + UnevaluatedExpr(_c**2 / (4*_a**2))) - _a * UnevaluatedExpr(_c**2 / (4*_a**2))
+  
+  _square = _a * (x + sign(_c/_a) * UnevaluatedExpr(abs(_c) / (2*abs(_a))))**2 + -sign(_a) * UnevaluatedExpr(_c**2/abs(4*_a))
+  
+  return [_part, _add_term, _square]
+```
+
+
+## Numbers
+
+```{r}
+eg('2*x**2 + 3*x')
+eg('2*x**2 - 3*x')
+eg('-2*x**2 + 3*x')
+eg('-2*x**2 - 3*x')
+```
+
+
+## Letters
+
+```{r}
+py_run_string('a, c = symbols("a c")')
+eg('a*x**2 + c*x')
+```
+
+
+# Tidy up first try
+
+```{python}
+def completesq(e, symb):
+  
+  # ax^2 + cx
+  x = symb
+  epoly = e.as_poly(x)
+  
+  a = epoly.coeff_monomial(x**2)
+  c = epoly.coeff_monomial(x)
+  
+  # x^2 + cx/a
+  terms_monic = monic(a*x**2 + c*x, x)
+  
+  # a * ( x^2 + cx/a )
+  part = a * UnevaluatedExpr(terms_monic)
+  
+  # a * ( x^2 + cx/a + c^2/4a^2 ) - a * c^2/4a^2
+  add_term = a * \
+    ( \
+      terms_monic + UnevaluatedExpr(c**2 / (4*a**2)) \
+    ) \
+    - a * UnevaluatedExpr(c**2 / (4*a**2))
+  
+  # a * ( x + c/2a )^2 - c^2/4a
+  square = a * \
+    ( \
+      x + sign(c/a) * UnevaluatedExpr(abs(c) / (2*abs(a))) \
+    )**2 \
+    + -sign(a) * UnevaluatedExpr(c**2/abs(4*a))
+  
+  return [e, part, add_term, square]
+```
+
+
+A function to generate align from a Python list:
+
+```{r}
+align <- function(command, form = c('wide', 'narrow')) {
+  
+  py_run_string(
+    paste0(
+      '_steps = ', command
+    )
+  )
+  
+  form <- match.arg(form)
+  
+  if (form == 'narrow') {
+    before <- paste0(
+      '$$\n \\displaystyle \\begin{align} \n',
+      '& ', m('{{_steps[0]}}'), '\\\\ \n'
+    )
+  } else {
+    before <- paste0(
+      '$$\n \\displaystyle \\begin{align} \n',
+      m('{{_steps[0]}}'), ' '
+    )
+  }
+  
+  after <- '\n \\end{align} \n$$'
+
+  middle <- m(
+    '&= {{_steps[1:]}} '
+  ) %>% 
+    paste0(collapse = '\\\\ \n')
+
+  m(paste0(before, middle, after, collapse = ''))
+
+}
+```
+
+
+New eg function:
+
+```{r}
+eg <- function(expression, x = 'x') {
+  
+  py_run_string(
+    paste(
+      'expression = sympify(',
+      expression,
+      ')'
+    )
+  )
+  
+  x = as.character(x)
+  align(paste0('completesq(expression, ', x, ')'))
+  
+}
+```
+
+
+## Numbers
+
+```{r}
+eg('2*x**2 + 3*x')
+eg('2*x**2 - 3*x')
+eg('-2*x**2 + 3*x')
+eg('-2*x**2 - 3*x')
+```
+
+
+## Letters
+
+```{r}
+py_run_string('a, c = symbols("a c")')
+eg('a*x**2 + c*x')
+```
+
 
