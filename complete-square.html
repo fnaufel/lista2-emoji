@@ -2130,277 +2130,53 @@ pre code {
 <div id="TOC">
 <ul>
 <li>
-<a href="#complete-the-square-first-try" id="toc-complete-the-square-first-try"><span class="toc-section-number">1</span> Complete the square: first try<span></span></a>
+<a href="#complete-the-square" id="toc-complete-the-square"><span class="toc-section-number">1</span> Complete the square<span></span></a>
 <ul>
 <li><a href="#numbers" id="toc-numbers"><span class="toc-section-number">1.1</span> Numbers<span></span></a></li>
 <li><a href="#letters" id="toc-letters"><span class="toc-section-number">1.2</span> Letters<span></span></a></li>
 </ul>
 </li>
-<li>
-<a href="#second-try" id="toc-second-try"><span class="toc-section-number">2</span> Second try<span></span></a>
-<ul>
-<li><a href="#numbers-1" id="toc-numbers-1"><span class="toc-section-number">2.1</span> Numbers<span></span></a></li>
-<li><a href="#letters-1" id="toc-letters-1"><span class="toc-section-number">2.2</span> Letters<span></span></a></li>
-</ul>
-</li>
-<li>
-<a href="#tidy-up-first-try" id="toc-tidy-up-first-try"><span class="toc-section-number">3</span> Tidy up first try<span></span></a>
-<ul>
-<li><a href="#numbers-2" id="toc-numbers-2"><span class="toc-section-number">3.1</span> Numbers<span></span></a></li>
-<li><a href="#letters-2" id="toc-letters-2"><span class="toc-section-number">3.2</span> Letters<span></span></a></li>
-</ul>
-</li>
 </ul>
 </div>
 
-<div id="complete-the-square-first-try" class="section level1 hasAnchor" number="1">
+<div id="complete-the-square" class="section level1 hasAnchor" number="1">
 <h1 class="hasAnchor">
-<span class="header-section-number">1</span> Complete the square: first try<a href="#complete-the-square-first-try" class="anchor-section" aria-label="Anchor link to header"></a>
+<span class="header-section-number">1</span> Complete the square<a href="#complete-the-square" class="anchor-section" aria-label="Anchor link to header"></a>
 </h1>
 <p>Make function to deal only with expression <span class="math inline">\(ax^2 + cx\)</span>.</p>
 <p>The function returns a list of expressions with the steps of the computation.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> completesq(e, symb):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> symb</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  _epoly <span class="op">=</span> e.as_poly(x)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  _a <span class="op">=</span> _epoly.coeff_monomial(x<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  _c <span class="op">=</span> _epoly.coeff_monomial(x)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  _terms_monic <span class="op">=</span> monic(_a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> _c<span class="op">*</span>x, x)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  _part <span class="op">=</span> _a <span class="op">*</span> UnevaluatedExpr(_terms_monic)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  _add_term <span class="op">=</span> _a <span class="op">*</span> (_terms_monic <span class="op">+</span> UnevaluatedExpr(_c<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span><span class="op">*</span>_a<span class="op">**</span><span class="dv">2</span>))) <span class="op">-</span> _a <span class="op">*</span> UnevaluatedExpr(_c<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span><span class="op">*</span>_a<span class="op">**</span><span class="dv">2</span>))</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  _square <span class="op">=</span> _a <span class="op">*</span> (x <span class="op">+</span> sign(_c<span class="op">/</span>_a) <span class="op">*</span> UnevaluatedExpr(<span class="bu">abs</span>(_c) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span><span class="bu">abs</span>(_a))))<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="op">-</span>sign(_a) <span class="op">*</span> UnevaluatedExpr(_c<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="bu">abs</span>(<span class="dv">4</span><span class="op">*</span>_a))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ax^2 + cx</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> symb</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  epoly <span class="op">=</span> e.as_poly(x)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> epoly.coeff_monomial(x<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  c <span class="op">=</span> epoly.coeff_monomial(x)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x^2 + cx/a</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  terms_monic <span class="op">=</span> monic(a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> c<span class="op">*</span>x, x)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a * ( x^2 + cx/a )</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  part <span class="op">=</span> a <span class="op">*</span> UnevaluatedExpr(terms_monic)</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [_part, _add_term, _square]</span></code></pre></div>
-<p>Process an example:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">eg</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="op">{</span>
-  
-  <span class="fu">py_run_string</span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>
-      <span class="st">'e = sympify('</span>,
-      <span class="va">e</span>,
-      <span class="st">')'</span>
-    <span class="op">)</span>
-  <span class="op">)</span>
-  
-  <span class="fu">py_run_string</span><span class="op">(</span><span class="st">'steps = completesq(e, x)'</span><span class="op">)</span>
-  <span class="fu">py_run_string</span><span class="op">(</span><span class="st">'steps_latex = [latex(s) for s in steps]'</span><span class="op">)</span>
-
-  <span class="va">steps_latex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
-    <span class="va">py</span><span class="op">$</span><span class="va">steps_latex</span>,
-    collapse <span class="op">=</span> <span class="st">'\\\\ \n'</span>
-  <span class="op">)</span>
-
-  <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
-    <span class="st">'$$\n \\displaystyle \\begin{align} \n'</span>,
-    <span class="va">py</span><span class="op">$</span><span class="fu">latex</span><span class="op">(</span><span class="va">py</span><span class="op">$</span><span class="va">e</span><span class="op">)</span>,
-    <span class="st">'\\\\ \n'</span>,
-    <span class="va">steps_latex</span>,
-    <span class="st">'\n \\end{align} \n$$'</span>,
-    collapse <span class="op">=</span> <span class="st">'\n'</span>
-  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">m</span><span class="op">(</span><span class="op">)</span>
-  
-<span class="op">}</span></code></pre></div>
-<div id="numbers" class="section level2 hasAnchor" number="1.1">
-<h2 class="hasAnchor">
-<span class="header-section-number">1.1</span> Numbers<a href="#numbers" class="anchor-section" aria-label="Anchor link to header"></a>
-</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'2*x**2 + 3*x'</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-2 x^{2} + 3 x\\
-2 \left(x^{2} + \frac{3 x}{2}\right)\\
-2 \left(x^{2} + \frac{3 x}{2} + \frac{9}{16}\right) - 2 \cdot \frac{9}{16}\\
-2 \left(x + \frac{3}{4}\right)^{2} - \frac{9}{8}
-\end{align}
-\]</span></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'2*x**2 - 3*x'</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-2 x^{2} - 3 x\\
-2 \left(x^{2} - \frac{3 x}{2}\right)\\
-2 \left(x^{2} - \frac{3 x}{2} + \frac{9}{16}\right) - 2 \cdot \frac{9}{16}\\
-2 \left(x - \frac{3}{4}\right)^{2} - \frac{9}{8}
-\end{align}
-\]</span></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'-2*x**2 + 3*x'</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-- 2 x^{2} + 3 x\\
-- 2 \left(x^{2} - \frac{3 x}{2}\right)\\
-- 2 \left(x^{2} - \frac{3 x}{2} + \frac{9}{16}\right) + 2 \cdot \frac{9}{16}\\
-- 2 \left(x - \frac{3}{4}\right)^{2} + \frac{9}{8}
-\end{align}
-\]</span></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'-2*x**2 - 3*x'</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-- 2 x^{2} - 3 x\\
-- 2 \left(x^{2} + \frac{3 x}{2}\right)\\
-- 2 \left(x^{2} + \frac{3 x}{2} + \frac{9}{16}\right) + 2 \cdot \frac{9}{16}\\
-- 2 \left(x + \frac{3}{4}\right)^{2} + \frac{9}{8}
-\end{align}
-\]</span></p>
-</div>
-<div id="letters" class="section level2 hasAnchor" number="1.2">
-<h2 class="hasAnchor">
-<span class="header-section-number">1.2</span> Letters<a href="#letters" class="anchor-section" aria-label="Anchor link to header"></a>
-</h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">py_run_string</span><span class="op">(</span><span class="st">'a, c = symbols("a c")'</span><span class="op">)</span>
-<span class="fu">eg</span><span class="op">(</span><span class="st">'a*x**2 + c*x'</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-a x^{2} + c x\\
-a \left(x^{2} + \frac{c x}{a}\right)\\
-a \left(x^{2} + \frac{c^{2}}{4 a^{2}} + \frac{c x}{a}\right) - a \frac{c^{2}}{4 a^{2}}\\
-a \left(x + \operatorname{sign}{\left(\frac{c}{a} \right)} \frac{\left|{c}\right|}{2 \left|{a}\right|}\right)^{2} - \operatorname{sign}{\left(a \right)} \frac{c^{2}}{4 \left|{a}\right|}
-\end{align}
-\]</span></p>
-</div>
-</div>
-<div id="second-try" class="section level1 hasAnchor" number="2">
-<h1 class="hasAnchor">
-<span class="header-section-number">2</span> Second try<a href="#second-try" class="anchor-section" aria-label="Anchor link to header"></a>
-</h1>
-<p>Use parse_expr to control order and simplifications.</p>
-<p><a href="https://docs.sympy.org/latest/modules/parsing.html" class="uri">https://docs.sympy.org/latest/modules/parsing.html</a></p>
-<p>No good.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> completesq(e, symb):</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> symb</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  _epoly <span class="op">=</span> e.as_poly(x)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  _a <span class="op">=</span> _epoly.coeff_monomial(x<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  _c <span class="op">=</span> _epoly.coeff_monomial(x)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  _terms_monic <span class="op">=</span> monic(_a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> _c<span class="op">*</span>x, x)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  _part <span class="op">=</span> parse_expr( <span class="op">\</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'_a * (_terms_monic)'</span>, <span class="op">\</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    local_dict<span class="op">=</span><span class="bu">locals</span>(), <span class="op">\</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    evaluate<span class="op">=</span><span class="va">False</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  _add_term <span class="op">=</span> parse_expr( <span class="op">\</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'_a * (_terms_monic + _c**2 / (2**2*_a**2)) - _a * (_c**2 / (2**2*_a**2))'</span>, <span class="op">\</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    local_dict<span class="op">=</span><span class="bu">locals</span>(), <span class="op">\</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    evaluate<span class="op">=</span><span class="va">False</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">### Stopped here</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  _a <span class="op">*</span> (_terms_monic <span class="op">+</span> UnevaluatedExpr(_c<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span><span class="op">*</span>_a<span class="op">**</span><span class="dv">2</span>))) <span class="op">-</span> _a <span class="op">*</span> UnevaluatedExpr(_c<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span><span class="op">*</span>_a<span class="op">**</span><span class="dv">2</span>))</span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  _square <span class="op">=</span> _a <span class="op">*</span> (x <span class="op">+</span> sign(_c<span class="op">/</span>_a) <span class="op">*</span> UnevaluatedExpr(<span class="bu">abs</span>(_c) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span><span class="bu">abs</span>(_a))))<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> <span class="op">-</span>sign(_a) <span class="op">*</span> UnevaluatedExpr(_c<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="bu">abs</span>(<span class="dv">4</span><span class="op">*</span>_a))</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [_part, _add_term, _square]</span></code></pre></div>
-<div id="numbers-1" class="section level2 hasAnchor" number="2.1">
-<h2 class="hasAnchor">
-<span class="header-section-number">2.1</span> Numbers<a href="#numbers-1" class="anchor-section" aria-label="Anchor link to header"></a>
-</h2>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'2*x**2 + 3*x'</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-2 x^{2} + 3 x\\
-2 \left(x^{2} + \frac{3 x}{2}\right)\\
-2 \left(\left(x^{2} + \frac{3 x}{2}\right) + \frac{3^{2}}{2^{2} \cdot 2^{2}}\right) - \frac{2 \cdot 3^{2}}{2^{2} \cdot 2^{2}}\\
-2 \left(x + \frac{3}{4}\right)^{2} - \frac{9}{8}
-\end{align}
-\]</span></p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'2*x**2 - 3*x'</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-2 x^{2} - 3 x\\
-2 \left(x^{2} - \frac{3 x}{2}\right)\\
-2 \left(\left(x^{2} - \frac{3 x}{2}\right) + \frac{\left(-3\right)^{2}}{2^{2} \cdot 2^{2}}\right) - \frac{2 \left(-3\right)^{2}}{2^{2} \cdot 2^{2}}\\
-2 \left(x - \frac{3}{4}\right)^{2} - \frac{9}{8}
-\end{align}
-\]</span></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'-2*x**2 + 3*x'</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-- 2 x^{2} + 3 x\\
-- 2 \left(x^{2} - \frac{3 x}{2}\right)\\
-- 2 \left(\left(x^{2} - \frac{3 x}{2}\right) + \frac{3^{2}}{\left(-2\right)^{2} \cdot 2^{2}}\right) - - \frac{2 \cdot 3^{2}}{\left(-2\right)^{2} \cdot 2^{2}}\\
-- 2 \left(x - \frac{3}{4}\right)^{2} + \frac{9}{8}
-\end{align}
-\]</span></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'-2*x**2 - 3*x'</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-- 2 x^{2} - 3 x\\
-- 2 \left(x^{2} + \frac{3 x}{2}\right)\\
-- 2 \left(\left(x^{2} + \frac{3 x}{2}\right) + \frac{\left(-3\right)^{2}}{\left(-2\right)^{2} \cdot 2^{2}}\right) - - \frac{2 \left(-3\right)^{2}}{\left(-2\right)^{2} \cdot 2^{2}}\\
-- 2 \left(x + \frac{3}{4}\right)^{2} + \frac{9}{8}
-\end{align}
-\]</span></p>
-</div>
-<div id="letters-1" class="section level2 hasAnchor" number="2.2">
-<h2 class="hasAnchor">
-<span class="header-section-number">2.2</span> Letters<a href="#letters-1" class="anchor-section" aria-label="Anchor link to header"></a>
-</h2>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">py_run_string</span><span class="op">(</span><span class="st">'a, c = symbols("a c")'</span><span class="op">)</span>
-<span class="fu">eg</span><span class="op">(</span><span class="st">'a*x**2 + c*x'</span><span class="op">)</span></code></pre></div>
-<p><span class="math display">\[
-\displaystyle \begin{align}
-a x^{2} + c x\\
-a \left(x^{2} + \frac{c x}{a}\right)\\
-- \frac{a c^{2}}{2^{2} a^{2}} + a \left(\frac{c^{2}}{2^{2} a^{2}} + \left(x^{2} + \frac{c x}{a}\right)\right)\\
-a \left(x + \operatorname{sign}{\left(\frac{c}{a} \right)} \frac{\left|{c}\right|}{2 \left|{a}\right|}\right)^{2} - \operatorname{sign}{\left(a \right)} \frac{c^{2}}{4 \left|{a}\right|}
-\end{align}
-\]</span></p>
-</div>
-</div>
-<div id="tidy-up-first-try" class="section level1 hasAnchor" number="3">
-<h1 class="hasAnchor">
-<span class="header-section-number">3</span> Tidy up first try<a href="#tidy-up-first-try" class="anchor-section" aria-label="Anchor link to header"></a>
-</h1>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> completesq(e, symb):</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ax^2 + cx</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> symb</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  epoly <span class="op">=</span> e.as_poly(x)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  a <span class="op">=</span> epoly.coeff_monomial(x<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  c <span class="op">=</span> epoly.coeff_monomial(x)</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># x^2 + cx/a</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  terms_monic <span class="op">=</span> monic(a<span class="op">*</span>x<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> c<span class="op">*</span>x, x)</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a * ( x^2 + cx/a )</span></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  part <span class="op">=</span> a <span class="op">*</span> UnevaluatedExpr(terms_monic)</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a * ( x^2 + cx/a + c^2/4a^2 ) - a * c^2/4a^2</span></span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  add_term <span class="op">=</span> a <span class="op">*</span> <span class="op">\</span></span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    ( <span class="op">\</span></span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>      terms_monic <span class="op">+</span> UnevaluatedExpr(c<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span><span class="op">*</span>a<span class="op">**</span><span class="dv">2</span>)) <span class="op">\</span></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">\</span></span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span> a <span class="op">*</span> UnevaluatedExpr(c<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span><span class="op">*</span>a<span class="op">**</span><span class="dv">2</span>))</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a * ( x + c/2a )^2 - c^2/4a</span></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  square <span class="op">=</span> a <span class="op">*</span> <span class="op">\</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    ( <span class="op">\</span></span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>      x <span class="op">+</span> sign(c<span class="op">/</span>a) <span class="op">*</span> UnevaluatedExpr(<span class="bu">abs</span>(c) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span><span class="bu">abs</span>(a))) <span class="op">\</span></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    )<span class="op">**</span><span class="dv">2</span> <span class="op">\</span></span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="op">-</span>sign(a) <span class="op">*</span> UnevaluatedExpr(c<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="bu">abs</span>(<span class="dv">4</span><span class="op">*</span>a))</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [e, part, add_term, square]</span></code></pre></div>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a * ( x^2 + cx/a + c^2/4a^2 ) - a * c^2/4a^2</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  add_term <span class="op">=</span> a <span class="op">*</span> <span class="op">\</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    ( <span class="op">\</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      terms_monic <span class="op">+</span> UnevaluatedExpr(c<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span><span class="op">*</span>a<span class="op">**</span><span class="dv">2</span>)) <span class="op">\</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="op">\</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">-</span> a <span class="op">*</span> UnevaluatedExpr(c<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> (<span class="dv">4</span><span class="op">*</span>a<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># a * ( x + c/2a )^2 - c^2/4a</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  square <span class="op">=</span> a <span class="op">*</span> <span class="op">\</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    ( <span class="op">\</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>      x <span class="op">+</span> sign(c<span class="op">/</span>a) <span class="op">*</span> UnevaluatedExpr(<span class="bu">abs</span>(c) <span class="op">/</span> (<span class="dv">2</span><span class="op">*</span><span class="bu">abs</span>(a))) <span class="op">\</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    )<span class="op">**</span><span class="dv">2</span> <span class="op">\</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="op">-</span>sign(a) <span class="op">*</span> UnevaluatedExpr(c<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="bu">abs</span>(<span class="dv">4</span><span class="op">*</span>a))</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> [e, part, add_term, square]</span></code></pre></div>
 <p>A function to generate align from a Python list:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">align</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">command</span>, <span class="va">form</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'wide'</span>, <span class="st">'narrow'</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   
   <span class="fu">py_run_string</span><span class="op">(</span>
@@ -2433,8 +2209,8 @@ a \left(x + \operatorname{sign}{\left(\frac{c}{a} \right)} \frac{\left|{c}\right
   <span class="fu">m</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">before</span>, <span class="va">middle</span>, <span class="va">after</span>, collapse <span class="op">=</span> <span class="st">''</span><span class="op">)</span><span class="op">)</span>
 
 <span class="op">}</span></code></pre></div>
-<p>New eg function:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<p>A function to run an example:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">eg</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">expression</span>, <span class="va">x</span> <span class="op">=</span> <span class="st">'x'</span><span class="op">)</span> <span class="op">{</span>
   
   <span class="fu">py_run_string</span><span class="op">(</span>
@@ -2446,14 +2222,15 @@ a \left(x + \operatorname{sign}{\left(\frac{c}{a} \right)} \frac{\left|{c}\right
   <span class="op">)</span>
   
   <span class="va">x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-  <span class="fu">align</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'completesq(expression, '</span>, <span class="va">x</span>, <span class="st">')'</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">command</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'completesq(expression, '</span>, <span class="va">x</span>, <span class="st">')'</span><span class="op">)</span>
+  <span class="fu">align</span><span class="op">(</span><span class="va">command</span><span class="op">)</span>
   
 <span class="op">}</span></code></pre></div>
-<div id="numbers-2" class="section level2 hasAnchor" number="3.1">
+<div id="numbers" class="section level2 hasAnchor" number="1.1">
 <h2 class="hasAnchor">
-<span class="header-section-number">3.1</span> Numbers<a href="#numbers-2" class="anchor-section" aria-label="Anchor link to header"></a>
+<span class="header-section-number">1.1</span> Numbers<a href="#numbers" class="anchor-section" aria-label="Anchor link to header"></a>
 </h2>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'2*x**2 + 3*x'</span><span class="op">)</span></code></pre></div>
 <p><span class="math display">\[
 \displaystyle \begin{align}
@@ -2462,7 +2239,7 @@ a \left(x + \operatorname{sign}{\left(\frac{c}{a} \right)} \frac{\left|{c}\right
 &amp;= 2 \left(x + \frac{3}{4}\right)^{2} - \frac{9}{8}
 \end{align}
 \]</span></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'2*x**2 - 3*x'</span><span class="op">)</span></code></pre></div>
 <p><span class="math display">\[
 \displaystyle \begin{align}
@@ -2471,30 +2248,30 @@ a \left(x + \operatorname{sign}{\left(\frac{c}{a} \right)} \frac{\left|{c}\right
 &amp;= 2 \left(x - \frac{3}{4}\right)^{2} - \frac{9}{8}
 \end{align}
 \]</span></p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'-2*x**2 + 3*x'</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'-2*y**2 + 3*y'</span>, <span class="st">'y'</span><span class="op">)</span></code></pre></div>
 <p><span class="math display">\[
 \displaystyle \begin{align}
-- 2 x^{2} + 3 x &amp;= - 2 \left(x^{2} - \frac{3 x}{2}\right) \\
-&amp;= - 2 \left(x^{2} - \frac{3 x}{2} + \frac{9}{16}\right) + 2 \cdot \frac{9}{16} \\
-&amp;= - 2 \left(x - \frac{3}{4}\right)^{2} + \frac{9}{8}
+- 2 y^{2} + 3 y &amp;= - 2 \left(y^{2} - \frac{3 y}{2}\right) \\
+&amp;= - 2 \left(y^{2} - \frac{3 y}{2} + \frac{9}{16}\right) + 2 \cdot \frac{9}{16} \\
+&amp;= - 2 \left(y - \frac{3}{4}\right)^{2} + \frac{9}{8}
 \end{align}
 \]</span></p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'-2*x**2 - 3*x'</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'-2*y**2 - 3*y'</span>, <span class="st">'y'</span><span class="op">)</span></code></pre></div>
 <p><span class="math display">\[
 \displaystyle \begin{align}
-- 2 x^{2} - 3 x &amp;= - 2 \left(x^{2} + \frac{3 x}{2}\right) \\
-&amp;= - 2 \left(x^{2} + \frac{3 x}{2} + \frac{9}{16}\right) + 2 \cdot \frac{9}{16} \\
-&amp;= - 2 \left(x + \frac{3}{4}\right)^{2} + \frac{9}{8}
+- 2 y^{2} - 3 y &amp;= - 2 \left(y^{2} + \frac{3 y}{2}\right) \\
+&amp;= - 2 \left(y^{2} + \frac{3 y}{2} + \frac{9}{16}\right) + 2 \cdot \frac{9}{16} \\
+&amp;= - 2 \left(y + \frac{3}{4}\right)^{2} + \frac{9}{8}
 \end{align}
 \]</span></p>
 </div>
-<div id="letters-2" class="section level2 hasAnchor" number="3.2">
+<div id="letters" class="section level2 hasAnchor" number="1.2">
 <h2 class="hasAnchor">
-<span class="header-section-number">3.2</span> Letters<a href="#letters-2" class="anchor-section" aria-label="Anchor link to header"></a>
+<span class="header-section-number">1.2</span> Letters<a href="#letters" class="anchor-section" aria-label="Anchor link to header"></a>
 </h2>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">py_run_string</span><span class="op">(</span><span class="st">'a, c = symbols("a c")'</span><span class="op">)</span>
 <span class="fu">eg</span><span class="op">(</span><span class="st">'a*x**2 + c*x'</span><span class="op">)</span></code></pre></div>
 <p><span class="math display">\[
@@ -2504,10 +2281,19 @@ a x^{2} + c x &amp;= a \left(x^{2} + \frac{c x}{a}\right) \\
 &amp;= a \left(x + \operatorname{sign}{\left(\frac{c}{a} \right)} \frac{\left|{c}\right|}{2 \left|{a}\right|}\right)^{2} - \operatorname{sign}{\left(a \right)} \frac{c^{2}}{4 \left|{a}\right|}
 \end{align}
 \]</span></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">eg</span><span class="op">(</span><span class="st">'a*y**2 + c*y'</span>, <span class="st">'y'</span><span class="op">)</span></code></pre></div>
+<p><span class="math display">\[
+\displaystyle \begin{align}
+a y^{2} + c y &amp;= a \left(y^{2} + \frac{c y}{a}\right) \\
+&amp;= a \left(y^{2} + \frac{c^{2}}{4 a^{2}} + \frac{c y}{a}\right) - a \frac{c^{2}}{4 a^{2}} \\
+&amp;= a \left(y + \operatorname{sign}{\left(\frac{c}{a} \right)} \frac{\left|{c}\right|}{2 \left|{a}\right|}\right)^{2} - \operatorname{sign}{\left(a \right)} \frac{c^{2}}{4 \left|{a}\right|}
+\end{align}
+\]</span></p>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAnQ29tcGxldGUgdGhlIHNxdWFyZScKYXV0aG9yOiAnZm5hdWZlbCcKZW1haWw6ICdodHRwczovL2ZuYXVmZWwuZ2l0aHViLmlvLycKZGF0ZTogJyAgICh2LiBgciBmb3JtYXQoU3lzLkRhdGUoKSwgIiVkLyVtLyVZIilgKScKbGFuZzogJ2VuJwoKb3V0cHV0OgogICMgVG8gaW5zdGFsbCB0aGVzZSBvdXRwdXQgZm9ybWF0cywgcnVuCiAgIyAgIGluc3RhbGwucGFja2FnZXMoImRldnRvb2xzIikKICAjICAgZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKCJmbmF1ZmVsL2ZuYXVmZWxSbWQiKQogIGZuYXVmZWxSbWQ6Omh0bWxfcmVwb3J0OgogICAgW10KLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0KIyBUaGUgbmV4dCBjb21tYW5kIGNvbmZpZ3VyZXMgTUFOWSB0aGluZ3MgYW5kIGxvYWRzIHF1aXRlIGEgZmV3IHBhY2thZ2VzLgojCiMgSWYgeW91IHdhbnQgdG8gc2VlIHdoYXQncyBiZWluZyBkb25lLCBleGVjdXRlCiMKIyAgIGNhdCgKIyAgICAgc3lzdGVtLmZpbGUoCiMgICAgICAgInJtYXJrZG93bi9yZXNvdXJjZXMvUi9fY29tbW9uX3JlcG9ydC5SIiwKIyAgICAgICBwYWNrYWdlID0gImZuYXVmZWxSbWQiCiMgICAgICkKIyAgICkKIwojIHRvIGZpbmQgb3V0IHRoZSBsb2NhdGlvbiBvZiB0aGUgZmlsZS4gVGhlbiBvcGVuIHRoZSBmaWxlLgojCiMgSWYgeW91IHdhbnQgdG8gY2hhbmdlIHRoZSBjb25maWd1cmF0aW9uLCBjb3B5IHRoZSBmaWxlLCBlZGl0IGl0LCBhbmQKIyBzb3VyY2UgaXQgaW5zdGVhZCBvZiB0aGUgcGFja2FnZSBmaWxlLgojCiMgT3Igc2ltcGx5IHdyaXRlIHlvdXIgY29tbWFuZHMgaGVyZSBpbiB0aGlzIGNvZGUgY2h1bmsuCgpzb3VyY2UoCiAgc3lzdGVtLmZpbGUoCiAgICAicm1hcmtkb3duL3Jlc291cmNlcy9SL19jb21tb25fcmVwb3J0LlIiLAogICAgcGFja2FnZSA9ICJmbmF1ZmVsUm1kIgogICkKKQoKbGlicmFyeShyZXRpY3VsYXRlKQpzeW1weSA8LSBpbXBvcnQoJ3N5bXB5JykKcHlfcnVuX3N0cmluZygnZnJvbSBzeW1weSBpbXBvcnQgKicpCnB5X3J1bl9zdHJpbmcoJ2Zyb20gc3ltcHkucGFyc2luZy5zeW1weV9wYXJzZXIgaW1wb3J0IFQnKQpweV9ydW5fc3RyaW5nKCdpbml0X3ByaW50aW5nKHVzZV9sYXRleCA9IFRydWUpJykKcHlfcnVuX3N0cmluZygneCwgeSA9IHN5bWJvbHMoXCd4IHlcJyknKQoKbGlicmFyeShzeW1weWdsdWUpCmBgYAoKCiMgQ29tcGxldGUgdGhlIHNxdWFyZTogZmlyc3QgdHJ5CgpNYWtlIGZ1bmN0aW9uIHRvIGRlYWwgb25seSB3aXRoIGV4cHJlc3Npb24gJGF4XjIgKyBjeCQuCgpUaGUgZnVuY3Rpb24gcmV0dXJucyBhIGxpc3Qgb2YgZXhwcmVzc2lvbnMgd2l0aCB0aGUgc3RlcHMgb2YgdGhlIGNvbXB1dGF0aW9uLgoKYGBge3B5dGhvbn0KZGVmIGNvbXBsZXRlc3EoZSwgc3ltYik6CiAgCiAgeCA9IHN5bWIKICBfZXBvbHkgPSBlLmFzX3BvbHkoeCkKICAKICBfYSA9IF9lcG9seS5jb2VmZl9tb25vbWlhbCh4KioyKQogIF9jID0gX2Vwb2x5LmNvZWZmX21vbm9taWFsKHgpCiAgCiAgX3Rlcm1zX21vbmljID0gbW9uaWMoX2EqeCoqMiArIF9jKngsIHgpCiAgX3BhcnQgPSBfYSAqIFVuZXZhbHVhdGVkRXhwcihfdGVybXNfbW9uaWMpCiAgCiAgX2FkZF90ZXJtID0gX2EgKiAoX3Rlcm1zX21vbmljICsgVW5ldmFsdWF0ZWRFeHByKF9jKioyIC8gKDQqX2EqKjIpKSkgLSBfYSAqIFVuZXZhbHVhdGVkRXhwcihfYyoqMiAvICg0Kl9hKioyKSkKICAKICBfc3F1YXJlID0gX2EgKiAoeCArIHNpZ24oX2MvX2EpICogVW5ldmFsdWF0ZWRFeHByKGFicyhfYykgLyAoMiphYnMoX2EpKSkpKioyICsgLXNpZ24oX2EpICogVW5ldmFsdWF0ZWRFeHByKF9jKioyL2Ficyg0Kl9hKSkKICAKICByZXR1cm4gW19wYXJ0LCBfYWRkX3Rlcm0sIF9zcXVhcmVdCmBgYAoKUHJvY2VzcyBhbiBleGFtcGxlOgoKYGBge3J9CmVnIDwtIGZ1bmN0aW9uKGUpIHsKICAKICBweV9ydW5fc3RyaW5nKAogICAgcGFzdGUoCiAgICAgICdlID0gc3ltcGlmeSgnLAogICAgICBlLAogICAgICAnKScKICAgICkKICApCiAgCiAgcHlfcnVuX3N0cmluZygnc3RlcHMgPSBjb21wbGV0ZXNxKGUsIHgpJykKICBweV9ydW5fc3RyaW5nKCdzdGVwc19sYXRleCA9IFtsYXRleChzKSBmb3IgcyBpbiBzdGVwc10nKQoKICBzdGVwc19sYXRleCA8LSBwYXN0ZTAoCiAgICBweSRzdGVwc19sYXRleCwKICAgIGNvbGxhcHNlID0gJ1xcXFwgXG4nCiAgKQoKICBwYXN0ZTAoCiAgICAnJCRcbiBcXGRpc3BsYXlzdHlsZSBcXGJlZ2lue2FsaWdufSBcbicsCiAgICBweSRsYXRleChweSRlKSwKICAgICdcXFxcIFxuJywKICAgIHN0ZXBzX2xhdGV4LAogICAgJ1xuIFxcZW5ke2FsaWdufSBcbiQkJywKICAgIGNvbGxhcHNlID0gJ1xuJwogICkgJT4lIG0oKQogIAp9CmBgYAoKCiMjIE51bWJlcnMKCmBgYHtyfQplZygnMip4KioyICsgMyp4JykKZWcoJzIqeCoqMiAtIDMqeCcpCmVnKCctMip4KioyICsgMyp4JykKZWcoJy0yKngqKjIgLSAzKngnKQpgYGAKCgojIyBMZXR0ZXJzCgpgYGB7cn0KcHlfcnVuX3N0cmluZygnYSwgYyA9IHN5bWJvbHMoImEgYyIpJykKZWcoJ2EqeCoqMiArIGMqeCcpCmBgYAoKCiMgU2Vjb25kIHRyeQoKVXNlIHBhcnNlX2V4cHIgdG8gY29udHJvbCBvcmRlciBhbmQgc2ltcGxpZmljYXRpb25zLgoKaHR0cHM6Ly9kb2NzLnN5bXB5Lm9yZy9sYXRlc3QvbW9kdWxlcy9wYXJzaW5nLmh0bWwKCk5vIGdvb2QuCgpgYGB7cHl0aG9ufQpkZWYgY29tcGxldGVzcShlLCBzeW1iKToKICAKICB4ID0gc3ltYgogIF9lcG9seSA9IGUuYXNfcG9seSh4KQogIAogIF9hID0gX2Vwb2x5LmNvZWZmX21vbm9taWFsKHgqKjIpCiAgX2MgPSBfZXBvbHkuY29lZmZfbW9ub21pYWwoeCkKICAKICBfdGVybXNfbW9uaWMgPSBtb25pYyhfYSp4KioyICsgX2MqeCwgeCkKICAKICBfcGFydCA9IHBhcnNlX2V4cHIoIFwKICAgICdfYSAqIChfdGVybXNfbW9uaWMpJywgXAogICAgbG9jYWxfZGljdD1sb2NhbHMoKSwgXAogICAgZXZhbHVhdGU9RmFsc2UKICApCiAgCiAgX2FkZF90ZXJtID0gcGFyc2VfZXhwciggXAogICAgJ19hICogKF90ZXJtc19tb25pYyArIF9jKioyIC8gKDIqKjIqX2EqKjIpKSAtIF9hICogKF9jKioyIC8gKDIqKjIqX2EqKjIpKScsIFwKICAgIGxvY2FsX2RpY3Q9bG9jYWxzKCksIFwKICAgIGV2YWx1YXRlPUZhbHNlCiAgKQogIAogICMjIyBTdG9wcGVkIGhlcmUKICAKICBfYSAqIChfdGVybXNfbW9uaWMgKyBVbmV2YWx1YXRlZEV4cHIoX2MqKjIgLyAoNCpfYSoqMikpKSAtIF9hICogVW5ldmFsdWF0ZWRFeHByKF9jKioyIC8gKDQqX2EqKjIpKQogIAogIF9zcXVhcmUgPSBfYSAqICh4ICsgc2lnbihfYy9fYSkgKiBVbmV2YWx1YXRlZEV4cHIoYWJzKF9jKSAvICgyKmFicyhfYSkpKSkqKjIgKyAtc2lnbihfYSkgKiBVbmV2YWx1YXRlZEV4cHIoX2MqKjIvYWJzKDQqX2EpKQogIAogIHJldHVybiBbX3BhcnQsIF9hZGRfdGVybSwgX3NxdWFyZV0KYGBgCgoKIyMgTnVtYmVycwoKYGBge3J9CmVnKCcyKngqKjIgKyAzKngnKQplZygnMip4KioyIC0gMyp4JykKZWcoJy0yKngqKjIgKyAzKngnKQplZygnLTIqeCoqMiAtIDMqeCcpCmBgYAoKCiMjIExldHRlcnMKCmBgYHtyfQpweV9ydW5fc3RyaW5nKCdhLCBjID0gc3ltYm9scygiYSBjIiknKQplZygnYSp4KioyICsgYyp4JykKYGBgCgoKIyBUaWR5IHVwIGZpcnN0IHRyeQoKYGBge3B5dGhvbn0KZGVmIGNvbXBsZXRlc3EoZSwgc3ltYik6CiAgCiAgIyBheF4yICsgY3gKICB4ID0gc3ltYgogIGVwb2x5ID0gZS5hc19wb2x5KHgpCiAgCiAgYSA9IGVwb2x5LmNvZWZmX21vbm9taWFsKHgqKjIpCiAgYyA9IGVwb2x5LmNvZWZmX21vbm9taWFsKHgpCiAgCiAgIyB4XjIgKyBjeC9hCiAgdGVybXNfbW9uaWMgPSBtb25pYyhhKngqKjIgKyBjKngsIHgpCiAgCiAgIyBhICogKCB4XjIgKyBjeC9hICkKICBwYXJ0ID0gYSAqIFVuZXZhbHVhdGVkRXhwcih0ZXJtc19tb25pYykKICAKICAjIGEgKiAoIHheMiArIGN4L2EgKyBjXjIvNGFeMiApIC0gYSAqIGNeMi80YV4yCiAgYWRkX3Rlcm0gPSBhICogXAogICAgKCBcCiAgICAgIHRlcm1zX21vbmljICsgVW5ldmFsdWF0ZWRFeHByKGMqKjIgLyAoNCphKioyKSkgXAogICAgKSBcCiAgICAtIGEgKiBVbmV2YWx1YXRlZEV4cHIoYyoqMiAvICg0KmEqKjIpKQogIAogICMgYSAqICggeCArIGMvMmEgKV4yIC0gY14yLzRhCiAgc3F1YXJlID0gYSAqIFwKICAgICggXAogICAgICB4ICsgc2lnbihjL2EpICogVW5ldmFsdWF0ZWRFeHByKGFicyhjKSAvICgyKmFicyhhKSkpIFwKICAgICkqKjIgXAogICAgKyAtc2lnbihhKSAqIFVuZXZhbHVhdGVkRXhwcihjKioyL2Ficyg0KmEpKQogIAogIHJldHVybiBbZSwgcGFydCwgYWRkX3Rlcm0sIHNxdWFyZV0KYGBgCgoKQSBmdW5jdGlvbiB0byBnZW5lcmF0ZSBhbGlnbiBmcm9tIGEgUHl0aG9uIGxpc3Q6CgpgYGB7cn0KYWxpZ24gPC0gZnVuY3Rpb24oY29tbWFuZCwgZm9ybSA9IGMoJ3dpZGUnLCAnbmFycm93JykpIHsKICAKICBweV9ydW5fc3RyaW5nKAogICAgcGFzdGUwKAogICAgICAnX3N0ZXBzID0gJywgY29tbWFuZAogICAgKQogICkKICAKICBmb3JtIDwtIG1hdGNoLmFyZyhmb3JtKQogIAogIGlmIChmb3JtID09ICduYXJyb3cnKSB7CiAgICBiZWZvcmUgPC0gcGFzdGUwKAogICAgICAnJCRcbiBcXGRpc3BsYXlzdHlsZSBcXGJlZ2lue2FsaWdufSBcbicsCiAgICAgICcmICcsIG0oJ3t7X3N0ZXBzWzBdfX0nKSwgJ1xcXFwgXG4nCiAgICApCiAgfSBlbHNlIHsKICAgIGJlZm9yZSA8LSBwYXN0ZTAoCiAgICAgICckJFxuIFxcZGlzcGxheXN0eWxlIFxcYmVnaW57YWxpZ259IFxuJywKICAgICAgbSgne3tfc3RlcHNbMF19fScpLCAnICcKICAgICkKICB9CiAgCiAgYWZ0ZXIgPC0gJ1xuIFxcZW5ke2FsaWdufSBcbiQkJwoKICBtaWRkbGUgPC0gbSgKICAgICcmPSB7e19zdGVwc1sxOl19fSAnCiAgKSAlPiUgCiAgICBwYXN0ZTAoY29sbGFwc2UgPSAnXFxcXCBcbicpCgogIG0ocGFzdGUwKGJlZm9yZSwgbWlkZGxlLCBhZnRlciwgY29sbGFwc2UgPSAnJykpCgp9CmBgYAoKCk5ldyBlZyBmdW5jdGlvbjoKCmBgYHtyfQplZyA8LSBmdW5jdGlvbihleHByZXNzaW9uLCB4ID0gJ3gnKSB7CiAgCiAgcHlfcnVuX3N0cmluZygKICAgIHBhc3RlKAogICAgICAnZXhwcmVzc2lvbiA9IHN5bXBpZnkoJywKICAgICAgZXhwcmVzc2lvbiwKICAgICAgJyknCiAgICApCiAgKQogIAogIHggPSBhcy5jaGFyYWN0ZXIoeCkKICBhbGlnbihwYXN0ZTAoJ2NvbXBsZXRlc3EoZXhwcmVzc2lvbiwgJywgeCwgJyknKSkKICAKfQpgYGAKCgojIyBOdW1iZXJzCgpgYGB7cn0KZWcoJzIqeCoqMiArIDMqeCcpCmVnKCcyKngqKjIgLSAzKngnKQplZygnLTIqeCoqMiArIDMqeCcpCmVnKCctMip4KioyIC0gMyp4JykKYGBgCgoKIyMgTGV0dGVycwoKYGBge3J9CnB5X3J1bl9zdHJpbmcoJ2EsIGMgPSBzeW1ib2xzKCJhIGMiKScpCmVnKCdhKngqKjIgKyBjKngnKQpgYGAKCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAnQ29tcGxldGUgdGhlIHNxdWFyZScKYXV0aG9yOiAnZm5hdWZlbCcKZW1haWw6ICdodHRwczovL2ZuYXVmZWwuZ2l0aHViLmlvLycKZGF0ZTogJyAgICh2LiBgciBmb3JtYXQoU3lzLkRhdGUoKSwgIiVkLyVtLyVZIilgKScKbGFuZzogJ2VuJwoKb3V0cHV0OgogICMgVG8gaW5zdGFsbCB0aGVzZSBvdXRwdXQgZm9ybWF0cywgcnVuCiAgIyAgIGluc3RhbGwucGFja2FnZXMoImRldnRvb2xzIikKICAjICAgZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKCJmbmF1ZmVsL2ZuYXVmZWxSbWQiKQogIGZuYXVmZWxSbWQ6Omh0bWxfcmVwb3J0OgogICAgW10KLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0KIyBUaGUgbmV4dCBjb21tYW5kIGNvbmZpZ3VyZXMgTUFOWSB0aGluZ3MgYW5kIGxvYWRzIHF1aXRlIGEgZmV3IHBhY2thZ2VzLgojCiMgSWYgeW91IHdhbnQgdG8gc2VlIHdoYXQncyBiZWluZyBkb25lLCBleGVjdXRlCiMKIyAgIGNhdCgKIyAgICAgc3lzdGVtLmZpbGUoCiMgICAgICAgInJtYXJrZG93bi9yZXNvdXJjZXMvUi9fY29tbW9uX3JlcG9ydC5SIiwKIyAgICAgICBwYWNrYWdlID0gImZuYXVmZWxSbWQiCiMgICAgICkKIyAgICkKIwojIHRvIGZpbmQgb3V0IHRoZSBsb2NhdGlvbiBvZiB0aGUgZmlsZS4gVGhlbiBvcGVuIHRoZSBmaWxlLgojCiMgSWYgeW91IHdhbnQgdG8gY2hhbmdlIHRoZSBjb25maWd1cmF0aW9uLCBjb3B5IHRoZSBmaWxlLCBlZGl0IGl0LCBhbmQKIyBzb3VyY2UgaXQgaW5zdGVhZCBvZiB0aGUgcGFja2FnZSBmaWxlLgojCiMgT3Igc2ltcGx5IHdyaXRlIHlvdXIgY29tbWFuZHMgaGVyZSBpbiB0aGlzIGNvZGUgY2h1bmsuCgpzb3VyY2UoCiAgc3lzdGVtLmZpbGUoCiAgICAicm1hcmtkb3duL3Jlc291cmNlcy9SL19jb21tb25fcmVwb3J0LlIiLAogICAgcGFja2FnZSA9ICJmbmF1ZmVsUm1kIgogICkKKQoKbGlicmFyeShyZXRpY3VsYXRlKQpzeW1weSA8LSBpbXBvcnQoJ3N5bXB5JykKcHlfcnVuX3N0cmluZygnZnJvbSBzeW1weSBpbXBvcnQgKicpCnB5X3J1bl9zdHJpbmcoJ2Zyb20gc3ltcHkucGFyc2luZy5zeW1weV9wYXJzZXIgaW1wb3J0IFQnKQpweV9ydW5fc3RyaW5nKCdpbml0X3ByaW50aW5nKHVzZV9sYXRleCA9IFRydWUpJykKcHlfcnVuX3N0cmluZygneCwgeSA9IHN5bWJvbHMoXCd4IHlcJyknKQoKbGlicmFyeShzeW1weWdsdWUpCmBgYAoKCiMgQ29tcGxldGUgdGhlIHNxdWFyZQoKTWFrZSBmdW5jdGlvbiB0byBkZWFsIG9ubHkgd2l0aCBleHByZXNzaW9uICRheF4yICsgY3gkLgoKVGhlIGZ1bmN0aW9uIHJldHVybnMgYSBsaXN0IG9mIGV4cHJlc3Npb25zIHdpdGggdGhlIHN0ZXBzIG9mIHRoZSBjb21wdXRhdGlvbi4KCmBgYHtweXRob259CmRlZiBjb21wbGV0ZXNxKGUsIHN5bWIpOgogIAogICMgYXheMiArIGN4CiAgeCA9IHN5bWIKICBlcG9seSA9IGUuYXNfcG9seSh4KQogIAogIGEgPSBlcG9seS5jb2VmZl9tb25vbWlhbCh4KioyKQogIGMgPSBlcG9seS5jb2VmZl9tb25vbWlhbCh4KQogIAogICMgeF4yICsgY3gvYQogIHRlcm1zX21vbmljID0gbW9uaWMoYSp4KioyICsgYyp4LCB4KQogIAogICMgYSAqICggeF4yICsgY3gvYSApCiAgcGFydCA9IGEgKiBVbmV2YWx1YXRlZEV4cHIodGVybXNfbW9uaWMpCiAgCiAgIyBhICogKCB4XjIgKyBjeC9hICsgY14yLzRhXjIgKSAtIGEgKiBjXjIvNGFeMgogIGFkZF90ZXJtID0gYSAqIFwKICAgICggXAogICAgICB0ZXJtc19tb25pYyArIFVuZXZhbHVhdGVkRXhwcihjKioyIC8gKDQqYSoqMikpIFwKICAgICkgXAogICAgLSBhICogVW5ldmFsdWF0ZWRFeHByKGMqKjIgLyAoNCphKioyKSkKICAKICAjIGEgKiAoIHggKyBjLzJhICleMiAtIGNeMi80YQogIHNxdWFyZSA9IGEgKiBcCiAgICAoIFwKICAgICAgeCArIHNpZ24oYy9hKSAqIFVuZXZhbHVhdGVkRXhwcihhYnMoYykgLyAoMiphYnMoYSkpKSBcCiAgICApKioyIFwKICAgICsgLXNpZ24oYSkgKiBVbmV2YWx1YXRlZEV4cHIoYyoqMi9hYnMoNCphKSkKICAKICByZXR1cm4gW2UsIHBhcnQsIGFkZF90ZXJtLCBzcXVhcmVdCmBgYAoKCkEgZnVuY3Rpb24gdG8gZ2VuZXJhdGUgYWxpZ24gZnJvbSBhIFB5dGhvbiBsaXN0OgoKYGBge3J9CmFsaWduIDwtIGZ1bmN0aW9uKGNvbW1hbmQsIGZvcm0gPSBjKCd3aWRlJywgJ25hcnJvdycpKSB7CiAgCiAgcHlfcnVuX3N0cmluZygKICAgIHBhc3RlMCgKICAgICAgJ19zdGVwcyA9ICcsIGNvbW1hbmQKICAgICkKICApCiAgCiAgZm9ybSA8LSBtYXRjaC5hcmcoZm9ybSkKICAKICBpZiAoZm9ybSA9PSAnbmFycm93JykgewogICAgYmVmb3JlIDwtIHBhc3RlMCgKICAgICAgJyQkXG4gXFxkaXNwbGF5c3R5bGUgXFxiZWdpbnthbGlnbn0gXG4nLAogICAgICAnJiAnLCBtKCd7e19zdGVwc1swXX19JyksICdcXFxcIFxuJwogICAgKQogIH0gZWxzZSB7CiAgICBiZWZvcmUgPC0gcGFzdGUwKAogICAgICAnJCRcbiBcXGRpc3BsYXlzdHlsZSBcXGJlZ2lue2FsaWdufSBcbicsCiAgICAgIG0oJ3t7X3N0ZXBzWzBdfX0nKSwgJyAnCiAgICApCiAgfQogIAogIGFmdGVyIDwtICdcbiBcXGVuZHthbGlnbn0gXG4kJCcKCiAgbWlkZGxlIDwtIG0oCiAgICAnJj0ge3tfc3RlcHNbMTpdfX0gJwogICkgJT4lIAogICAgcGFzdGUwKGNvbGxhcHNlID0gJ1xcXFwgXG4nKQoKICBtKHBhc3RlMChiZWZvcmUsIG1pZGRsZSwgYWZ0ZXIsIGNvbGxhcHNlID0gJycpKQoKfQpgYGAKCkEgZnVuY3Rpb24gdG8gcnVuIGFuIGV4YW1wbGU6CgpgYGB7cn0KZWcgPC0gZnVuY3Rpb24oZXhwcmVzc2lvbiwgeCA9ICd4JykgewogIAogIHB5X3J1bl9zdHJpbmcoCiAgICBwYXN0ZSgKICAgICAgJ2V4cHJlc3Npb24gPSBzeW1waWZ5KCcsCiAgICAgIGV4cHJlc3Npb24sCiAgICAgICcpJwogICAgKQogICkKICAKICB4ID0gYXMuY2hhcmFjdGVyKHgpCiAgY29tbWFuZCA8LSBwYXN0ZTAoJ2NvbXBsZXRlc3EoZXhwcmVzc2lvbiwgJywgeCwgJyknKQogIGFsaWduKGNvbW1hbmQpCiAgCn0KYGBgCgoKIyMgTnVtYmVycwoKYGBge3J9CmVnKCcyKngqKjIgKyAzKngnKQplZygnMip4KioyIC0gMyp4JykKZWcoJy0yKnkqKjIgKyAzKnknLCAneScpCmVnKCctMip5KioyIC0gMyp5JywgJ3knKQpgYGAKCgojIyBMZXR0ZXJzCgpgYGB7cn0KcHlfcnVuX3N0cmluZygnYSwgYyA9IHN5bWJvbHMoImEgYyIpJykKZWcoJ2EqeCoqMiArIGMqeCcpCmVnKCdhKnkqKjIgKyBjKnknLCAneScpCmBgYAoKCg==</div>
 
 
 

@@ -50,143 +50,11 @@ library(sympyglue)
 ```
 
 
-# Complete the square: first try
+# Complete the square
 
 Make function to deal only with expression $ax^2 + cx$.
 
 The function returns a list of expressions with the steps of the computation.
-
-```{python}
-def completesq(e, symb):
-  
-  x = symb
-  _epoly = e.as_poly(x)
-  
-  _a = _epoly.coeff_monomial(x**2)
-  _c = _epoly.coeff_monomial(x)
-  
-  _terms_monic = monic(_a*x**2 + _c*x, x)
-  _part = _a * UnevaluatedExpr(_terms_monic)
-  
-  _add_term = _a * (_terms_monic + UnevaluatedExpr(_c**2 / (4*_a**2))) - _a * UnevaluatedExpr(_c**2 / (4*_a**2))
-  
-  _square = _a * (x + sign(_c/_a) * UnevaluatedExpr(abs(_c) / (2*abs(_a))))**2 + -sign(_a) * UnevaluatedExpr(_c**2/abs(4*_a))
-  
-  return [_part, _add_term, _square]
-```
-
-Process an example:
-
-```{r}
-eg <- function(e) {
-  
-  py_run_string(
-    paste(
-      'e = sympify(',
-      e,
-      ')'
-    )
-  )
-  
-  py_run_string('steps = completesq(e, x)')
-  py_run_string('steps_latex = [latex(s) for s in steps]')
-
-  steps_latex <- paste0(
-    py$steps_latex,
-    collapse = '\\\\ \n'
-  )
-
-  paste0(
-    '$$\n \\displaystyle \\begin{align} \n',
-    py$latex(py$e),
-    '\\\\ \n',
-    steps_latex,
-    '\n \\end{align} \n$$',
-    collapse = '\n'
-  ) %>% m()
-  
-}
-```
-
-
-## Numbers
-
-```{r}
-eg('2*x**2 + 3*x')
-eg('2*x**2 - 3*x')
-eg('-2*x**2 + 3*x')
-eg('-2*x**2 - 3*x')
-```
-
-
-## Letters
-
-```{r}
-py_run_string('a, c = symbols("a c")')
-eg('a*x**2 + c*x')
-```
-
-
-# Second try
-
-Use parse_expr to control order and simplifications.
-
-https://docs.sympy.org/latest/modules/parsing.html
-
-No good.
-
-```{python}
-def completesq(e, symb):
-  
-  x = symb
-  _epoly = e.as_poly(x)
-  
-  _a = _epoly.coeff_monomial(x**2)
-  _c = _epoly.coeff_monomial(x)
-  
-  _terms_monic = monic(_a*x**2 + _c*x, x)
-  
-  _part = parse_expr( \
-    '_a * (_terms_monic)', \
-    local_dict=locals(), \
-    evaluate=False
-  )
-  
-  _add_term = parse_expr( \
-    '_a * (_terms_monic + _c**2 / (2**2*_a**2)) - _a * (_c**2 / (2**2*_a**2))', \
-    local_dict=locals(), \
-    evaluate=False
-  )
-  
-  ### Stopped here
-  
-  _a * (_terms_monic + UnevaluatedExpr(_c**2 / (4*_a**2))) - _a * UnevaluatedExpr(_c**2 / (4*_a**2))
-  
-  _square = _a * (x + sign(_c/_a) * UnevaluatedExpr(abs(_c) / (2*abs(_a))))**2 + -sign(_a) * UnevaluatedExpr(_c**2/abs(4*_a))
-  
-  return [_part, _add_term, _square]
-```
-
-
-## Numbers
-
-```{r}
-eg('2*x**2 + 3*x')
-eg('2*x**2 - 3*x')
-eg('-2*x**2 + 3*x')
-eg('-2*x**2 - 3*x')
-```
-
-
-## Letters
-
-```{r}
-py_run_string('a, c = symbols("a c")')
-eg('a*x**2 + c*x')
-```
-
-
-# Tidy up first try
 
 ```{python}
 def completesq(e, symb):
@@ -259,8 +127,7 @@ align <- function(command, form = c('wide', 'narrow')) {
 }
 ```
 
-
-New eg function:
+A function to run an example:
 
 ```{r}
 eg <- function(expression, x = 'x') {
@@ -274,7 +141,8 @@ eg <- function(expression, x = 'x') {
   )
   
   x = as.character(x)
-  align(paste0('completesq(expression, ', x, ')'))
+  command <- paste0('completesq(expression, ', x, ')')
+  align(command)
   
 }
 ```
@@ -285,8 +153,8 @@ eg <- function(expression, x = 'x') {
 ```{r}
 eg('2*x**2 + 3*x')
 eg('2*x**2 - 3*x')
-eg('-2*x**2 + 3*x')
-eg('-2*x**2 - 3*x')
+eg('-2*y**2 + 3*y', 'y')
+eg('-2*y**2 - 3*y', 'y')
 ```
 
 
@@ -295,6 +163,7 @@ eg('-2*x**2 - 3*x')
 ```{r}
 py_run_string('a, c = symbols("a c")')
 eg('a*x**2 + c*x')
+eg('a*y**2 + c*y', 'y')
 ```
 
 
