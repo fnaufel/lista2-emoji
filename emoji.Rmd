@@ -67,7 +67,9 @@ Os dados da sua questão dependem do valor de $n$ sorteado para você.
 
 [Veja o seu valor de $n$ nesta lista.](#nums)
 
-Você vai achar equações de cônicas que são o rosto, os olhos, o nariz, a boca e as orelhas de um emoji no $\mathbb{R}^2$.
+Você vai achar [equações de cônicas]{.hl} que são o rosto, os olhos, o nariz, a boca e as orelhas de um emoji no $\mathbb{R}^2$.
+
+Além disso, você vai achar [inequações envolvendo cônicas]{.hl} que correspondem às áreas preenchidas da boca e das orelhas.
 
 ::: {.rmdimportant}
 
@@ -149,10 +151,10 @@ xc, yc = symbols('x_C, y_C', real = True)
 rc = symbols('r_C', real = True, positive = True)
 ```
 
-Seu emoji vai ficar assim:
+[]{#figura}Seu emoji vai ficar assim:
 
 ```{r echo=FALSE, out.width='50%'}
-knitr::include_graphics('emoji-com-orelha.png')
+knitr::include_graphics('emoji.png')
 ```
 
 
@@ -302,15 +304,10 @@ knitr::include_graphics('emoji-com-orelha.png')
       '\\ ,\\quad p = {{pbocasups}}$\n\n\n'
     )
     ```
-    
 
 * A [parte inferior da boca]{.hl} também é uma [parábola, cuja equação geral é dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
 * Ache a [equação canônica]{.hl} desta parábola.
-
-* Ache as coordenadas dos [pontos onde as duas parábolas se interceptam]{.hl} --- i.e., os cantos das bocas.
-
-* No Geogebra, aprenda como [traçar estas duas parábolas]{.hl} apenas na região entre os dois pontos de interseção, para que o traçado da boca não ultrapasse os cantos.
 
     ```{python echo=FALSE}
     eq_bocainf = -18*rc*y - 15*rc**2 + 26*xc**2 + 26*x**2 + 18*rc*yc - 52*xc*x
@@ -327,14 +324,18 @@ knitr::include_graphics('emoji-com-orelha.png')
       '1. $\\displaystyle \\quad {{eqs_bocainf}} = 0$\n\n\n'
     )
     ```
-    
+
+* Escreva uma [inequação]{.hl} que represente a região da boca que está [preenchida em vermelho na figura](#figura).
+
+* No Geogebra, entre a inequação e configure-a para que a área seja preenchida em vermelho.
+
 
 ## Orelhas
 
 * As [orelhas]{.hl} são os ramos de uma [hipérbole de eixo real          horizontal, de excentricidade $11/10$]{.hl}, cujos [vértices]{.hl} são os [dois pontos do círculo do rosto]{.hl} que têm a [coordenada $y$ igual ao valor abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
     ```{python echo=FALSE}
-    yorelha = yc + rc / 5
+    yorelha = yc
     
     yorelhas = [
       yorelha.subs({yc: yy, rc: rr}) for (yy, rr) in zip(r.df.yc, r.df.rc)
@@ -348,6 +349,25 @@ knitr::include_graphics('emoji-com-orelha.png')
     ```
     
 * Ache a [equação canônica]{.hl} desta hipérbole.
+
+* Escreva uma [inequação]{.hl} que represente a região das orelhas que está [preenchida em rosa na figura](#figura). [A distância $d$ entre o centro do rosto e a borda vertical de cada orelha é a dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
+
+    ```{python echo=FALSE}
+    dorelha = 9*rc / 8
+    
+    dorelhas = [
+      dorelha.subs({rc: rr}) for rr in r.df.rc
+    ]
+    ```
+    
+    ```{r echo=FALSE}
+    m(
+      '1. $\\displaystyle \\quad d = {{dorelhas}}$\n\n\n'
+    )
+    ```
+    
+
+* No Geogebra, entre a inequação e configure-a para que a área seja preenchida em rosa.
 
 
 # Números dos alunos, por matrícula { #nums }
