@@ -1,5 +1,5 @@
 ---
-title: 'Lista 2: emoji com cônicas'
+title: 'Lista 2: emoji com cônicas: respostas'
 author: 'fnaufel'
 email: 'https://fnaufel.github.io/'
 date: '   (v. `r format(Sys.Date(), "%d/%m/%Y")`)'
@@ -43,43 +43,13 @@ library(reticulate)
 sympy <- import('sympy')
 py_run_string('from sympy import *')
 py_run_string('init_printing(use_latex = True)')
+source_python('conics.py')
 
-py_transformer <- function(text, envir) {
+library(sympyglue)
 
-  decimal <- ifelse(
-    getOption('OutDec') == ',',
-    '"comma"',
-    '"period"'
-  )
-
-  py_run_string(
-    paste0(
-      'm_latex = latex(',
-      text,
-      ', decimal_separator = ',
-      decimal,
-      ')'
-    )
-  )
-
-  py$m_latex
-
-}
-
-m <- function(template, asis = getOption('m_asis', FALSE)) {
-
-  f <- ifelse(asis, cat, knitr::asis_output)
-
-  f(
-    glue::glue(
-      template,
-      .open = '{{',
-      .close = '}}',
-      .transformer = py_transformer
-    )
-  )
-
-}
+opts_chunk$set(
+  echo = FALSE
+)
 
 ```
 
@@ -103,7 +73,9 @@ Os dados da sua questão dependem do valor de $n$ sorteado para você.
 
 [Veja o seu valor de $n$ nesta lista.](#nums)
 
-Você vai achar equações de cônicas que são o rosto, os olhos, o nariz, a boca e as orelhas de um emoji no $\mathbb{R}^2$.
+Você vai achar [equações de cônicas]{.hl} que são o rosto, os olhos, o nariz, a boca e as orelhas de um emoji no $\mathbb{R}^2$.
+
+Além disso, você vai achar [inequações envolvendo cônicas]{.hl} que correspondem às áreas preenchidas da boca e das orelhas.
 
 ::: {.rmdimportant}
 
@@ -185,10 +157,10 @@ xc, yc = symbols('x_C, y_C', real = True)
 rc = symbols('r_C', real = True, positive = True)
 ```
 
-Seu emoji vai ficar assim:
+[]{#figura}Seu emoji vai ficar assim:
 
 ```{r echo=FALSE, out.width='50%'}
-knitr::include_graphics('emoji-com-orelha.png')
+knitr::include_graphics('emoji.png')
 ```
 
 
@@ -206,29 +178,115 @@ knitr::include_graphics('emoji-com-orelha.png')
       for (xx, yy, rr) 
       in zip(r.df.xc, r.df.yc, r.df.rc)
     ]
-    
-    eqs_face_latex = [latex(e) for e in eqs_face]
     ```
     
     ```{r echo=FALSE}
-    eqs_face <- paste0(
+    m(
       '1. $\\displaystyle \\quad ',
-      py$eqs_face_latex,
-      '$',
-      collapse = '\n\n'
+      '{{eqs_face}}',
+      '$\n\n\n',
     )
     ```
     
-    ```{r echo=FALSE}
-    m(eqs_face)
+::: {.rmdbox latex=1}
+
+* Vamos resolver o item $1$. Os passos são os mesmos para todos os itens; só mudam os valores.
+
+    ```{python}
+    eq = eqs_face[0].lhs
+    face = find_canonical_eq(eq)
+    
+    A, C, D, E, F = [face[c] for c in 'ACDEF']
+    eq_canonical = face['eq_canonical']
     ```
 
-   ::: {.rmdbox latex=1}
-   
-   
-   
-   :::
-   
+* A equação é 
+
+    ```{r}
+    m('$${{eq}}$$')
+    ```
+
+* Vamos separar os termos em $x$:
+
+    ```{python}
+    eqx = A*x**2 + D*x
+    ```
+    
+    ```{r}
+    m('$${{eqx}}$$')
+    ```
+
+* Completando o quadrado, isto é igual a:
+
+    ```{python}
+    eqx = complsq(eqx, x)
+    ```
+    
+    ```{r}
+    m('$${{eqx}}$$')
+    ```
+
+* Vamos separar os termos em $y$:
+
+    ```{python}
+    eqy = C*y**2 + E*y
+    ```
+    
+    ```{r}
+    m('$${{eqy}}$$')
+    ```
+
+* Completando o quadrado, isto é igual a:
+
+    ```{python}
+    eqy = complsq(eqy, y)
+    ```
+    
+    ```{r}
+    m('$${{eqy}}$$')
+    ```
+
+* Agora, somamos estas duas expressões (mais o termo independente da equação original). 
+
+  O resultado é uma equação equivalente à original:
+
+    ```{r}
+    m('$${{Eq(eqx + eqy + F, 0)}}$$')
+    ```
+
+* Jogando o termo independente para o lado direito, chegamos à forma canônica da equação do círculo:
+
+    ```{r}
+    m('$${{eq_canonical}}$$')
+    ```
+
+:::
+
+::: {.rmdbox latex=1}
+
+As respostas para todos os itens são:
+
+```{python}
+eqs_face = [find_canonical_eq(f.lhs) for f in eqs_face]
+```
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '{{ [f["eq_general"]      for f in eqs_face] }} & & ',
+  '{{ [f["eq_canonical"][0] for f in eqs_face] }} ',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|lll} ',
+    '& \\textbf{Geral} & \\qquad & \\textbf{Canônica} \\\\ \\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
+
+:::
+
 
 ## Nariz
 
@@ -240,37 +298,118 @@ knitr::include_graphics('emoji-com-orelha.png')
     cnariz = rc / 10
     anariz = cnariz + cnariz / 10
     
-    centronarizes = zip(r.df.xc, r.df.yc)
-    centronarizes_latex = [latex(e) for e in centronarizes]
+    centronarizes = [sympify((xx, yy), rational=True) 
+      for (xx, yy) in zip(r.df.xc, r.df.yc)]
     
     cnarizes = [
       cnariz.subs({rc: rr}) for rr in r.df.rc
     ]
-    cnarizes_latex = [latex(e) for e in cnarizes]
     
     anarizes = [
       anariz.subs({cnariz: cn}) for cn in cnarizes
     ]
-    anarizes_latex = [latex(e) for e in anarizes]
     ```
     
     ```{r echo=FALSE}
-    narizes <- paste0(
-      '1. $\\displaystyle \\quad \\text{Centro} = ',
-      py$centronarizes_latex,
-      '\\ ,\\quad a = ',
-      py$anarizes_latex,
-      '\\ ,\\quad c = ',
-      py$cnarizes_latex,
-      '$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad \\text{Centro} = {{centronarizes}}',
+      '\\ ,\\quad a = {{anarizes}}',
+      '\\ ,\\quad c = {{cnarizes}}',
+      '$\n\n\n'
     )
     ```
     
-    ```{r echo=FALSE}
-    m(narizes)
-    ```
+::: {.rmdbox latex=1}
+
+* Você percebeu que o centro da elipse do nariz é exatamente o centro do círculo do rosto?
+
+* Vamos resolver o item $1$. Os passos são os mesmos para todos os itens; só mudam os valores.
+
+* A equação canônica de uma elipse  com eixo maior horizontal é da forma
+
+  $$
+  \frac{(x - h)^2}{a^2} + \frac{(y - k)^2}{b^2} = 1
+  $$
+
+  onde $(h, k)$ é o centro, que foi dado.
+  
+* O valor de $a$ foi dado.
+
+* O valor de $b$ pode ser calculado como $b = \sqrt{a^2 - c^2}$, com $c$ dado.
+
+    ```{python}
+    centro = centronarizes[0]
+    c = cnarizes[0]
+    a = anarizes[0]
+    b = sqrt(a**2 - c**2)
     
+    def eqnariz(centro, a, c):
+      
+      h, k = centro
+      b = sqrt(a**2 - c**2)
+      
+      num1 = (x - h)**2
+      denom1 = a**2
+      
+      num2 = (y - k)**2
+      denom2 = b**2
+      
+      eq = sympify( \
+        'Eq(num1 / denom1 + num2/denom2, 1)', \
+        locals = { \
+          'num1': num1, 'num2': num2, 'denom1': denom1, 'denom2': denom2 \
+        }, \
+        evaluate=False \
+      )
+      
+      return eq
+      
+    ```
+
+* Usando os valores do item $1$:
+
+  * `r m('Centro ${} = {{centro}}$')`
+
+  * `r m('$a = {{a}}$')`
+
+  * `r m('$c = {{c}}$')`
+
+  * Calculamos `r m('$b = {{b}}$')`
+  
+  * E a equação fica
+  
+    ```{r}
+    m('$${{ eqnariz(centro, a, c) }}$$')
+    ```
+
+:::
+
+::: {.rmdbox latex=1}
+
+As respostas para todos os itens são:
+
+```{python}
+eqs_nariz = [ eqnariz(cen, a, c) \
+  for (cen, a, c) in zip(centronarizes, anarizes, cnarizes) ]
+```
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '\\displaystyle {{ eqs_nariz }} ',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|l} ',
+    '\\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
+
+:::
+
+
 
 ## Olhos
 
@@ -295,22 +434,14 @@ knitr::include_graphics('emoji-com-orelha.png')
       for (xx, yy, rr) 
       in zip(r.df.xc, r.df.yc, r.df.rc)
     ]
-    
-    eqs_mascara_latex = [latex(e) for e in eqs_mascara]
     ```
     
     ```{r echo=FALSE}
-    eqs_mascara <- paste0(
-      '1. $\\displaystyle \\quad ',
-      py$eqs_mascara_latex,
-      ' = 0$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad {{eqs_mascara}} = 0$\n\n\n'
     )
     ```
     
-    ```{r echo=FALSE}
-    m(eqs_mascara)
-    ```
 
 * [Cada olho]{.hl} é uma [elipse de eixo maior vertical com os valores de $a$ e de $c$ dados abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
@@ -323,29 +454,19 @@ knitr::include_graphics('emoji-com-orelha.png')
     colhos = [
       colho.subs({rc: rr}) for rr in r.df.rc
     ]
-    colhos_latex = [latex(e) for e in colhos]
     
     aolhos = [
       aolho.subs({rc: rr}) for rr in r.df.rc
     ]
-    aolhos_latex = [latex(e) for e in aolhos]
     ```
     
     ```{r echo=FALSE}
-    olhos <- paste0(
-      '1. $\\displaystyle \\quad a = ',
-      py$aolhos_latex,
-      '\\ ,\\quad c = ',
-      py$colhos_latex,
-      '$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad a = {{aolhos}}',
+      '\\ ,\\quad c = {{colhos}}$\n\n\n'
     )
     ```
     
-    ```{r echo=FALSE}
-    m(olhos)
-    ```
-
 
 ## Boca
 
@@ -358,43 +479,31 @@ knitr::include_graphics('emoji-com-orelha.png')
     pbocasup = rc / 4
     
     fbocasups = [
-      (
-        fbocasup[0].subs({xc: xx, yc: yy, rc: rr}),
-        fbocasup[1].subs({xc: xx, yc: yy, rc: rr})
+      S(
+        (
+          fbocasup[0].subs({xc: xx, yc: yy, rc: rr}),
+          fbocasup[1].subs({xc: xx, yc: yy, rc: rr})
+        )
       )
       for (xx, yy, rr) 
       in zip(r.df.xc, r.df.yc, r.df.rc)
     ]
-    fbocasups_latex = [latex(e) for e in fbocasups]
     
     pbocasups = [
       pbocasup.subs({rc: rr}) for rr in r.df.rc
     ]
-    pbocasups_latex = [latex(e) for e in pbocasups]
     ```
     
     ```{r echo=FALSE}
-    bocasup <- paste0(
-      '1. $\\displaystyle \\quad F = ',
-      py$fbocasups_latex,
-      '\\ ,\\quad p = ',
-      py$pbocasups_latex,
-      '$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad F = {{fbocasups}}',
+      '\\ ,\\quad p = {{pbocasups}}$\n\n\n'
     )
-    ```
-    
-    ```{r echo=FALSE}
-    m(bocasup)
     ```
 
 * A [parte inferior da boca]{.hl} também é uma [parábola, cuja equação geral é dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
 * Ache a [equação canônica]{.hl} desta parábola.
-
-* Ache as coordenadas dos [pontos onde as duas parábolas se interceptam]{.hl} --- i.e., os cantos das bocas.
-
-* No Geogebra, aprenda como [traçar estas duas parábolas]{.hl} apenas na região entre os dois pontos de interseção, para que o traçado da boca não ultrapasse os cantos.
 
     ```{python echo=FALSE}
     eq_bocainf = -18*rc*y - 15*rc**2 + 26*xc**2 + 26*x**2 + 18*rc*yc - 52*xc*x
@@ -404,22 +513,17 @@ knitr::include_graphics('emoji-com-orelha.png')
       for (xx, yy, rr) 
       in zip(r.df.xc, r.df.yc, r.df.rc)
     ]
-    
-    eqs_bocainf_latex = [latex(e) for e in eqs_bocainf]
     ```
     
     ```{r echo=FALSE}
-    eqs_bocainf <- paste0(
-      '1. $\\displaystyle \\quad ',
-      py$eqs_bocainf_latex,
-      ' = 0$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad {{eqs_bocainf}} = 0$\n\n\n'
     )
     ```
-    
-    ```{r echo=FALSE}
-    m(eqs_bocainf)
-    ```
+
+* Escreva uma [inequação]{.hl} que represente a região da boca que está [preenchida em vermelho na figura](#figura).
+
+* No Geogebra, entre a inequação e configure-a para que a área seja preenchida em vermelho.
 
 
 ## Orelhas
@@ -427,28 +531,39 @@ knitr::include_graphics('emoji-com-orelha.png')
 * As [orelhas]{.hl} são os ramos de uma [hipérbole de eixo real          horizontal, de excentricidade $11/10$]{.hl}, cujos [vértices]{.hl} são os [dois pontos do círculo do rosto]{.hl} que têm a [coordenada $y$ igual ao valor abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
     ```{python echo=FALSE}
-    yorelha = yc + rc / 5
+    yorelha = yc
     
     yorelhas = [
       yorelha.subs({yc: yy, rc: rr}) for (yy, rr) in zip(r.df.yc, r.df.rc)
     ]
-    yorelhas_latex = [latex(e) for e in yorelhas]
     ```
     
     ```{r echo=FALSE}
-    orelhas <- paste0(
-      '1. $\\displaystyle \\quad y = ',
-      py$yorelhas_latex,
-      '$',
-      collapse = '\n\n'
+    m(
+      '1. $\\displaystyle \\quad y = {{yorelhas}}$\n\n\n'
     )
     ```
     
-    ```{r echo=FALSE}
-    m(orelhas)
-    ```
-
 * Ache a [equação canônica]{.hl} desta hipérbole.
+
+* Escreva uma [inequação]{.hl} que represente a região das orelhas que está [preenchida em rosa na figura](#figura). [A distância $d$ entre o centro do rosto e a borda vertical de cada orelha é a dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
+
+    ```{python echo=FALSE}
+    dorelha = 9*rc / 8
+    
+    dorelhas = [
+      dorelha.subs({rc: rr}) for rr in r.df.rc
+    ]
+    ```
+    
+    ```{r echo=FALSE}
+    m(
+      '1. $\\displaystyle \\quad d = {{dorelhas}}$\n\n\n'
+    )
+    ```
+    
+
+* No Geogebra, entre a inequação e configure-a para que a área seja preenchida em rosa.
 
 
 # Números dos alunos, por matrícula { #nums }
