@@ -410,7 +410,6 @@ m(
 :::
 
 
-
 ## Olhos
 
 * Os [centros dos olhos]{.hl} são os [focos da elipse com equação geral dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
@@ -441,7 +440,119 @@ m(
       '1. $\\displaystyle \\quad {{eqs_mascara}} = 0$\n\n\n'
     )
     ```
+
+::: {.rmdbox latex=1}
+
+* Vamos resolver o item $1$. Os passos são os mesmos para todos os itens; só mudam os valores.
+
+    ```{python}
+    eq = eqs_mascara[0]
+    mascara = find_canonical_eq(eq)
     
+    A, C, D, E, F = [mascara[c] for c in 'ACDEF']
+    eq_canonical = mascara['eq_canonical']
+    ```
+
+* A equação é 
+
+    ```{r}
+    m('$${{eq}} = 0$$')
+    ```
+
+* Vamos separar os termos em $x$:
+
+    ```{python}
+    eqx = A*x**2 + D*x
+    ```
+    
+    ```{r}
+    m('$${{eqx}}$$')
+    ```
+
+* Completando o quadrado, isto é igual a:
+
+    ```{python}
+    eqx = complsq(eqx, x)
+    ```
+    
+    ```{r}
+    m('$${{eqx}}$$')
+    ```
+
+* Vamos separar os termos em $y$:
+
+    ```{python}
+    eqy = C*y**2 + E*y
+    ```
+    
+    ```{r}
+    m('$${{eqy}}$$')
+    ```
+
+* Completando o quadrado, isto é igual a:
+
+    ```{python}
+    eqy = complsq(eqy, y)
+    ```
+    
+    ```{r}
+    m('$${{eqy}}$$')
+    ```
+
+* Agora, somamos estas duas expressões (mais o termo independente da equação original). 
+
+  O resultado é uma equação equivalente à original:
+
+    ```{r}
+    m('$${{Eq(eqx + eqy + F, 0)}}$$')
+    ```
+
+* Jogando o termo independente para o lado direito, e dividindo tudo para o lado direito ficar igual a $1$, chegamos à forma canônica da equação da elipse:
+
+    ```{r}
+    m('$${{eq_canonical}}$$')
+    ```
+
+:::
+
+::: {.rmdbox latex=1}
+
+As respostas para todos os itens são:
+
+```{python}
+eqs_mascara = [find_canonical_eq(f) for f in eqs_mascara]
+```
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '\\displaystyle {{ [f["eq_general"]      for f in eqs_mascara] }} & & ',
+  '\\displaystyle {{ [f["eq_canonical"][0] for f in eqs_mascara] }} ',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|lll} ',
+    '\n &  & \\qquad &  \\\\ \\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
+
+:::
+
+::: {.rmdbox latex=1}
+
+* Para achar os focos ???
+
+:::
+
+::: {.rmdbox latex=1}
+
+As respostas para todos os itens são:
+
+???
+
+:::
 
 * [Cada olho]{.hl} é uma [elipse de eixo maior vertical com os valores de $a$ e de $c$ dados abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
