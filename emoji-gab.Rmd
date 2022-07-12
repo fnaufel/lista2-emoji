@@ -526,12 +526,11 @@ eqs_mascara = [find_canonical_eq(f) for f in eqs_mascara]
 ```{r}
 m(
   '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
-  '\\displaystyle {{ [f["eq_general"]      for f in eqs_mascara] }} & & ',
   '\\displaystyle {{ [f["eq_canonical"][0] for f in eqs_mascara] }} ',
   sep_middle = ' \\\\ \n',
   before = paste0(
-    '$$ \\begin{array}{r|lll} ',
-    '\n &  & \\qquad &  \\\\ \\hline '
+    '$$ \\begin{array}{r|l}',
+    '\\hline '
   ),
   after = '\\\\ \\hline \\end{array} $$',
   sep_blocks = '\n'
@@ -542,7 +541,85 @@ m(
 
 ::: {.rmdbox latex=1}
 
-* Para achar os focos ???
+* Para achar os focos, lembre-se de que, para uma elipse com eixo maior horizontal, com centro em $(h, k)$, os focos são
+
+  $$
+  \begin{align}
+    F_1 &= (h - c, k) \\
+    F_2 &= (h + c, k)
+  \end{align}
+  $$
+
+  onde $c$ é a distância focal, que pode ser calculada como
+  
+  $$
+  c = \sqrt{a^2 - b^2}
+  $$
+  
+* Para o item $1$
+  
+```{python}
+def find_foci(conic):
+  
+  eqlhs = conic['eq_canonical'][0].lhs
+  aa, bb, h, k = [ Wild(w, exclude=[x, y]) for w in ['aa', 'bb', 'h', 'k'] ]
+  
+  eqx, eqy = sympify('eqlhs.args', locals={'eqlhs': eqlhs}, evaluate=False)
+  mx = eqx.match((1 / aa) * (x - h)**2)
+  my = eqy.match((1 / bb) * (y - k)**2)
+  
+  a2 = aa.xreplace(mx)
+  b2 = bb.xreplace(my)
+  
+  c = sqrt(a2 - b2)
+  
+  hh = h.xreplace(mx)
+  kk = k.xreplace(my)
+  
+  conic['h'] = hh
+  conic['k'] = kk
+  conic['a'] = sqrt(a2)
+  conic['b'] = sqrt(b2)
+  conic['c'] = c
+  conic['foci'] = [Point(hh - c, kk), Point(hh + c, kk)] 
+  
+```  
+  
+```{python}
+def point_to_tuple(p):
+  
+  return sympify((p.x, p.y))
+```
+  
+```{python}
+conic = eqs_mascara[0]
+find_foci(conic)
+a2 = conic['a']**2
+b2 = conic['b']**2
+c = conic['c']
+foci = [ point_to_tuple(f) for f in conic['foci'] ]
+h = conic['h']
+k = conic['k']
+```
+  
+  $$
+  \begin{align}
+  h &= `r py$h` \\
+  k &= `r py$k` \\
+  c &= \sqrt{`r py$a2` - `r py$b2`} = `r py$c`  
+  \end{align}
+  $$
+
+* Os focos são 
+
+    ```{r}
+    m(
+      '{{ foci }}', 
+      sep_middle = '\\quad\\text{e}\\quad',
+      before = '$$',
+      after = '$$'
+    )
+    ```
 
 :::
 
@@ -550,7 +627,28 @@ m(
 
 As respostas para todos os itens são:
 
-???
+```{python}
+for conic in eqs_mascara:
+  find_foci(conic)
+
+f1 = [ point_to_tuple(c['foci'][0]) for c in eqs_mascara ] 
+f2 = [ point_to_tuple(c['foci'][1]) for c in eqs_mascara ] 
+```
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '\\displaystyle {{ f1 }} & ',
+  '\\displaystyle {{ f2 }} ',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|ll}',
+    '\\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
 
 :::
 
