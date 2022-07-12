@@ -1037,9 +1037,9 @@ eqs_bocainf_r = [ eq.rhs for eq in eqs_bocainf ]
 ```{r}
 m(
   '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
-  '\\displaystyle \\begin{cases} ',
-  '{{ eqs_bocasup_l }} < {{ eqs_bocasup_r }} \\\\ ',
-  '{{ eqs_bocainf_l }} > {{ eqs_bocainf_r }} ',
+  '\\begin{cases} ',
+  '\\displaystyle {{ eqs_bocasup_l }} < {{ eqs_bocasup_r }} \\\\ ',
+  '\\displaystyle {{ eqs_bocainf_l }} > {{ eqs_bocainf_r }} ',
   '\\end{cases}',
   sep_middle = ' \\\\ \n',
   before = paste0(
@@ -1076,6 +1076,87 @@ m(
     
 * Ache a [equação canônica]{.hl} desta hipérbole.
 
+::: {.rmdbox latex=1}
+
+* Vamos resolver o item 1. Os passos são os mesmos para todos os itens; só mudam os valores.
+
+* A equação canônica de uma hipérbole de eixo real horizontal tem a forma
+
+  $$
+  \frac{(x - h)^2}{a^2} - \frac{(y - k)^2}{b^2} = 1
+  $$
+
+* Aqui, o ponto $(h, k)$ é o centro, que não foi dado.
+
+* Mas, se você prestar atenção, vai notar que os vértices da hipérbole estão na mesma horizontal $(y = -2)$ que o centro do rosto.
+
+* Então, como as orelhas são simétricas em relação ao centro do rosto, o centro da hipérbole é igual ao centro do círculo do rosto: $(h, k) = (-1, -2)$.
+
+* A excentricidade de uma hipérbole é  $e = c/a$. O enunciado diz que $e = 11/10$.
+
+* Daí, $c/a = 11/10$, o que equivale a dizer que $c = 11a/10$.
+
+* Na hipérbole, $c^2 = a^2 + b^2$, o que equivale a dizer que $b^2 = c^2 - a^2$.
+
+* Isto equivale a dizer que $b^2 = \frac{121a^2}{100} - a^2 = \frac{21a^2}{100}$.
+
+* Levando em conta as informações acima, a hipérbole que procuramos é
+
+  $$
+  \frac{(x + 1)^2}{a^2} - \frac{(y + 2)^2}{21a^2 / 100} = 1
+  $$
+
+* Para descobrir o valor de $a$, podemos usar o fato de que os vértices da hipérbole também pertencem ao círculo do rosto.
+
+* Ou seja, os pontos $(-4, -2)$ e $(2, -2)$ são os vértices da hipérbole.
+
+* Usando o segundo vértice, poderíamos substituir $x$ por $2$ e $y$ por $-2$ e resolver a equação para achar o valor de $a$.
+
+* Mas nem precisamos fazer isto. [O valor de $a$ é justamente a distância entre o centro e o vértice da hipérbole]{.hl}, e acabamos de observar que esta distância é o raio do círculo do rosto: ou seja, $a = 3$.
+
+* A equação da hipérbole, fica, então
+
+  $$
+  \frac{(x + 1)^2}{9} - \frac{(y + 2)^2}{189 / 100} = 1
+  $$
+
+:::
+
+::: {.rmdbox latex=1}
+
+As respostas para todos os itens são:
+
+```{python}
+data_ears = [ \
+  ((x - h)**2, (y - k)**2, r**2, S(21*r**2) / 100) \
+  for h, k, r in zip(r.df.xc, r.df.yc, r.df.rc) \
+]
+
+eqs_ears = [ \
+  Eq( sympify( \
+    'numx / a2 - numy / b2', \
+    locals = { 'numx': numx, 'numy': numy, 'a2': a2, 'b2': b2 }, \
+    evaluate=False), 1) \
+  for numx, numy, a2, b2 in data_ears \
+]
+```
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '\\displaystyle {{ eqs_ears }} ',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|l}',
+    ' \\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
+
+:::
+
 * Escreva uma [inequação]{.hl} que represente a região das orelhas que está [preenchida em rosa na figura](#figura). [A distância $d$ entre o centro do rosto e a borda vertical de cada orelha é a dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
     ```{python echo=FALSE}
@@ -1092,6 +1173,65 @@ m(
     )
     ```
     
+::: {.rmdbox latex=1}
+
+* Vamos resolver o item 1. Os passos são os mesmos para todos os itens; só mudam os valores.
+
+* Lembrando que o centro do círculo tem $x = -1$, os limites das orelhas são as duas retas verticais 
+
+  $$x = -1 - 27/8 = -35/8$$
+  
+  e
+
+  $$x = -1 + 27/8 = 19/8$$
+
+* O [capítulo $10$ do livro](https://canal.cecierj.edu.br/recurso/4690) diz que os pontos que estão nas mesmas regiões que os focos da hipérbole (ou seja, nas orelhas) satisfazem a inequação
+
+  $$
+  \frac{(x + 1)^2}{9} - \frac{(y + 2)^2}{189 / 100} > 1
+  $$
+
+* Assim, a parte sombreada das orelhas corresponde aos pontos que satisfazem o sistema de inequações
+
+  $$
+  \begin{cases}
+    \displaystyle \frac{(x + 1)^2}{9} - \frac{(y + 2)^2}{189 / 100} > 1 \\
+    \displaystyle x > \frac{-35}{8} \\
+    \displaystyle x < \frac{19}{8}
+  \end{cases}
+  $$
+
+:::
+
+::: {.rmdbox latex=1}
+
+As respostas para todos os itens são:
+
+```{python}
+ineq = [ Gt(e.lhs, e.rhs) for e in eqs_ears ]
+line1 = [ Gt(x, xc - d) for xc, d in zip(r.df.xc, dorelhas) ]
+line2 = [ Lt(x, xc + d) for xc, d in zip(r.df.xc, dorelhas) ]
+```
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '\\begin{cases} ',
+  '\\displaystyle {{ ineq }} \\\\ ',
+  '\\displaystyle {{ line1 }} \\\\ ',
+  '\\displaystyle {{ line2 }} ',
+  '\\end{cases}',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|l}',
+    ' \\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
+
+:::
 
 * No Geogebra, entre a inequação e configure-a para que a área seja preenchida em rosa.
 
