@@ -236,7 +236,7 @@ knitr::include_graphics('emoji.png')
     m('$${{eqy}}$$')
     ```
 
-* Completando o quadrado, isto é igual a:
+* [Completando o quadrado](https://www.geogebra.org/m/srg5ap85), isto é igual a:
 
     ```{python}
     eqy = complsq(eqy, y)
@@ -469,7 +469,7 @@ m(
     m('$${{eqx}}$$')
     ```
 
-* Completando o quadrado, isto é igual a:
+* [Completando o quadrado](https://www.geogebra.org/m/srg5ap85), isto é igual a:
 
     ```{python}
     eqx = complsq(eqx, x)
@@ -489,7 +489,7 @@ m(
     m('$${{eqy}}$$')
     ```
 
-* Completando o quadrado, isto é igual a:
+* [Completando o quadrado](https://www.geogebra.org/m/srg5ap85), isto é igual a:
 
     ```{python}
     eqy = complsq(eqy, y)
@@ -845,6 +845,68 @@ m(
     )
     ```
 
+::: {.rmdbox latex=1}
+
+* Vamos resolver o item 1. Os passos são os mesmos para todos os itens; só mudam os valores.
+
+* A equação canônica da parábola com eixo vertical é
+
+  $$
+  y - k = \frac{1}{4p}(x - h)^2
+  $$
+
+  onde
+  
+  * $(h, k)$ é o vértice;
+  
+  * $p = 3/4$ é a distância focal, que foi dada.
+  
+* As coordenadas do foco $F = (-1, -3)$ foram dadas, e o vértice está exatamente a $p = 3/4$ unidades de distância abaixo do foco.
+
+* Ou seja, $h = -1$ e $k = -3 - 3/4 = -15/4$.
+
+* A equação canônica fica
+
+  $$
+  y + \frac{15}{4} = \frac{1}{3}(x + 1)^2
+  $$
+
+:::
+
+::: {.rmdbox latex=1}
+
+As respostas para todos os itens são:
+
+```{python}
+def boca1(f, p):
+  
+  fx, fy = f
+  h = fx
+  k = fy - p
+  
+  return Eq(y - k, 1 / (4*p) * (x - h)**2)
+```
+
+```{python}
+eqs_bocasup = [ boca1(f, p) for f, p in zip(fbocasups, pbocasups) ]
+```
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '\\displaystyle {{ eqs_bocasup }} ',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|l}',
+    ' \\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
+
+:::
+
 * A [parte inferior da boca]{.hl} também é uma [parábola, cuja equação geral é dada abaixo]{.hl} ([veja o seu número $n$ nesta lista](#nums)).
 
 * Ache a [equação canônica]{.hl} desta parábola.
@@ -865,7 +927,131 @@ m(
     )
     ```
 
+::: {.rmdbox latex=1}
+
+* Vamos resolver o item 1. Os passos são os mesmos para todos os itens; só mudam os valores.
+
+    ```{python}
+    eq = eqs_bocainf[0]
+    face = find_canonical_eq(eq)
+    
+    A, D, E, F = [face[c] for c in 'ADEF']
+    eq_canonical = face['eq_canonical']
+    ```
+
+* A equação é 
+
+    ```{r}
+    m('$${{eq}} = 0$$')
+    ```
+
+* Vamos separar os termos em $x$:
+
+    ```{python}
+    eqx = A*x**2 + D*x
+    ```
+    
+    ```{r}
+    m('$${{eqx}}$$')
+    ```
+
+* [Completando o quadrado](https://www.geogebra.org/m/srg5ap85), isto é igual a:
+
+    ```{python}
+    eqx = complsq(eqx, x)
+    ```
+    
+    ```{r}
+    m('$${{eqx}}$$')
+    ```
+
+* Agora, somamos esta expressão com o termo em $y$ e o termo independente. O resultado é uma equação equivalente à original:
+
+    ```{r}
+    m('$${{Eq(eqx + E*y + F, 0)}}$$')
+    ```
+
+* Rearrumando, chegamos à forma canônica:
+
+    ```{r}
+    m('$${{eq_canonical}}$$')
+    ```
+
+:::
+
+::: {.rmdbox latex=1}
+
+As respostas para todos os itens são:
+
+```{python}
+bocasinf = [ find_canonical_eq(eq) for eq in eqs_bocainf ]
+eqs_bocainf = [ c['eq_canonical'][0] for c in bocasinf ]
+```
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '\\displaystyle {{ eqs_bocainf }} ',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|l}',
+    ' \\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
+
+:::
+
 * Escreva uma [inequação]{.hl} que represente a região da boca que está [preenchida em vermelho na figura](#figura).
+
+::: {.rmdbox latex=1}
+
+* Vamos resolver o item 1. Os passos são os mesmos para todos os itens; só mudam os valores.
+
+* Os pontos no interior da boca são exatamente aqueles que estão, ao mesmo tempo, abaixo da parte superior e acima da parte inferior.
+
+* São os pontos $(x, y)$ que satisfazem o seguinte sistema de inequações:
+
+  $$
+  \begin{cases}
+  `r m('{{ eqs_bocasup[0].lhs }} < {{ eqs_bocasup[0].rhs }}')` \\
+  `r m('{{ eqs_bocainf[0].lhs }} > {{ eqs_bocainf[0].rhs }}')`
+  \end{cases}
+  $$
+
+:::
+
+::: {.rmdbox latex=1}
+
+As respostas para todos os itens são:
+
+```{python}
+eqs_bocasup_l = [ eq.lhs for eq in eqs_bocasup ]
+eqs_bocasup_r = [ eq.rhs for eq in eqs_bocasup ]
+eqs_bocainf_l = [ eq.lhs for eq in eqs_bocainf ]
+eqs_bocainf_r = [ eq.rhs for eq in eqs_bocainf ]
+```
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '\\displaystyle \\begin{cases} ',
+  '{{ eqs_bocasup_l }} < {{ eqs_bocasup_r }} \\\\ ',
+  '{{ eqs_bocainf_l }} > {{ eqs_bocainf_r }} ',
+  '\\end{cases}',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|l}',
+    ' \\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
+
+:::
 
 * No Geogebra, entre a inequação e configure-a para que a área seja preenchida em vermelho.
 
