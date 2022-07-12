@@ -216,7 +216,7 @@ knitr::include_graphics('emoji.png')
     m('$${{eqx}}$$')
     ```
 
-* Completando o quadrado, isto é igual a:
+* [Completando o quadrado](https://www.geogebra.org/m/srg5ap85), isto é igual a:
 
     ```{python}
     eqx = complsq(eqx, x)
@@ -676,6 +676,141 @@ m(
     )
     ```
     
+::: {.rmdbox latex=1}
+
+* Vamos resolver o item $1$. Os passos são os mesmos para todos os itens; só mudam os valores.
+
+* Temos, para cada olho:
+
+  * O centro $(h, k)$, que é um dos focos da elipse do item anterior;
+  
+  * O valor de $a$;
+  
+  * O valor de $c$.
+  
+* O mais prático é achar a equação canônica de cada olho, que é da forma
+
+  $$
+  \frac{(x - h)^2}{b^2} + \frac{(y - k)^2}{a^2} = 1
+  $$
+
+  onde $b = \sqrt{a^2 - c^2}$. 
+  
+* [Importante: ]{.hl} como a elipse tem o eixo maior vertical, o denominador $a^2$ aparece no termo em $y$.
+  
+* Uma vez achada a equação canônica, desenvolvemos os quadrados e a soma para achar a equação geral.
+
+```{python}
+def olho(h, k, a, c):
+  
+  b2 = a**2 - c**2
+  eq = (x - h)**2 / b2 + (y - k)**2 / a**2 - 1
+  eq = expand(eq)
+  
+  return find_canonical_eq(eq)
+```
+
+* Para um olho:
+
+```{python}
+h, k = f1[0]
+a = aolhos[0]
+c = colhos[0]
+olho1 = olho(h, k, a, c)
+canonical = olho1['eq_canonical'][0]
+general = olho1['eq_general']
+b = sqrt(a**2 - c**2)
+```
+
+    ```{r}
+    m(
+      '* Centro $(h, k) = {{ f1[0] }}$ ',
+      '* $a = {{ aolhos[0] }}$ ',
+      '* $c = {{ colhos[0] }}$ ',
+      '* $b = {{ b }}$ ',
+      '* Equação canônica ${}= {{ canonical }}$ ',
+      '* Equação geral ${}= {{ general }}$ ',
+      sep = '\n\n'  
+    )
+    ```
+
+* Para o outro olho:
+
+```{python}
+h, k = f2[0]
+a = aolhos[0]
+c = colhos[0]
+olho2 = olho(h, k, a, c)
+canonical = olho2['eq_canonical'][0]
+general = olho2['eq_general']
+b = sqrt(a**2 - c**2)
+```
+
+    ```{r}
+    m(
+      '* Centro $(h, k) = {{ f2[0] }}$ ',
+      '* $a = {{ aolhos[0] }}$ ',
+      '* $c = {{ colhos[0] }}$ ',
+      '* $b = {{ b }}$ ',
+      '* Equação canônica ${}= {{ canonical }}$ ',
+      '* Equação geral ${}= {{ general }}$ ',
+      sep = '\n\n'  
+    )
+    ```
+
+:::
+
+::: {.rmdbox latex=1}
+
+As respostas para todos os itens (equações canônicas e gerais do [primeiro]{.hl} olho) são:
+
+```{python}
+for focus1, focus2, a, c in zip(f1, f2, aolhos, colhos):
+  h1, k1 = focus1
+  olho1 = olho(h, k, a, c)
+  canonical1 = olho1['eq_canonical'][0]
+  general1 = olho1['eq_general']
+  
+  h2, k2 = focus2
+  olho2 = olho(h, k, a, c)
+  canonical2 = olho2['eq_canonical'][0]
+  general2 = olho2['eq_general']
+```
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '\\displaystyle {{ canonical1 }} & ',
+  '\\displaystyle {{ general1 }} ',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|ll}',
+    ' \\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
+
+As respostas para todos os itens (equações canônicas e gerais do [segundo]{.hl} olho) são:
+
+```{r}
+m(
+  '{{ [i + 1 for i in list(range(r.n_alunos))] }} & ',
+  '\\displaystyle {{ canonical2 }} & ',
+  '\\displaystyle {{ general2 }} ',
+  sep_middle = ' \\\\ \n',
+  before = paste0(
+    '$$ \\begin{array}{r|ll}',
+    ' \\hline '
+  ),
+  after = '\\\\ \\hline \\end{array} $$',
+  sep_blocks = '\n'
+)
+```
+
+:::
+
 
 ## Boca
 
